@@ -1,0 +1,17 @@
+[package]
+name = "desktop-ui-tauri"
+version = "0.1.0"
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { workspace = true }
+
+[dependencies]
+tauri = { workspace = true }
+tauri-plugin-shell = { workspace = true }
+tauri-plugin-dialog = { workspace = true }
+tauri-plugin-store = { workspace = true }
+tauri-plugin-notification = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
