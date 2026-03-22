@@ -53,9 +53,9 @@
 
 ## Session Continuity
 
-**Last action:** Roadmap updated — added Phase 0 (moonrepo monorepo setup)
-**Next action:** `/gsd-plan-phase 0` — Plan Phase 0: moonrepo 工程化基建
-**Context needed for next session:** moonrepo/moon docs, docs/03 architecture spec (Cargo workspace layout), research STACK.md (Tauri v2 + SvelteKit versions)
+**Last action:** Phase 0 context gathered — OSS toolchain decisions captured (bun, Changesets, cocogitto, Lefthook, Renovate, cargo-deny)
+**Next action:** `/gsd-plan-phase 0 --skip-research` — Replan Phase 0 with updated context
+**Context needed for next session:** CONTEXT.md decisions (bun 包管理器, cocogitto+Changesets 协作, Lefthook 全量 hooks, cargo-deny 安全+许可证, Renovate 全部 PR, SvelteKit 带路由占位)
 
 ---
-*Last updated: 2026-03-22 — Phase 0 added to roadmap*
+*Last updated: 2026-03-22 — Phase 0 context captured, ready for replanning*
