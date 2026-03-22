@@ -1,0 +1,5 @@
+rust:
+  version: '1.82.0'
+node:
+  version: '22.11.0'
+  packageManager: 'pnpm'

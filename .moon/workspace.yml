@@ -1,0 +1,6 @@
+projects:
+  - 'apps/*'
+  - 'crates/*'
+vcs:
+  client: 'git'
+  defaultBranch: 'main'
