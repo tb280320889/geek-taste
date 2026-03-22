@@ -7,7 +7,7 @@
 
 ## Phases
 
-- [ ] **Phase 0: moonrepo 工程化基建** — moon monorepo 配置、目录结构、Cargo workspace、SvelteKit+Tauri 骨架、CI/CD pipeline
+- [x] **Phase 0: moonrepo 工程化基建** — moon monorepo 配置、目录结构、Cargo workspace、SvelteKit+Tauri 骨架、CI/CD pipeline
 - [ ] **Phase 1: 项目脚手架与认证** — GitHub Token 认证、OS 安全存储、导航壳、基础仓库信息展示
 - [ ] **Phase 2: 数据层与 TopK 发现引擎** — SQLite + GitHub REST 客户端、TopK 排名/筛选/快照/评分、一键订阅
 - [ ] **Phase 3: 订阅系统与信号模型** — 订阅 CRUD、Release/Tag 轮询、Signal 去重/排序/Digest/通知、Home 页面
@@ -47,11 +47,11 @@
   6. 开发者可 `moon run desktop-ui:dev` 启动开发环境
 **Plans**: 5 plans
 Plans:
-- [ ] 00-01-PLAN.md — 目录结构与 moon 配置
-- [ ] 00-02-PLAN.md — Cargo workspace 配置
-- [ ] 00-03-PLAN.md — Tauri v2 + SvelteKit 5 SPA 骨架
-- [ ] 00-04-PLAN.md — moon 任务与 CI/CD
-- [ ] 00-05-PLAN.md — 开发工具链配置
+- [x] 00-01-PLAN.md — 目录结构与 moon 配置
+- [x] 00-02-PLAN.md — Cargo workspace 配置
+- [x] 00-03-PLAN.md — Tauri v2 + SvelteKit 5 SPA 骨架
+- [x] 00-04-PLAN.md — moon 任务与 CI/CD
+- [x] 00-05-PLAN.md — 开发工具链配置
 
 ### Phase 1: 项目脚手架与认证
 **Goal**: 用户能启动应用、认证 GitHub、看到可用的导航结构
@@ -112,7 +112,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 0. moonrepo 工程化基建 | 0/5 | Not started | - |
+| 0. moonrepo 工程化基建 | 5/5 | Complete | 2026-03-22 |
 | 1. 项目脚手架与认证 | 0/4 | Not started | - |
 | 2. 数据层与 TopK 发现引擎 | 0/11 | Not started | - |
 | 3. 订阅系统与信号模型 | 0/10 | Not started | - |
