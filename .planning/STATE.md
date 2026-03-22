@@ -1,3 +1,16 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: "Phase 00 shipped — PR #1"
+last_updated: "2026-03-22T05:28:38.489Z"
+progress:
+  total_phases: 6
+  completed_phases: 1
+  total_plans: 5
+  completed_plans: 5
+---
+
 # State: geek taste
 
 ## Project Reference
@@ -10,7 +23,7 @@
 
 **Phase:** Phase 1 (next)
 **Plan:** — (not started)
-**Status:** Phase 0 complete, ready for Phase 1
+**Status:** Phase 00 shipped — PR #1
 **Progress:** [███░░░░░░░░░░░░░░░░░] 0/29 requirements
 
 ## Phase Summary
@@ -36,6 +49,7 @@
 ## Accumulated Context
 
 ### Key Decisions
+
 - 桌面优先，本地优先 — SQLite 为主权威数据库
 - REST-first — Search/Releases/Tags 端点清晰
 - 轮询+差分+摘要 — 不依赖 webhook
@@ -43,12 +57,14 @@
 - 规则+模板摘要为主 — v1 不做全自动 LLM 摘要
 
 ### Known Risks
+
 - Tauri v2 ACL 权限遗漏 → Phase 1 必须验证
 - SQLite 并发写入 → Phase 2 启用 WAL + busy_timeout
 - GitHub API 速率预算 → Phase 2 core/search 分池隔离
 - SvelteKit static-adapter 误用 server 功能 → Phase 1 配置 ssr=false
 
 ### Blockers
+
 - None currently
 
 ## Session Continuity
