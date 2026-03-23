@@ -78,3 +78,11 @@ cargo test -p persistence_sqlite   # ✅ 23 passed (5 migrations + 9 repo + 9 ra
 
 ---
 *Executed: 2026-03-23 | Phase: 02-topk | Plan: 02*
+
+## Self-Check: PASSED
+
+- ✅ SUMMARY.md created at `.planning/phases/02-topk/02-02-SUMMARY.md`
+- ✅ All source files created: migrations.rs, repo_repository.rs, ranking_repository.rs
+- ✅ Commits: eb68232 (migration), 17e4678 (repo CRUD), a200c6f (ranking CRUD)
+- ✅ STATE.md updated (plan 13, phase progress 2/6)
+- ✅ ROADMAP.md updated (02-02 marked complete, INFRA requirements marked)
