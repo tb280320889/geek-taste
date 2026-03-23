@@ -10,9 +10,9 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Foundation
 
 - [x] **FOUND-01**: 用户能输入 GitHub PAT 并保存到 OS 安全存储
-- [ ] **FOUND-02**: 用户能查看仓库基本信息（stars, forks, description, language, topics）
+- [x] **FOUND-02**: 用户能查看仓库基本信息（stars, forks, description, language, topics）
 - [x] **FOUND-03**: 用户能配置通知频率、语言兴趣、安静时段等设置
-- [ ] **FOUND-04**: 应用提供 Home/TopK/Subscriptions/Resources/Rules 导航壳与路由
+- [x] **FOUND-04**: 应用提供 Home/TopK/Subscriptions/Resources/Rules 导航壳与路由
 
 ### TopK Discovery
 
@@ -91,9 +91,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | FOUND-01 | Phase 1 | Complete |
-| FOUND-02 | Phase 1 | Pending |
+| FOUND-02 | Phase 1 | Complete |
 | FOUND-03 | Phase 1 | Complete |
-| FOUND-04 | Phase 1 | Pending |
+| FOUND-04 | Phase 1 | Complete |
 | TOPK-01 | Phase 2 | Pending |
 | TOPK-02 | Phase 2 | Pending |
 | TOPK-03 | Phase 2 | Pending |
