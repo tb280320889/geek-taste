@@ -1,6 +1,5 @@
 [workspace]
 members = [
-    "apps/*",
     "apps/desktop-ui/src-tauri",
     "crates/*",
 ]
@@ -21,7 +20,7 @@ tauri-plugin-window-state = "2"
 tokio = { version = "1", features = ["full"] }
 
 # HTTP
-reqwest = { version = "0.13", features = ["json", "rustls-tls"] }
+reqwest = "0.13"
 
 # GitHub API
 octocrab = "0.49"
@@ -29,7 +28,7 @@ octocrab = "0.49"
 # SQLite
 rusqlite = { version = "0.38", features = ["bundled"] }
 rusqlite_migration = "2.4"
-serde_rusqlite = "0.38"
+serde_rusqlite = "0.41"
 
 # 安全存储
 keyring = { version = "3.6", features = ["apple-native", "windows-native"] }
