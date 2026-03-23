@@ -39,3 +39,53 @@ export type RepoBasicInfo = {
   topics: string[];
   html_url: string;
 };
+
+// ── TopK types (Phase 2) ──────────────────────────────
+
+export type FiltersDto = {
+  language: string[];
+  exclude_archived: boolean;
+  exclude_forks: boolean;
+  min_stars: number | null;
+  updated_since_days: number | null;
+  topic: string[];
+};
+
+export type RankingViewSpecDto = {
+  ranking_view_id: string;
+  name: string;
+  view_kind: string; // "PRESET" | "CUSTOM"
+  filters: FiltersDto;
+  ranking_mode: string; // "STARS_DESC" | "UPDATED_DESC" | "MOMENTUM_24H" | "MOMENTUM_7D"
+  k_value: number;
+  is_pinned: boolean;
+  created_at: string;
+};
+
+export type ScoreBreakdownDto = {
+  star_delta: number;
+  fork_delta: number;
+  updated_recency: number;
+};
+
+export type RankingItemDto = {
+  repo_id: number;
+  full_name: string;
+  html_url: string;
+  description: string | null;
+  primary_language: string | null;
+  stars: number;
+  forks: number;
+  rank: number;
+  score: number;
+  score_breakdown: ScoreBreakdownDto | null;
+  rank_change: number | null; // +N / -N / null (首次)
+  is_subscribed: boolean;
+};
+
+export type CreateRankingViewRequest = {
+  name: string;
+  filters: FiltersDto;
+  ranking_mode: string;
+  k_value: number;
+};
