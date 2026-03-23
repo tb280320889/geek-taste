@@ -7,5 +7,4 @@ edition = "2021"
 domain = { path = "../domain" }
 shared_contracts = { path = "../shared_contracts" }
 octocrab = { workspace = true }
-reqwest = { workspace = true }
 serde = { workspace = true }
