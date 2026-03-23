@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Executing Phase 02
-last_updated: "2026-03-23T07:35:40.000Z"
+  last_updated: "2026-03-23T08:13:00.000Z"
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 17
-  completed_plans: 14
+  completed_plans: 15
 ---
 
 # State: geek taste
@@ -22,7 +22,7 @@ progress:
 ## Current Position
 
 Phase: 02 (topk) — EXECUTING
-Plan: 4 of 6
+Plan: 5 of 6
 
 ## Phase Summary
 
@@ -30,7 +30,7 @@ Plan: 4 of 6
 |-------|------|------|--------|
 | 0. moonrepo 工程化基建 | monorepo 配置 + 目录结构 + Cargo workspace + CI/CD | — | Complete |
 | 1. 项目脚手架与认证 | 启动应用、认证 GitHub、导航结构 | 4 | Complete |
-| 2. 数据层与 TopK 发现引擎 | SQLite + GitHub 客户端 + TopK 排名 | 11 | 4/6 plans done |
+| 2. 数据层与 TopK 发现引擎 | SQLite + GitHub 客户端 + TopK 排名 | 11 | 5/6 plans done |
 | 3. 订阅系统与信号模型 | 订阅 CRUD + Signal + Home | 10 | Not started |
 | 4. Agent 资源雷达 | MCP/Skills/Agent 资源发现 | 3 | Not started |
 | 5. 打磨与发布准备 | 离线 + 性能 + 发布 | 1 | Not started |
@@ -53,6 +53,7 @@ Plan: 4 of 6
 | Phase 02-topk P02 | 15min | 3 tasks | 5 files |
 | Phase 02-topk P03 | 15min | 2 tasks | 4 files |
 | Phase 02-topk P04 | 12min | 2 tasks | 7 files |
+| Phase 02-topk P05 | 8min | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -96,9 +97,9 @@ Plan: 4 of 6
 
 ## Session Continuity
 
-**Last action:** Phase 02 Plan 04 应用层编排 + Tauri IPC 命令完成 (application::topk + commands/topk.rs)
-**Next action:** Phase 02 Plan 05 — 前端 TopK 页面 UI
-**Context needed for next session:** application::topk 提供 7 个用例函数 (execute_ranking/list_views/create_view/delete_view/toggle_pin_view/create_snapshot/get_rank_change); Tauri IPC 注册 5 个命令 (list_ranking_views/create_ranking_view/delete_ranking_view/toggle_pin_ranking_view/execute_ranking); 前端可通过 invoke() 调用; create_ranking_view 自动暖机快照; execute_ranking 自动保存快照 + 计算排名变化
+**Last action:** Phase 02 Plan 05 前端 TopK IPC + Store + Types 完成 (types.ts + tauri.ts + topk.ts store)
+**Next action:** Phase 02 Plan 06 — TopK 页面 UI 组件
+**Context needed for next session:** 前端已具备完整的 TopK 类型系统、5 个 IPC 函数和 topk.ts store (rankingViews/currentViewId/rankingItems/topkLoading/topkError + derived currentView/pinnedViews + actions loadViews/selectView/addView/removeView/pinView/refreshCurrentView); 下一步需要构建 UI 组件（视图选择器下拉、排名列表卡片、筛选面板）调用 store actions
 
 ---
-*Last updated: 2026-03-23 — Phase 02 Plan 04 complete*
+*Last updated: 2026-03-23 — Phase 02 Plan 05 complete*
