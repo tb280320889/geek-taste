@@ -173,9 +173,11 @@ None - plan executed exactly as written.
 
 ## Self-Check: PASSED
 
-- All 14 new files exist on disk
-- All 6 commits present in git log
+- All 18 files exist on disk (14 created + 4 modified)
+- All 7 commits present in git log (6 task + 1 docs metadata)
 - No plan files remain untracked
+
+## Self-Check: PASSED
 
 ---
 *Phase: 01-scaffold-auth*
