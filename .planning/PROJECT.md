@@ -12,7 +12,10 @@
 
 ### Validated
 
-(None yet — ship to validate)
+- [x] 用户能输入 GitHub PAT 并保存到 OS 安全存储 — *Validated in Phase 01: scaffold-auth*
+- [x] 用户能查看仓库基本信息（stars, forks, description, language, topics） — *Validated in Phase 01: scaffold-auth*
+- [x] 用户能配置通知频率、语言兴趣、安静时段等设置 — *Validated in Phase 01: scaffold-auth*
+- [x] 应用提供 Home/TopK/Subscriptions/Resources/Rules 导航壳与路由 — *Validated in Phase 01: scaffold-auth*
 
 ### Active
 
@@ -85,4 +88,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-22 after initialization*
+*Last updated: 2026-03-23 after Phase 01 (scaffold-auth) completion*
