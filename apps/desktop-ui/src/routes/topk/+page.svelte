@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import ViewSelector from "$lib/components/ViewSelector.svelte";
   import FilterPanel from "$lib/components/FilterPanel.svelte";
   import RankingList from "$lib/components/RankingList.svelte";
@@ -17,6 +18,7 @@
     pinView,
   } from "$lib/stores/topk";
   import { authStatus } from "$lib/stores/auth";
+  import { addSubscription, loadSubscriptions } from "$lib/stores/subscriptions";
   import type { FiltersDto } from "$lib/types";
 
   let showFilter = $state(false);
@@ -31,10 +33,11 @@
     topic: [],
   };
 
-  // 初始化：加载已保存视图
-  $effect(() => {
+  // 初始化：加载已保存视图和订阅列表
+  onMount(() => {
     if ($authStatus === "authenticated") {
       void loadViews();
+      void loadSubscriptions();
     }
   });
 
@@ -59,8 +62,24 @@
     subscribeTarget = { repoId, fullName };
   };
 
-  // 订阅确认（Phase 3 实现实际订阅，当前仅关闭 popover）
-  const handleSubscribeConfirm = (): void => {
+  // 订阅确认
+  const handleSubscribeConfirm = async (_repoId: number, settings: {
+    tracking_mode: string;
+    digest_window: string;
+    notify_high_immediately: boolean;
+    event_types: string[];
+  }): Promise<void> => {
+    if (!subscribeTarget) return;
+
+    await addSubscription(subscribeTarget.repoId, {
+      repo_id: subscribeTarget.repoId,
+      tracking_mode: settings.tracking_mode,
+      digest_window: settings.digest_window,
+      notify_high_immediately: settings.notify_high_immediately,
+      event_types: settings.event_types,
+    });
+
+    await loadSubscriptions();
     subscribeTarget = null;
   };
 </script>

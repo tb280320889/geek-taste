@@ -21,6 +21,18 @@ pub fn run() {
             runtime_tauri::commands::delete_ranking_view,
             runtime_tauri::commands::toggle_pin_ranking_view,
             runtime_tauri::commands::execute_ranking,
+            // Phase 3: Subscription commands
+            runtime_tauri::commands::subscribe,
+            runtime_tauri::commands::unsubscribe,
+            runtime_tauri::commands::pause_subscription,
+            runtime_tauri::commands::list_subscriptions,
+            runtime_tauri::commands::sync_subscriptions,
+            // Phase 3: Signal commands
+            runtime_tauri::commands::list_signals,
+            runtime_tauri::commands::list_home_signals,
+            runtime_tauri::commands::ack_signal,
+            runtime_tauri::commands::mark_signal_seen,
+            runtime_tauri::commands::get_unread_counts,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

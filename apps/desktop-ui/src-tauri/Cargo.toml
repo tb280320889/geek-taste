@@ -12,6 +12,7 @@ tauri-plugin-shell = { workspace = true }
 tauri-plugin-dialog = { workspace = true }
 tauri-plugin-store = { workspace = true }
 tauri-plugin-notification = { workspace = true }
+runtime_tauri = { path = "../../../crates/runtime_tauri" }
 serde = { workspace = true }
 serde_json = { workspace = true }
 tracing = { workspace = true }

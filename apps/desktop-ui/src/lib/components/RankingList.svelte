@@ -1,6 +1,7 @@
 <script lang="ts">
   import { open } from "@tauri-apps/plugin-shell";
   import type { RankingItemDto } from "$lib/types";
+  import { subscribedRepoIds } from "$lib/stores/subscriptions";
 
   let {
     items,
@@ -22,6 +23,9 @@
   const openRepo = async (url: string): Promise<void> => {
     await open(url);
   };
+
+  const isSubscribed = (item: RankingItemDto): boolean =>
+    $subscribedRepoIds.has(item.repo_id) || item.is_subscribed;
 </script>
 
 <div class="ranking-list">
@@ -94,7 +98,7 @@
 
         <!-- Subscribe -->
         <div class="rank-action">
-          {#if item.is_subscribed}
+          {#if isSubscribed(item)}
             <button type="button" class="sub-btn subscribed" disabled>已订阅</button>
           {:else}
             <button

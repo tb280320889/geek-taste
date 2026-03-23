@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { addSubscription } from "$lib/stores/subscriptions";
+
   let {
     repoId,
     fullName,
@@ -9,7 +11,7 @@
     repoId: number;
     fullName: string;
     visible: boolean;
-    onConfirm: (settings: SubscribeSettings) => void;
+    onConfirm: (repoId: number, settings: SubscribeSettings) => void | Promise<void>;
     onClose: () => void;
   } = $props();
 
@@ -22,14 +24,33 @@
 
   let digestWindow = $state<"12h" | "24h">("12h");
   let notifyHigh = $state(true);
+  let submitting = $state(false);
 
-  const handleConfirm = (): void => {
-    onConfirm({
+  const handleConfirm = async (): Promise<void> => {
+    if (submitting) return;
+    submitting = true;
+    const settings: SubscribeSettings = {
       tracking_mode: "STANDARD",
       digest_window: digestWindow,
       notify_high_immediately: notifyHigh,
       event_types: ["RELEASE_PUBLISHED", "TAG_PUBLISHED"],
-    });
+    };
+    try {
+      if (onConfirm) {
+        await onConfirm(repoId, settings);
+      } else {
+        await addSubscription(repoId, {
+          repo_id: repoId,
+          tracking_mode: settings.tracking_mode,
+          digest_window: settings.digest_window,
+          notify_high_immediately: settings.notify_high_immediately,
+          event_types: settings.event_types,
+        });
+      }
+      onClose();
+    } finally {
+      submitting = false;
+    }
   };
 </script>
 
@@ -80,9 +101,10 @@
       <button
         type="button"
         class="confirm-btn"
-        onclick={handleConfirm}
+        onclick={() => void handleConfirm()}
+        disabled={submitting}
       >
-        确认订阅
+        {submitting ? "订阅中…" : "确认订阅"}
       </button>
     </footer>
   </div>
@@ -207,7 +229,13 @@
     cursor: pointer;
   }
 
-  .confirm-btn:hover {
+  .confirm-btn:hover:not(:disabled) {
     opacity: 0.9;
   }
+
+  .confirm-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
 </style>
