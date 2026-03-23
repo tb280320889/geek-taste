@@ -103,6 +103,15 @@ None
 - Settings UI complete and functional
 - Ready for Phase 01 Plan 06 (auth logout/settings menu)
 
+## Self-Check: PASSED
+
+- [x] SUMMARY.md exists at `.planning/phases/01-scaffold-auth/01-05-SUMMARY.md`
+- [x] All key files exist on disk (settings page, SettingsGroup, LanguagePicker)
+- [x] Commit `67f5d19` exists in git log
+- [x] Svelte check passes (0 errors, 0 warnings)
+- [x] Rust crates compile (domain, shared_contracts, runtime_tauri)
+- [x] All 7 verification criteria pass
+
 ---
 *Phase: 01-scaffold-auth*
 *Completed: 2026-03-23*
