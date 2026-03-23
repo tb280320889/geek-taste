@@ -151,7 +151,13 @@ pub async fn execute_ranking(
         })
         .unwrap_or_default();
 
-    // 8. 转换为 RankingItemDto
+    // 8. 查询活跃订阅 repo_id（用于 is_subscribed）
+    let subscribed_repo_ids: std::collections::HashSet<i64> =
+        persistence_sqlite::subscription_repository::list_active_repo_ids(conn)?
+            .into_iter()
+            .collect();
+
+    // 9. 转换为 RankingItemDto
     let dtos: Vec<RankingItemDto> = items
         .into_iter()
         .enumerate()
@@ -193,7 +199,7 @@ pub async fn execute_ranking(
                 score,
                 score_breakdown,
                 rank_change,
-                is_subscribed: false, // TODO: Phase 3 订阅交叉检查
+                is_subscribed: subscribed_repo_ids.contains(&repo.repo_id),
             }
         })
         .collect();
