@@ -1,10 +1,14 @@
 import { invoke } from "@tauri-apps/api/core";
 import type {
   CreateRankingViewRequest,
+  CreateSubscriptionRequest,
   RankingItemDto,
   RankingViewSpecDto,
   RepoBasicInfo,
   SettingsDto,
+  SignalDto,
+  SubscriptionRowDto,
+  UnreadCountsDto,
   UpdateSettingsRequest,
   UserDto,
   ValidateTokenResponse,
@@ -47,3 +51,40 @@ export const togglePinRankingView = async (viewId: string): Promise<void> =>
 
 export const executeRanking = async (viewId: string): Promise<RankingItemDto[]> =>
   invoke("execute_ranking", { viewId });
+
+// ── Subscription IPC (Phase 3) ──────────────────────────────
+
+export const subscribe = async (
+  repoId: number,
+  options?: CreateSubscriptionRequest,
+): Promise<SubscriptionRowDto> =>
+  invoke("subscribe", { repoId, ...options });
+
+export const unsubscribe = async (subscriptionId: string): Promise<void> =>
+  invoke("unsubscribe", { subscriptionId });
+
+export const pauseSubscription = async (subscriptionId: string): Promise<void> =>
+  invoke("pause_subscription", { subscriptionId });
+
+export const listSubscriptions = async (): Promise<SubscriptionRowDto[]> =>
+  invoke("list_subscriptions");
+
+export const syncSubscriptions = async (): Promise<number> =>
+  invoke("sync_subscriptions");
+
+// ── Signal IPC (Phase 3) ──────────────────────────────
+
+export const listSignals = async (filterState?: string, limit?: number): Promise<SignalDto[]> =>
+  invoke("list_signals", { filterState, limit });
+
+export const listHomeSignals = async (since?: string): Promise<SignalDto[]> =>
+  invoke("list_home_signals", { since });
+
+export const ackSignal = async (signalId: string): Promise<void> =>
+  invoke("ack_signal", { signalId });
+
+export const markSignalSeen = async (signalId: string): Promise<void> =>
+  invoke("mark_signal_seen", { signalId });
+
+export const getUnreadCounts = async (): Promise<UnreadCountsDto> =>
+  invoke("get_unread_counts");
