@@ -1,5 +1,8 @@
 import { invoke } from "@tauri-apps/api/core";
 import type {
+  CreateRankingViewRequest,
+  RankingItemDto,
+  RankingViewSpecDto,
   RepoBasicInfo,
   SettingsDto,
   UpdateSettingsRequest,
@@ -26,3 +29,21 @@ export const getSettings = async (): Promise<SettingsDto> => invoke("get_setting
 
 export const updateSettings = async (settings: UpdateSettingsRequest): Promise<SettingsDto> =>
   invoke("update_settings", { settings });
+
+// ── TopK IPC (Phase 2) ──────────────────────────────
+
+export const listRankingViews = async (): Promise<RankingViewSpecDto[]> =>
+  invoke("list_ranking_views");
+
+export const createRankingView = async (
+  request: CreateRankingViewRequest,
+): Promise<RankingViewSpecDto> => invoke("create_ranking_view", { request });
+
+export const deleteRankingView = async (viewId: string): Promise<void> =>
+  invoke("delete_ranking_view", { viewId });
+
+export const togglePinRankingView = async (viewId: string): Promise<void> =>
+  invoke("toggle_pin_ranking_view", { viewId });
+
+export const executeRanking = async (viewId: string): Promise<RankingItemDto[]> =>
+  invoke("execute_ranking", { viewId });
