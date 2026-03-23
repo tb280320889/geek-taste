@@ -9,7 +9,7 @@
 
 - [x] **Phase 0: moonrepo 工程化基建** — moon monorepo 配置、目录结构、Cargo workspace、SvelteKit+Tauri 骨架、CI/CD pipeline
 - [ ] **Phase 1: 项目脚手架与认证** — GitHub Token 认证、OS 安全存储、导航壳、基础仓库信息展示
-- [ ] **Phase 2: 数据层与 TopK 发现引擎** — SQLite + GitHub REST 客户端、TopK 排名/筛选/快照/评分、一键订阅
+- [x] **Phase 2: 数据层与 TopK 发现引擎** — SQLite + GitHub REST 客户端、TopK 排名/筛选/快照/评分、一键订阅
 - [ ] **Phase 3: 订阅系统与信号模型** — 订阅 CRUD、Release/Tag 轮询、Signal 去重/排序/Digest/通知、Home 页面
 - [ ] **Phase 4: Agent 资源雷达** — MCP/Skills/Agent 资源发现、分类评分、推荐解释
 - [ ] **Phase 5: 打磨与发布准备** — 离线降级、错误处理、性能优化、Momentum 暖机、代码签名
@@ -90,7 +90,7 @@ Plans:
 - [x] 02-03-PLAN.md — GitHub Search 客户端 + 速率预算
 - [x] 02-04-PLAN.md — 应用层编排 + Tauri IPC 命令
 - [x] 02-05-PLAN.md — 前端 IPC + Store + Types
-- [ ] 02-06-PLAN.md — 前端 TopK UI（视图选择/筛选/排名/订阅）
+- [x] 02-06-PLAN.md — 前端 TopK UI（视图选择/筛选/排名/订阅）
 
 ### Phase 3: 订阅系统与信号模型
 **Goal**: 用户能管理订阅、接收高信噪比的技术信号、在 Home 页面一览全局
@@ -128,7 +128,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 0. moonrepo 工程化基建 | 5/5 | Complete | 2026-03-22 |
 | 1. 项目脚手架与认证 | 6/6 | Complete | 2026-03-23 |
-| 2. 数据层与 TopK 发现引擎 | 5/6 | In Progress | - |
+| 2. 数据层与 TopK 发现引擎 | 6/6 | Complete | 2026-03-23 |
 | 3. 订阅系统与信号模型 | 0/10 | Not started | - |
 | 4. Agent 资源雷达 | 0/3 | Not started | - |
 | 5. 打磨与发布准备 | 0/1 | Not started | - |
@@ -146,12 +146,12 @@ Plans:
 | INFRA-03 | Phase 2 | ✅ Complete (02-02) |
 | TOPK-01 | Phase 2 | ✅ Complete (02-03) |
 | TOPK-02 | Phase 2 | ✅ Complete (02-04) |
-| TOPK-03 | Phase 2 | Partial (snapshot API done, 12h scheduling in P05/06) |
+| TOPK-03 | Phase 2 | ✅ Complete (02-03 + 02-06) |
 | TOPK-04 | Phase 2 | ✅ Complete (02-04) |
 | TOPK-05 | Phase 2 | ✅ Complete (02-04) |
 | TOPK-06 | Phase 2 | ✅ Complete (02-04) |
 | TOPK-07 | Phase 2 | ✅ Complete (02-04) |
-| TOPK-08 | Phase 2 | Partial (execute_ranking ready, subscribe flow in Phase 3) |
+| TOPK-08 | Phase 2 | ✅ Complete (02-06) — subscribe popover UI ready, actual IPC in Phase 3 |
 | SUB-01 | Phase 3 | Pending |
 | SUB-02 | Phase 3 | Pending |
 | SUB-03 | Phase 3 | Pending |

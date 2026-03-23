@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Executing Phase 02
-  last_updated: "2026-03-23T08:13:00.000Z"
+  last_updated: "2026-03-23T08:41:25.000Z"
 progress:
   total_phases: 6
   completed_phases: 2
@@ -21,8 +21,8 @@ progress:
 
 ## Current Position
 
-Phase: 02 (topk) — EXECUTING
-Plan: 5 of 6
+Phase: 02 (topk) — COMPLETE
+Plan: 6 of 6
 
 ## Phase Summary
 
@@ -30,7 +30,7 @@ Plan: 5 of 6
 |-------|------|------|--------|
 | 0. moonrepo 工程化基建 | monorepo 配置 + 目录结构 + Cargo workspace + CI/CD | — | Complete |
 | 1. 项目脚手架与认证 | 启动应用、认证 GitHub、导航结构 | 4 | Complete |
-| 2. 数据层与 TopK 发现引擎 | SQLite + GitHub 客户端 + TopK 排名 | 11 | 5/6 plans done |
+| 2. 数据层与 TopK 发现引擎 | SQLite + GitHub 客户端 + TopK 排名 | 11 | Complete |
 | 3. 订阅系统与信号模型 | 订阅 CRUD + Signal + Home | 10 | Not started |
 | 4. Agent 资源雷达 | MCP/Skills/Agent 资源发现 | 3 | Not started |
 | 5. 打磨与发布准备 | 离线 + 性能 + 发布 | 1 | Not started |
@@ -41,7 +41,7 @@ Plan: 5 of 6
 |--------|-------|
 | Requirements total | 29 |
 | Requirements validated | 0 |
-| Phases complete | 2/6 |
+| Phases complete | 3/6 |
 | Current phase progress | 6/6 plans |
 | Phase 01-scaffold-auth P01 | 20min | 2 tasks | 2 files |
 | Phase 01-scaffold-auth P02 | 8min | 4 tasks | 16 files |
@@ -54,6 +54,7 @@ Plan: 5 of 6
 | Phase 02-topk P03 | 15min | 2 tasks | 4 files |
 | Phase 02-topk P04 | 12min | 2 tasks | 7 files |
 | Phase 02-topk P05 | 8min | 3 tasks | 3 files |
+| Phase 02-topk P06 | 14min | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -83,6 +84,9 @@ Plan: 5 of 6
 - application 层直接依赖 persistence_sqlite + github_adapter — v1 务实选择
 - DB 连接每次 IPC 调用独立打开 (WAL 模式) — 避免共享状态复杂性
 - 暖机快照失败仅 warn — 不阻塞视图创建
+- SubscribePopover 使用 absolute 定位而非 fixed — 相对于 RankingList 容器
+- 排名变化标识：rank_change > 0 → 绿 +↑N，< 0 → 红 -↓N，=== 0 → 灰 —，null → 不显示
+- 订阅确认当前仅关闭 Popover — 实际订阅由 Phase 3 接入
 
 ### Known Risks
 
@@ -97,9 +101,9 @@ Plan: 5 of 6
 
 ## Session Continuity
 
-**Last action:** Phase 02 Plan 05 前端 TopK IPC + Store + Types 完成 (types.ts + tauri.ts + topk.ts store)
-**Next action:** Phase 02 Plan 06 — TopK 页面 UI 组件
-**Context needed for next session:** 前端已具备完整的 TopK 类型系统、5 个 IPC 函数和 topk.ts store (rankingViews/currentViewId/rankingItems/topkLoading/topkError + derived currentView/pinnedViews + actions loadViews/selectView/addView/removeView/pinView/refreshCurrentView); 下一步需要构建 UI 组件（视图选择器下拉、排名列表卡片、筛选面板）调用 store actions
+**Last action:** Phase 02 Plan 06 TopK UI 组件完成 (ViewSelector + FilterPanel + RankingList + SubscribePopover + 页面重写)
+**Next action:** Phase 03 — 订阅系统与信号模型
+**Context needed for next session:** Phase 02 完整交付：前端 TopK 排名引擎 UI 已就绪（4 个新组件 + 页面重写），SubscribePopover 已有预填 UI，Phase 3 只需接入实际订阅 IPC 即可；类型系统（types.ts）、IPC 层（tauri.ts）、Store（topk.ts）在 Plan 05 中已完成
 
 ---
-*Last updated: 2026-03-23 — Phase 02 Plan 05 complete*
+*Last updated: 2026-03-23 — Phase 02 complete (6/6 plans)*
