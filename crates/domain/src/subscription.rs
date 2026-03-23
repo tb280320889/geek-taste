@@ -32,6 +32,11 @@ fn generate_ulid_like() -> String {
 pub enum SubscriptionError {
     #[error("digest_window must be one of: 12h, 24h")]
     InvalidDigestWindow,
+    #[error("invalid subscription state transition: {from:?} -> {to:?}")]
+    InvalidStateTransition {
+        from: SubscriptionState,
+        to: SubscriptionState,
+    },
 }
 
 /// 订阅状态
@@ -142,6 +147,26 @@ impl Subscription {
             _ => Err(SubscriptionError::InvalidDigestWindow),
         }
     }
+
+    /// 状态机: ACTIVE <-> PAUSED, ACTIVE/PAUSED -> ARCHIVED
+    pub fn transition_state(&mut self, next: SubscriptionState) -> Result<(), SubscriptionError> {
+        let from = self.state.clone();
+        let allowed = matches!(
+            (&self.state, &next),
+            (SubscriptionState::Active, SubscriptionState::Paused)
+                | (SubscriptionState::Paused, SubscriptionState::Active)
+                | (SubscriptionState::Active, SubscriptionState::Archived)
+                | (SubscriptionState::Paused, SubscriptionState::Archived)
+        );
+
+        if allowed {
+            self.state = next;
+            self.updated_at = chrono::Utc::now().to_rfc3339();
+            Ok(())
+        } else {
+            Err(SubscriptionError::InvalidStateTransition { to: next, from })
+        }
+    }
 }
 
 #[cfg(test)]
@@ -197,5 +222,30 @@ mod tests {
         let mut sub = Subscription::new(1);
         let err = sub.set_digest_window("48h").unwrap_err();
         assert_eq!(err, SubscriptionError::InvalidDigestWindow);
+    }
+
+    #[test]
+    fn subscription_state_machine_allows_valid_paths() {
+        let mut sub = Subscription::new(1);
+        sub.transition_state(SubscriptionState::Paused).unwrap();
+        assert_eq!(sub.state, SubscriptionState::Paused);
+        sub.transition_state(SubscriptionState::Active).unwrap();
+        assert_eq!(sub.state, SubscriptionState::Active);
+        sub.transition_state(SubscriptionState::Archived).unwrap();
+        assert_eq!(sub.state, SubscriptionState::Archived);
+    }
+
+    #[test]
+    fn subscription_state_machine_blocks_invalid_paths() {
+        let mut sub = Subscription::new(1);
+        sub.transition_state(SubscriptionState::Archived).unwrap();
+        let err = sub.transition_state(SubscriptionState::Active).unwrap_err();
+        match err {
+            SubscriptionError::InvalidStateTransition { from, to } => {
+                assert_eq!(from, SubscriptionState::Archived);
+                assert_eq!(to, SubscriptionState::Active);
+            }
+            _ => panic!("expected InvalidStateTransition"),
+        }
     }
 }
