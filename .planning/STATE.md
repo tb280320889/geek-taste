@@ -30,7 +30,7 @@ Plan: 3 of 6
 |-------|------|------|--------|
 | 0. moonrepo 工程化基建 | monorepo 配置 + 目录结构 + Cargo workspace + CI/CD | — | Complete |
 | 1. 项目脚手架与认证 | 启动应用、认证 GitHub、导航结构 | 4 | Complete |
-| 2. 数据层与 TopK 发现引擎 | SQLite + GitHub 客户端 + TopK 排名 | 11 | 2/6 plans done |
+| 2. 数据层与 TopK 发现引擎 | SQLite + GitHub 客户端 + TopK 排名 | 11 | 3/6 plans done |
 | 3. 订阅系统与信号模型 | 订阅 CRUD + Signal + Home | 10 | Not started |
 | 4. Agent 资源雷达 | MCP/Skills/Agent 资源发现 | 3 | Not started |
 | 5. 打磨与发布准备 | 离线 + 性能 + 发布 | 1 | Not started |
@@ -51,6 +51,7 @@ Plan: 3 of 6
 | Phase 01-scaffold-auth P06 | 0min | 0 tasks | 0 files |
 | Phase 02-topk P01 | 10min | 3 tasks | 5 files |
 | Phase 02-topk P02 | 15min | 3 tasks | 5 files |
+| Phase 02-topk P03 | 15min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -74,6 +75,9 @@ Plan: 3 of 6
 - RankingMode 使用 Rust enum (StarsDesc) + Display 返回 UPPER_SNAKE — 保持 Rust 类型安全，字符串仅在 DTO 边界
 - MomentumScore max_delta 默认 1000.0 — 按 plan 规范，star/fork 增量超过 1000 即为满分
 - From 转换仅 domain→DTO 方向 — DTO 不回退到领域对象
+- RateBudget 使用 sync Mutex (非 tokio::Mutex) — Tauri 单线程应用
+- Pool auto-reset on check() — 无需后台定时器
+- octocrab models Repository.language 为 serde_json::Value — 需 match 提取 String
 
 ### Known Risks
 
@@ -88,9 +92,9 @@ Plan: 3 of 6
 
 ## Session Continuity
 
-**Last action:** Phase 02 Plan 02 SQLite 持久化层完成 (Migration + init_db + Repository CRUD + Ranking CRUD)
-**Next action:** Phase 02 Plan 03 — GitHub Search API 客户端扩展
-**Context needed for next session:** persistence_sqlite crate 新增 migrations.rs (V001, 4 表 + 3 索引) + repo_repository.rs (upsert/get/search/snapshot CRUD, SearchFilters) + ranking_repository.rs (create/update/delete/get/list/toggle_pin/save_snapshot/get_snapshot); init_db() 配置 WAL + busy_timeout; 23 个测试全部通过
+**Last action:** Phase 02 Plan 03 GitHub Search 客户端 + 速率预算完成 (RateBudget + search_repositories)
+**Next action:** Phase 02 Plan 04 — persistence_sqlite 持久化层 (Migration + CRUD)
+**Context needed for next session:** github_adapter 新增 rate_limit.rs (RateBudget core 5000/h, search 30/min) + search.rs (SearchQuery, SearchResult, search_repositories()); domain::repository::Repository 已定义 (repo_id/full_name/owner/name/html_url/topics/stargazers_count/forks_count/updated_at 等 15 字段); octocrab models::Repository → domain mapping 已完成
 
 ---
 *Last updated: 2026-03-23 — Phase 01 complete, all 6 plans done*
