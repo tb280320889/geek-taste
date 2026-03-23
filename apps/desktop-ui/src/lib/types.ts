@@ -31,6 +31,7 @@ export type UpdateSettingsRequest = {
 };
 
 export type RepoBasicInfo = {
+  repo_id: number;
   full_name: string;
   description: string | null;
   stargazers_count: number;
@@ -88,4 +89,55 @@ export type CreateRankingViewRequest = {
   filters: FiltersDto;
   ranking_mode: string;
   k_value: number;
+};
+
+// ── Subscription types (Phase 3) ──────────────────────────────
+
+export type SubscriptionRowDto = {
+  subscription_id: string;
+  repo_id: number;
+  full_name: string;
+  html_url: string;
+  description: string | null;
+  primary_language: string | null;
+  stargazers_count: number;
+  state: 'ACTIVE' | 'PAUSED' | 'ARCHIVED';
+  tracking_mode: string;
+  event_types: string[];
+  digest_window: string;
+  notify_high_immediately: boolean;
+  last_successful_sync_at: string | null;
+  created_at: string;
+};
+
+export type CreateSubscriptionRequest = {
+  repo_id: number;
+  tracking_mode?: string;
+  event_types?: string[];
+  digest_window?: string;
+  notify_high_immediately?: boolean;
+};
+
+// ── Signal types (Phase 3) ──────────────────────────────
+
+export type SignalDto = {
+  signal_id: string;
+  signal_type: string;
+  priority: 'HIGH' | 'MEDIUM' | 'LOW';
+  state: 'NEW' | 'SEEN' | 'ACKED' | 'ARCHIVED';
+  source_kind: string;
+  repo_id: number | null;
+  full_name: string | null;
+  title: string;
+  summary: string | null;
+  evidence: Record<string, unknown>;
+  occurred_at: string;
+  created_at: string;
+};
+
+export type UnreadCountsDto = {
+  total: number;
+  high: number;
+  medium: number;
+  low: number;
 };

@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 /// 仓库基本信息 DTO
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct RepoBasicInfo {
+    pub repo_id: i64,
     pub full_name: String,
     pub description: Option<String>,
     pub stargazers_count: u64,

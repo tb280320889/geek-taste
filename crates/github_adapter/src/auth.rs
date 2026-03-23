@@ -15,13 +15,11 @@ pub async fn validate_token(token: &str) -> Result<User, AuthError> {
             avatar_url: user.avatar_url.to_string(),
             html_url: user.html_url.to_string(),
         }),
-        Err(octocrab::Error::GitHub { source, .. }) => {
-            match source.status_code.as_u16() {
-                401 => Err(AuthError::InvalidToken),
-                403 => Err(AuthError::RateLimited),
-                _ => Err(AuthError::Unknown(source.message)),
-            }
-        }
+        Err(octocrab::Error::GitHub { source, .. }) => match source.status_code.as_u16() {
+            401 => Err(AuthError::InvalidToken),
+            403 => Err(AuthError::RateLimited),
+            _ => Err(AuthError::Unknown(source.message)),
+        },
         Err(e) => Err(AuthError::NetworkError(e.to_string())),
     }
 }
@@ -44,12 +42,18 @@ pub async fn fetch_repo_info(
         .map_err(|e| e.to_string())?;
 
     Ok(RepoBasicInfo {
-        full_name: repo_data.full_name.unwrap_or_else(|| format!("{}/{}", owner, repo)),
+        repo_id: repo_data.id.0 as i64,
+        full_name: repo_data
+            .full_name
+            .unwrap_or_else(|| format!("{}/{}", owner, repo)),
         description: repo_data.description,
         stargazers_count: repo_data.stargazers_count.unwrap_or(0) as u64,
         forks_count: repo_data.forks_count.unwrap_or(0) as u64,
         language: repo_data.language.map(|l| l.to_string()),
         topics: repo_data.topics.unwrap_or_default(),
-        html_url: repo_data.html_url.map(|u| u.to_string()).unwrap_or_default(),
+        html_url: repo_data
+            .html_url
+            .map(|u| u.to_string())
+            .unwrap_or_default(),
     })
 }
