@@ -1,6 +1,7 @@
 //! persistence_sqlite — SQLite repository impl
 
 pub mod migrations;
+pub mod repo_repository;
 
 /// 初始化数据库：执行 migrations + 配置 WAL/busy_timeout
 pub fn init_db(conn: &mut rusqlite::Connection) -> anyhow::Result<()> {
