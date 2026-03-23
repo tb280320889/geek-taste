@@ -13,6 +13,7 @@ shared_contracts = { path = "../shared_contracts" }
 tauri = { workspace = true }
 tauri-plugin-store = { workspace = true }
 keyring = { workspace = true }
+rusqlite = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 tokio = { workspace = true }
