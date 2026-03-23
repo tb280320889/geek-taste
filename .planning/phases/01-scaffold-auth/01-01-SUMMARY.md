@@ -105,3 +105,14 @@ None — plan 所有文件在 Phase 0 已创建，本次只需补全缺失方法
 ---
 *Phase: 01-scaffold-auth*
 *Completed: 2026-03-23*
+
+## Self-Check: PASSED
+
+- [x] SUMMARY.md exists at `.planning/phases/01-scaffold-auth/01-01-SUMMARY.md`
+- [x] Commit `99a22f4` — fix(01-01): serde_rusqlite version
+- [x] Commit `a38ce33` — feat(01-01): is_expired + from_github_response
+- [x] Commit `b653a76` — docs(01-01): plan metadata
+- [x] `cargo test -p domain -p shared_contracts` — 7 passed
+- [x] STATE.md updated (plan 2 of 6, decisions added)
+- [x] ROADMAP.md updated (In Progress, 1/6 summaries)
+- [x] REQUIREMENTS.md: FOUND-01, FOUND-03 marked complete
