@@ -3,6 +3,7 @@
 pub mod migrations;
 pub mod ranking_repository;
 pub mod repo_repository;
+pub mod subscription_repository;
 
 /// 初始化数据库：执行 migrations + 配置 WAL/busy_timeout
 pub fn init_db(conn: &mut rusqlite::Connection) -> anyhow::Result<()> {
