@@ -27,14 +27,14 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Subscriptions & Signals
 
-- [ ] **SUB-01**: 用户能搜索仓库并创建订阅
-- [ ] **SUB-02**: 用户能编辑/暂停/删除已有订阅
-- [ ] **SUB-03**: 系统轮询已订阅仓库的 Releases 和 Tags 生成信号
-- [ ] **SUB-04**: 系统按 U1-U4 优先级规则去重（RELEASE_PUBLISHED > TAG_PUBLISHED > DEFAULT_BRANCH_ACTIVITY_DIGEST）
+- [x] **SUB-01**: 用户能搜索仓库并创建订阅
+- [x] **SUB-02**: 用户能编辑/暂停/删除已有订阅
+- [x] **SUB-03**: 系统轮询已订阅仓库的 Releases 和 Tags 生成信号
+- [x] **SUB-04**: 系统按 U1-U4 优先级规则去重（RELEASE_PUBLISHED > TAG_PUBLISHED > DEFAULT_BRANCH_ACTIVITY_DIGEST）
 - [ ] **SUB-05**: 系统生成 12h/24h digest 窗口内的聚合信号
 - [ ] **SUB-06**: HIGH 优先级信号触发桌面通知
-- [ ] **SUB-07**: 用户能标记信号为已读/已处理
-- [ ] **SUB-08**: 同一信号不会重复生成（幂等同步）
+- [x] **SUB-07**: 用户能标记信号为已读/已处理
+- [x] **SUB-08**: 同一信号不会重复生成（幂等同步）
 
 ### Resource Radar
 
@@ -102,14 +102,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TOPK-06 | Phase 2 | Pending |
 | TOPK-07 | Phase 2 | Pending |
 | TOPK-08 | Phase 2 | Pending |
-| SUB-01 | Phase 3 | Pending |
-| SUB-02 | Phase 3 | Pending |
-| SUB-03 | Phase 3 | Pending |
-| SUB-04 | Phase 3 | Pending |
+| SUB-01 | Phase 3 | Complete |
+| SUB-02 | Phase 3 | Complete |
+| SUB-03 | Phase 3 | Complete |
+| SUB-04 | Phase 3 | Complete |
 | SUB-05 | Phase 3 | Pending |
 | SUB-06 | Phase 3 | Pending |
-| SUB-07 | Phase 3 | Pending |
-| SUB-08 | Phase 3 | Pending |
+| SUB-07 | Phase 3 | Complete |
+| SUB-08 | Phase 3 | Complete |
 | RES-01 | Phase 4 | Pending |
 | RES-02 | Phase 4 | Pending |
 | RES-03 | Phase 4 | Pending |

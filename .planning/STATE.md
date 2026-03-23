@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to plan
-last_updated: "2026-03-23T09:15:54.933Z"
+status: Ready to execute
+last_updated: "2026-03-23T13:53:37.785Z"
 progress:
   total_phases: 6
-  completed_phases: 3
-  total_plans: 17
-  completed_plans: 17
+  completed_phases: 4
+  total_plans: 26
+  completed_plans: 26
 ---
 
 # State: geek taste
@@ -21,8 +21,8 @@ progress:
 
 ## Current Position
 
-Phase: 3
-Plan: Not started
+Phase: 03 (subscription-signal) — EXECUTING
+Plan: 2 of 9
 
 ## Phase Summary
 
@@ -31,7 +31,7 @@ Plan: Not started
 | 0. moonrepo 工程化基建 | monorepo 配置 + 目录结构 + Cargo workspace + CI/CD | — | Complete |
 | 1. 项目脚手架与认证 | 启动应用、认证 GitHub、导航结构 | 4 | Complete |
 | 2. 数据层与 TopK 发现引擎 | SQLite + GitHub 客户端 + TopK 排名 | 11 | Complete |
-| 3. 订阅系统与信号模型 | 订阅 CRUD + Signal + Home | 10 | Not started |
+| 3. 订阅系统与信号模型 | 订阅 CRUD + Signal + Home | 10 | In progress |
 | 4. Agent 资源雷达 | MCP/Skills/Agent 资源发现 | 3 | Not started |
 | 5. 打磨与发布准备 | 离线 + 性能 + 发布 | 1 | Not started |
 
@@ -55,6 +55,8 @@ Plan: Not started
 | Phase 02-topk P04 | 12min | 2 tasks | 7 files |
 | Phase 02-topk P05 | 8min | 3 tasks | 3 files |
 | Phase 02-topk P06 | 14min | 3 tasks | 5 files |
+| Phase 03 P01 | 5 min | 2 tasks | 3 files |
+| Phase 03 P02 | 2 min | 3 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -87,6 +89,11 @@ Plan: Not started
 - SubscribePopover 使用 absolute 定位而非 fixed — 相对于 RankingList 容器
 - 排名变化标识：rank_change > 0 → 绿 +↑N，< 0 → 红 -↓N，=== 0 → 灰 —，null → 不显示
 - 订阅确认当前仅关闭 Popover — 实际订阅由 Phase 3 接入
+- Subscription::new(repo_id) 统一默认值入口 — 避免上层重复拼装字段
+- Signal 构造函数内置 signal_key 规则 — 领域层保证去重键唯一来源
+- Subscription/Signal 状态迁移在 domain 层显式校验 — 防止非法状态写入持久化
+- signals 表通过 signal_key UNIQUE + INSERT OR IGNORE 实现同步幂等
+- subscription 查询保留 repo JOIN 结果结构，复用现有 application DTO 映射路径
 
 ### Known Risks
 
@@ -101,9 +108,9 @@ Plan: Not started
 
 ## Session Continuity
 
-**Last action:** Phase 02 Plan 06 TopK UI 组件完成 (ViewSelector + FilterPanel + RankingList + SubscribePopover + 页面重写)
-**Next action:** Phase 03 — 订阅系统与信号模型
-**Context needed for next session:** Phase 02 完整交付：前端 TopK 排名引擎 UI 已就绪（4 个新组件 + 页面重写），SubscribePopover 已有预填 UI，Phase 3 只需接入实际订阅 IPC 即可；类型系统（types.ts）、IPC 层（tauri.ts）、Store（topk.ts）在 Plan 05 中已完成
+**Last action:** Completed 03-02-PLAN.md（V002 migration + subscription/signal repository）
+**Next action:** Execute 03-03-PLAN.md（GitHub releases/tags adapter）
+**Context needed for next session:** persistence_sqlite 已完成 subscriptions/signals/deliveries 表与仓库层 CRUD/幂等写入；上层可直接复用 get_subscription_by_repo_id、insert_signal、mark_signal_seen/acked、count_unread 等接口
 
 ---
-*Last updated: 2026-03-23 — Phase 02 complete (6/6 plans)*
+*Last updated: 2026-03-23 — Phase 03 Plan 02 complete*

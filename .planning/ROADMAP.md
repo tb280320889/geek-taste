@@ -10,7 +10,7 @@
 - [x] **Phase 0: moonrepo 工程化基建** — moon monorepo 配置、目录结构、Cargo workspace、SvelteKit+Tauri 骨架、CI/CD pipeline
 - [ ] **Phase 1: 项目脚手架与认证** — GitHub Token 认证、OS 安全存储、导航壳、基础仓库信息展示
 - [x] **Phase 2: 数据层与 TopK 发现引擎** — SQLite + GitHub REST 客户端、TopK 排名/筛选/快照/评分、一键订阅
-- [ ] **Phase 3: 订阅系统与信号模型** — 订阅 CRUD、Release/Tag 轮询、Signal 去重/排序/Digest/通知、Home 页面
+- [x] **Phase 3: 订阅系统与信号模型** — 订阅 CRUD、Release/Tag 轮询、Signal 去重/排序/Digest/通知、Home 页面 (completed 2026-03-23)
 - [ ] **Phase 4: Agent 资源雷达** — MCP/Skills/Agent 资源发现、分类评分、推荐解释
 - [ ] **Phase 5: 打磨与发布准备** — 离线降级、错误处理、性能优化、Momentum 暖机、代码签名
 
@@ -129,7 +129,7 @@ Plans:
 | 0. moonrepo 工程化基建 | 5/5 | Complete | 2026-03-22 |
 | 1. 项目脚手架与认证 | 6/6 | Complete | 2026-03-23 |
 | 2. 数据层与 TopK 发现引擎 | 6/6 | Complete | 2026-03-23 |
-| 3. 订阅系统与信号模型 | 0/10 | Not started | - |
+| 3. 订阅系统与信号模型 | 9/9 | Complete   | 2026-03-23 |
 | 4. Agent 资源雷达 | 0/3 | Not started | - |
 | 5. 打磨与发布准备 | 0/1 | Not started | - |
 
