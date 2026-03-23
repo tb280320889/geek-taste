@@ -88,7 +88,7 @@ Plans:
 - [x] 02-01-PLAN.md — 领域模型层（Repository / RankingView / Momentum 评分）
 - [x] 02-02-PLAN.md — SQLite 持久化层（Migration + CRUD）
 - [x] 02-03-PLAN.md — GitHub Search 客户端 + 速率预算
-- [ ] 02-04-PLAN.md — 应用层编排 + Tauri IPC 命令
+- [x] 02-04-PLAN.md — 应用层编排 + Tauri IPC 命令
 - [ ] 02-05-PLAN.md — 前端 IPC + Store + Types
 - [ ] 02-06-PLAN.md — 前端 TopK UI（视图选择/筛选/排名/订阅）
 
@@ -128,7 +128,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 0. moonrepo 工程化基建 | 5/5 | Complete | 2026-03-22 |
 | 1. 项目脚手架与认证 | 6/6 | Complete | 2026-03-23 |
-| 2. 数据层与 TopK 发现引擎 | 3/6 | In Progress | - |
+| 2. 数据层与 TopK 发现引擎 | 4/6 | In Progress | - |
 | 3. 订阅系统与信号模型 | 0/10 | Not started | - |
 | 4. Agent 资源雷达 | 0/3 | Not started | - |
 | 5. 打磨与发布准备 | 0/1 | Not started | - |
@@ -145,13 +145,13 @@ Plans:
 | INFRA-02 | Phase 2 | ✅ Complete (02-03) |
 | INFRA-03 | Phase 2 | ✅ Complete (02-02) |
 | TOPK-01 | Phase 2 | ✅ Complete (02-03) |
-| TOPK-02 | Phase 2 | Pending |
-| TOPK-03 | Phase 2 | Pending |
-| TOPK-04 | Phase 2 | Pending |
-| TOPK-05 | Phase 2 | Pending |
-| TOPK-06 | Phase 2 | Pending |
-| TOPK-07 | Phase 2 | Pending |
-| TOPK-08 | Phase 2 | Pending |
+| TOPK-02 | Phase 2 | ✅ Complete (02-04) |
+| TOPK-03 | Phase 2 | ✅ Complete (02-04) |
+| TOPK-04 | Phase 2 | ✅ Complete (02-04) |
+| TOPK-05 | Phase 2 | ✅ Complete (02-04) |
+| TOPK-06 | Phase 2 | ✅ Complete (02-04) |
+| TOPK-07 | Phase 2 | ✅ Complete (02-04) |
+| TOPK-08 | Phase 2 | ✅ Complete (02-04) |
 | SUB-01 | Phase 3 | Pending |
 | SUB-02 | Phase 3 | Pending |
 | SUB-03 | Phase 3 | Pending |

@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Executing Phase 02
-last_updated: "2026-03-23T08:15:00.000Z"
+last_updated: "2026-03-23T07:35:40.000Z"
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 17
-  completed_plans: 13
+  completed_plans: 14
 ---
 
 # State: geek taste
@@ -22,7 +22,7 @@ progress:
 ## Current Position
 
 Phase: 02 (topk) — EXECUTING
-Plan: 3 of 6
+Plan: 4 of 6
 
 ## Phase Summary
 
@@ -30,7 +30,7 @@ Plan: 3 of 6
 |-------|------|------|--------|
 | 0. moonrepo 工程化基建 | monorepo 配置 + 目录结构 + Cargo workspace + CI/CD | — | Complete |
 | 1. 项目脚手架与认证 | 启动应用、认证 GitHub、导航结构 | 4 | Complete |
-| 2. 数据层与 TopK 发现引擎 | SQLite + GitHub 客户端 + TopK 排名 | 11 | 3/6 plans done |
+| 2. 数据层与 TopK 发现引擎 | SQLite + GitHub 客户端 + TopK 排名 | 11 | 4/6 plans done |
 | 3. 订阅系统与信号模型 | 订阅 CRUD + Signal + Home | 10 | Not started |
 | 4. Agent 资源雷达 | MCP/Skills/Agent 资源发现 | 3 | Not started |
 | 5. 打磨与发布准备 | 离线 + 性能 + 发布 | 1 | Not started |
@@ -52,6 +52,7 @@ Plan: 3 of 6
 | Phase 02-topk P01 | 10min | 3 tasks | 5 files |
 | Phase 02-topk P02 | 15min | 3 tasks | 5 files |
 | Phase 02-topk P03 | 15min | 2 tasks | 4 files |
+| Phase 02-topk P04 | 12min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -78,6 +79,9 @@ Plan: 3 of 6
 - RateBudget 使用 sync Mutex (非 tokio::Mutex) — Tauri 单线程应用
 - Pool auto-reset on check() — 无需后台定时器
 - octocrab models Repository.language 为 serde_json::Value — 需 match 提取 String
+- application 层直接依赖 persistence_sqlite + github_adapter — v1 务实选择
+- DB 连接每次 IPC 调用独立打开 (WAL 模式) — 避免共享状态复杂性
+- 暖机快照失败仅 warn — 不阻塞视图创建
 
 ### Known Risks
 
@@ -92,9 +96,9 @@ Plan: 3 of 6
 
 ## Session Continuity
 
-**Last action:** Phase 02 Plan 03 GitHub Search 客户端 + 速率预算完成 (RateBudget + search_repositories)
-**Next action:** Phase 02 Plan 04 — persistence_sqlite 持久化层 (Migration + CRUD)
-**Context needed for next session:** github_adapter 新增 rate_limit.rs (RateBudget core 5000/h, search 30/min) + search.rs (SearchQuery, SearchResult, search_repositories()); domain::repository::Repository 已定义 (repo_id/full_name/owner/name/html_url/topics/stargazers_count/forks_count/updated_at 等 15 字段); octocrab models::Repository → domain mapping 已完成
+**Last action:** Phase 02 Plan 04 应用层编排 + Tauri IPC 命令完成 (application::topk + commands/topk.rs)
+**Next action:** Phase 02 Plan 05 — 前端 TopK 页面 UI
+**Context needed for next session:** application::topk 提供 7 个用例函数 (execute_ranking/list_views/create_view/delete_view/toggle_pin_view/create_snapshot/get_rank_change); Tauri IPC 注册 5 个命令 (list_ranking_views/create_ranking_view/delete_ranking_view/toggle_pin_ranking_view/execute_ranking); 前端可通过 invoke() 调用; create_ranking_view 自动暖机快照; execute_ranking 自动保存快照 + 计算排名变化
 
 ---
-*Last updated: 2026-03-23 — Phase 01 complete, all 6 plans done*
+*Last updated: 2026-03-23 — Phase 02 Plan 04 complete*
