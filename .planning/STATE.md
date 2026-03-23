@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to plan
-last_updated: "2026-03-23T05:00:00.000Z"
+status: Executing Phase 02
+last_updated: "2026-03-23T07:00:00.000Z"
 progress:
   total_phases: 6
   completed_phases: 2
-  total_plans: 11
-  completed_plans: 11
+  total_plans: 17
+  completed_plans: 12
 ---
 
 # State: geek taste
@@ -21,8 +21,8 @@ progress:
 
 ## Current Position
 
-Phase: 2
-Plan: Not started
+Phase: 02 (topk) — EXECUTING
+Plan: 2 of 6
 
 ## Phase Summary
 
@@ -30,7 +30,7 @@ Plan: Not started
 |-------|------|------|--------|
 | 0. moonrepo 工程化基建 | monorepo 配置 + 目录结构 + Cargo workspace + CI/CD | — | Complete |
 | 1. 项目脚手架与认证 | 启动应用、认证 GitHub、导航结构 | 4 | Complete |
-| 2. 数据层与 TopK 发现引擎 | SQLite + GitHub 客户端 + TopK 排名 | 11 | Not started |
+| 2. 数据层与 TopK 发现引擎 | SQLite + GitHub 客户端 + TopK 排名 | 11 | 1/6 plans done |
 | 3. 订阅系统与信号模型 | 订阅 CRUD + Signal + Home | 10 | Not started |
 | 4. Agent 资源雷达 | MCP/Skills/Agent 资源发现 | 3 | Not started |
 | 5. 打磨与发布准备 | 离线 + 性能 + 发布 | 1 | Not started |
@@ -49,7 +49,7 @@ Plan: Not started
 | Phase 01-scaffold-auth P04 | 0min | 0 tasks | 0 files |
 | Phase 01-scaffold-auth P05 | 0min | 0 tasks | 0 files |
 | Phase 01-scaffold-auth P06 | 0min | 0 tasks | 0 files |
-| Phase 01-scaffold-auth P05 | 0min | 0 tasks | 0 files |
+| Phase 02-topk P01 | 10min | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -70,6 +70,9 @@ Plan: Not started
 - Settings auto-save — 每次变更即时保存 + toast 反馈
 - Onboarding 2-step: validate → confirm — 防止误存错误 token
 - Plan 05 + 06 功能已在 01-03 中实现 — 验证通过，无需代码改动
+- RankingMode 使用 Rust enum (StarsDesc) + Display 返回 UPPER_SNAKE — 保持 Rust 类型安全，字符串仅在 DTO 边界
+- MomentumScore max_delta 默认 1000.0 — 按 plan 规范，star/fork 增量超过 1000 即为满分
+- From 转换仅 domain→DTO 方向 — DTO 不回退到领域对象
 
 ### Known Risks
 
@@ -84,9 +87,9 @@ Plan: Not started
 
 ## Session Continuity
 
-**Last action:** Phase 01 Plan 06 Home 欢迎页与仓库探索 完成（已在 01-03 中实现，验证通过）
-**Next action:** Phase 01 完成，准备 Phase 02
-**Context needed for next session:** Phase 01 全部 6 计划完成: 导航壳(Sidebar + 7 路由 + auth guard + stores + IPC wrapper) + Settings(auto-save) + Onboarding(GitHub PAT) + Home(欢迎卡) + TopK(仓库探索+Modal); Phase 02 可开始: SQLite 数据层 + GitHub 客户端 + TopK 排名引擎
+**Last action:** Phase 02 Plan 01 领域模型层完成 (Repository/RepoSnapshot + Ranking/Momentum + DTO From 转换)
+**Next action:** Phase 02 Plan 02 — SQLite 持久化层（Migration + CRUD）
+**Context needed for next session:** domain crate 新增 repository.rs (Repository, RepoSnapshot) + ranking.rs (RankingMode, RankingView, RankingFilters, RankingSnapshot, MomentumScore, compute_momentum); shared_contracts 新增 ranking_dto.rs (RankingViewSpecDto, RankingItemDto, FiltersDto, From 转换); 26 个测试全部通过
 
 ---
 *Last updated: 2026-03-23 — Phase 01 complete, all 6 plans done*

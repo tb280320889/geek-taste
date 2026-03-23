@@ -85,7 +85,7 @@ Plans:
   7. SQLite 使用 WAL 模式，支持并发读写
 **Plans**: 6 plans
 Plans:
-- [ ] 02-01-PLAN.md — 领域模型层（Repository / RankingView / Momentum 评分）
+- [x] 02-01-PLAN.md — 领域模型层（Repository / RankingView / Momentum 评分）
 - [ ] 02-02-PLAN.md — SQLite 持久化层（Migration + CRUD）
 - [ ] 02-03-PLAN.md — GitHub Search 客户端 + 速率预算
 - [ ] 02-04-PLAN.md — 应用层编排 + Tauri IPC 命令
@@ -127,8 +127,8 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 0. moonrepo 工程化基建 | 5/5 | Complete | 2026-03-22 |
-| 1. 项目脚手架与认证 | 5/6 | In Progress | - |
-| 2. 数据层与 TopK 发现引擎 | 0/6 | Not started | - |
+| 1. 项目脚手架与认证 | 6/6 | Complete | 2026-03-23 |
+| 2. 数据层与 TopK 发现引擎 | 1/6 | In Progress | - |
 | 3. 订阅系统与信号模型 | 0/10 | Not started | - |
 | 4. Agent 资源雷达 | 0/3 | Not started | - |
 | 5. 打磨与发布准备 | 0/1 | Not started | - |
