@@ -108,6 +108,14 @@ None — all features verified working as specified.
 - TopK page ready for Phase 02 ranking list
 - Auth, IPC, stores, and routing infrastructure complete
 
+## Self-Check: PASSED
+
+- SUMMARY.md exists at `.planning/phases/01-scaffold-auth/01-06-SUMMARY.md`
+- Metadata commit `e0bdbe0` present in git log
+- All 3 source files verified present with full implementation
+- STATE.md updated with Phase 01 completion
+- ROADMAP.md updated with 5/6 summaries
+
 ---
 *Phase: 01-scaffold-auth*
 *Completed: 2026-03-23*
