@@ -68,8 +68,8 @@ Plans:
 - [x] 01-02-PLAN.md — GitHub auth Tauri commands (validate/store/remove/get_user) + settings commands
 - [x] 01-03-PLAN.md — 导航壳与路由 (Sidebar + 7 routes + auth guard + stores + IPC wrapper)
 - [x] 01-04-PLAN.md — Onboarding 流程 (已在 01-03 中实现)
-- [ ] 01-05-PLAN.md — (pending)
-- [ ] 01-06-PLAN.md — (pending)
+- [x] 01-05-PLAN.md — Settings 页面 (已在 01-03 中实现)
+- [x] 01-06-PLAN.md — Home 欢迎页与仓库探索 (已在 01-03 中实现)
 
 ### Phase 2: 数据层与 TopK 发现引擎
 **Goal**: 用户能通过 TopK 榜单发现趋势项目并一键订阅
@@ -120,7 +120,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 0. moonrepo 工程化基建 | 5/5 | Complete | 2026-03-22 |
-| 1. 项目脚手架与认证 | 4/6 | In Progress | - |
+| 1. 项目脚手架与认证 | 5/6 | In Progress | - |
 | 2. 数据层与 TopK 发现引擎 | 0/11 | Not started | - |
 | 3. 订阅系统与信号模型 | 0/10 | Not started | - |
 | 4. Agent 资源雷达 | 0/3 | Not started | - |

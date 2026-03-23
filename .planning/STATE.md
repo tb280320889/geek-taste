@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-last_updated: "2026-03-23T03:50:37.328Z"
+  last_updated: "2026-03-23T04:03:00.000Z"
 progress:
   total_phases: 6
   completed_phases: 1
   total_plans: 11
-  completed_plans: 9
+  completed_plans: 10
 ---
 
 # State: geek taste
@@ -21,15 +21,15 @@ progress:
 
 ## Current Position
 
-Phase: 01 (scaffold-auth) — EXECUTING
-Plan: 5 of 6
+Phase: 01 (scaffold-auth) — COMPLETE
+Plan: 6 of 6 (all done)
 
 ## Phase Summary
 
 | Phase | Goal | Reqs | Status |
 |-------|------|------|--------|
 | 0. moonrepo 工程化基建 | monorepo 配置 + 目录结构 + Cargo workspace + CI/CD | — | Complete |
-| 1. 项目脚手架与认证 | 启动应用、认证 GitHub、导航结构 | 4 | Not started |
+| 1. 项目脚手架与认证 | 启动应用、认证 GitHub、导航结构 | 4 | Complete |
 | 2. 数据层与 TopK 发现引擎 | SQLite + GitHub 客户端 + TopK 排名 | 11 | Not started |
 | 3. 订阅系统与信号模型 | 订阅 CRUD + Signal + Home | 10 | Not started |
 | 4. Agent 资源雷达 | MCP/Skills/Agent 资源发现 | 3 | Not started |
@@ -41,12 +41,14 @@ Plan: 5 of 6
 |--------|-------|
 | Requirements total | 29 |
 | Requirements validated | 0 |
-| Phases complete | 1/6 |
-| Current phase progress | 3/6 plans |
+| Phases complete | 2/6 |
+| Current phase progress | 6/6 plans |
 | Phase 01-scaffold-auth P01 | 20min | 2 tasks | 2 files |
 | Phase 01-scaffold-auth P02 | 8min | 4 tasks | 16 files |
 | Phase 01-scaffold-auth P03 | 15min | 5 tasks | 18 files |
 | Phase 01-scaffold-auth P04 | 0min | 0 tasks | 0 files |
+| Phase 01-scaffold-auth P05 | 0min | 0 tasks | 0 files |
+| Phase 01-scaffold-auth P06 | 0min | 0 tasks | 0 files |
 
 ## Accumulated Context
 
@@ -66,6 +68,7 @@ Plan: 5 of 6
 - IPC wrapper 层 (tauri.ts) — 组件不直接调 invoke()，关注点分离
 - Settings auto-save — 每次变更即时保存 + toast 反馈
 - Onboarding 2-step: validate → confirm — 防止误存错误 token
+- Plan 05 + 06 功能已在 01-03 中实现 — 验证通过，无需代码改动
 
 ### Known Risks
 
@@ -80,9 +83,9 @@ Plan: 5 of 6
 
 ## Session Continuity
 
-**Last action:** Phase 01 Plan 04 Onboarding 流程 完成（已在 01-03 中实现，无需代码改动）
-**Next action:** 执行 01-05 计划
-**Context needed for next session:** 导航壳完成: Sidebar + 7 路由 + auth guard + stores + IPC wrapper; TopK 页面已有 repo 查询 UI; Settings 页面已有完整 auto-save UI; Onboarding 已有 GitHub PAT 验证流程; Phase 01 还剩 Plan 05, 06
+**Last action:** Phase 01 Plan 06 Home 欢迎页与仓库探索 完成（已在 01-03 中实现，验证通过）
+**Next action:** Phase 01 完成，准备 Phase 02
+**Context needed for next session:** Phase 01 全部 6 计划完成: 导航壳(Sidebar + 7 路由 + auth guard + stores + IPC wrapper) + Settings(auto-save) + Onboarding(GitHub PAT) + Home(欢迎卡) + TopK(仓库探索+Modal); Phase 02 可开始: SQLite 数据层 + GitHub 客户端 + TopK 排名引擎
 
 ---
-*Last updated: 2026-03-23 — Plan 01-04 complete, onboarding flow verified (pre-existing in 01-03)*
+*Last updated: 2026-03-23 — Phase 01 complete, all 6 plans done*
