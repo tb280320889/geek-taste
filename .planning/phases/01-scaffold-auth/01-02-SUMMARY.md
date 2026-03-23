@@ -130,3 +130,11 @@ None — all verification checks pass.
 ---
 *Phase: 01-scaffold-auth*
 *Completed: 2026-03-23*
+
+## Self-Check: PASSED
+
+- [x] All key files exist on disk
+- [x] All 5 commits present (4 task + 1 metadata)
+- [x] cargo check -p github_adapter passes
+- [x] cargo check -p runtime_tauri passes
+- [x] cargo test -p github_adapter passes
