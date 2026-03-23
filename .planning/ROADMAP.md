@@ -83,7 +83,14 @@ Plans:
   5. 用户能从 TopK 榜单项一键订阅仓库，直接进入订阅管理
   6. GitHub API 速率预算按 core/search 端点隔离管理，同步支持 ETag 条件请求和增量刷新
   7. SQLite 使用 WAL 模式，支持并发读写
-**Plans**: TBD
+**Plans**: 6 plans
+Plans:
+- [ ] 02-01-PLAN.md — 领域模型层（Repository / RankingView / Momentum 评分）
+- [ ] 02-02-PLAN.md — SQLite 持久化层（Migration + CRUD）
+- [ ] 02-03-PLAN.md — GitHub Search 客户端 + 速率预算
+- [ ] 02-04-PLAN.md — 应用层编排 + Tauri IPC 命令
+- [ ] 02-05-PLAN.md — 前端 IPC + Store + Types
+- [ ] 02-06-PLAN.md — 前端 TopK UI（视图选择/筛选/排名/订阅）
 
 ### Phase 3: 订阅系统与信号模型
 **Goal**: 用户能管理订阅、接收高信噪比的技术信号、在 Home 页面一览全局
@@ -121,7 +128,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 0. moonrepo 工程化基建 | 5/5 | Complete | 2026-03-22 |
 | 1. 项目脚手架与认证 | 5/6 | In Progress | - |
-| 2. 数据层与 TopK 发现引擎 | 0/11 | Not started | - |
+| 2. 数据层与 TopK 发现引擎 | 0/6 | Not started | - |
 | 3. 订阅系统与信号模型 | 0/10 | Not started | - |
 | 4. Agent 资源雷达 | 0/3 | Not started | - |
 | 5. 打磨与发布准备 | 0/1 | Not started | - |
