@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: "Phase 00 shipped — PR #1"
-last_updated: "2026-03-22T05:29:02.886Z"
+status: Ready to execute
+last_updated: "2026-03-23T02:52:21.171Z"
 progress:
   total_phases: 6
   completed_phases: 1
-  total_plans: 5
-  completed_plans: 5
+  total_plans: 11
+  completed_plans: 6
 ---
 
 # State: geek taste
@@ -21,10 +21,8 @@ progress:
 
 ## Current Position
 
-**Phase:** Phase 1 (next)
-**Plan:** — (not started)
-**Status:** Phase 00 shipped — PR #1
-**Progress:** [███░░░░░░░░░░░░░░░░░] 0/29 requirements
+Phase: 01 (scaffold-auth) — EXECUTING
+Plan: 2 of 6
 
 ## Phase Summary
 
@@ -45,6 +43,7 @@ progress:
 | Requirements validated | 0 |
 | Phases complete | 1/6 |
 | Current phase progress | — |
+| Phase 01-scaffold-auth P01 | 20min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -55,6 +54,8 @@ progress:
 - 轮询+差分+摘要 — 不依赖 webhook
 - TopK = 产品定义排行榜 — 非 GitHub Trending 复制品
 - 规则+模板摘要为主 — v1 不做全自动 LLM 摘要
+- AuthToken::is_expired() 采用 24h 窗口 — v1 简化: 启动时验证
+- serde_rusqlite 0.41 — 唯一兼容 rusqlite 0.38 的版本
 
 ### Known Risks
 
@@ -69,9 +70,9 @@ progress:
 
 ## Session Continuity
 
-**Last action:** Phase 00 shipped — PR #1 created
-**Next action:** Review/merge PR #1 when CI passes
-**Context needed for next session:** Phase 1 needs GitHub PAT authentication, OS keyring storage, navigation shell
+**Last action:** Phase 01 Plan 01 领域模型与共享契约 完成
+**Next action:** 执行 01-02 计划 (GitHub 认证流)
+**Context needed for next session:** serde_rusqlite 已升级到 0.41; AuthToken 有 is_expired(); User 有 from_github_response()
 
 ---
-*Last updated: 2026-03-22 — Phase 0 complete, ready for Phase 1*
+*Last updated: 2026-03-23 — Plan 01-01 complete, domain + shared_contracts verified*
