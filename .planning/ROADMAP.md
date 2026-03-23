@@ -146,12 +146,12 @@ Plans:
 | INFRA-03 | Phase 2 | ✅ Complete (02-02) |
 | TOPK-01 | Phase 2 | ✅ Complete (02-03) |
 | TOPK-02 | Phase 2 | ✅ Complete (02-04) |
-| TOPK-03 | Phase 2 | ✅ Complete (02-04) |
+| TOPK-03 | Phase 2 | Partial (snapshot API done, 12h scheduling in P05/06) |
 | TOPK-04 | Phase 2 | ✅ Complete (02-04) |
 | TOPK-05 | Phase 2 | ✅ Complete (02-04) |
 | TOPK-06 | Phase 2 | ✅ Complete (02-04) |
 | TOPK-07 | Phase 2 | ✅ Complete (02-04) |
-| TOPK-08 | Phase 2 | ✅ Complete (02-04) |
+| TOPK-08 | Phase 2 | Partial (execute_ranking ready, subscribe flow in Phase 3) |
 | SUB-01 | Phase 3 | Pending |
 | SUB-02 | Phase 3 | Pending |
 | SUB-03 | Phase 3 | Pending |
