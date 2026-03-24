@@ -18,6 +18,7 @@ progress:
 
 **Core Value:** 高信噪比、可行动、低打扰的技术信号
 **What This Is:** 跨端技术雷达工作台 — TopK 趋势发现 + Repo 订阅跟踪 + Agent 资源雷达
+**Current focus:** Phase 05 — polish-release
 **Stack:** Tauri v2 + SvelteKit 5 + SQLite (rusqlite) + octocrab
 
 ## Current Position
@@ -33,8 +34,8 @@ Plan: Not started
 | 1. 项目脚手架与认证 | 启动应用、认证 GitHub、导航结构 | 4 | Complete |
 | 2. 数据层与 TopK 发现引擎 | SQLite + GitHub 客户端 + TopK 排名 | 11 | Complete |
 | 3. 订阅系统与信号模型 | 订阅 CRUD + Signal + Home | 10 | Complete |
-| 4. Agent 资源雷达 | MCP/Skills/Agent 资源发现 | 3 | In Progress |
-| 5. 打磨与发布准备 | 离线 + 性能 + 发布 | 1 | In Progress |
+| 4. Agent 资源雷达 | MCP/Skills/Agent 资源发现 | 3 | Complete |
+| 5. 打磨与发布准备 | 离线 + 性能 + 发布 | 1 | ○ Pending |
 
 ## Performance Metrics
 
@@ -42,8 +43,8 @@ Plan: Not started
 |--------|-------|
 | Requirements total | 29 |
 | Requirements validated | 0 |
-| Phases complete | 3/6 |
-| Current phase progress | 6/6 plans |
+| Phases complete | 4/6 |
+| Current phase progress | 3/3 plans |
 | Phase 01-scaffold-auth P01 | 20min | 2 tasks | 2 files |
 | Phase 01-scaffold-auth P02 | 8min | 4 tasks | 16 files |
 | Phase 01-scaffold-auth P03 | 15min | 5 tasks | 18 files |
@@ -122,9 +123,9 @@ Plan: Not started
 
 ## Session Continuity
 
-**Last session:** 2026-03-24T03:20:08.113Z
-**Stopped at:** Completed 04-03-PLAN.md
-**Next action:** 执行 04-03 资源前端页面组件计划
+**Last session:** 2026-03-24
+**Stopped at:** Phase 04 complete, ready to plan Phase 05
+**Next action:** 讨论 Phase 05 打磨与发布准备
 
 ---
-*Last updated: 2026-03-24 — Phase 04 Plan 02 complete*
+*Last updated: 2026-03-24 — Phase 04 complete, transition to Phase 05*
