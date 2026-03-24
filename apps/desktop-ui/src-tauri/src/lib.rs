@@ -33,6 +33,13 @@ pub fn run() {
             runtime_tauri::commands::ack_signal,
             runtime_tauri::commands::mark_signal_seen,
             runtime_tauri::commands::get_unread_counts,
+            // Phase 4: Resource commands
+            runtime_tauri::commands::list_resources,
+            runtime_tauri::commands::search_resources,
+            runtime_tauri::commands::curate_resource,
+            runtime_tauri::commands::deactivate_resource,
+            // Phase 5: Sync status
+            runtime_tauri::commands::get_sync_status,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
