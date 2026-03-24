@@ -124,7 +124,9 @@ Plans:
 **Requirements**: HOME-03
 **Success Criteria** (what must be TRUE):
   1. 应用可离线打开并展示上次同步缓存，标记 STALE 状态
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [ ] 05-01-PLAN.md — 离线降级、错误处理与 Momentum 暖机
 
 ## Progress Table
 

@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-last_updated: "2026-03-23T15:50:29.200Z"
+last_updated: "2026-03-24T02:00:00.000Z"
 progress:
   total_phases: 6
   completed_phases: 4
@@ -21,8 +21,8 @@ progress:
 
 ## Current Position
 
-Phase: 03 (subscription-signal) — EXECUTING
-Plan: 5 of 9
+Phase: 05 (polish-release) — PLANNED
+Plan: 05-01 — Ready to execute
 
 ## Phase Summary
 
@@ -31,9 +31,9 @@ Plan: 5 of 9
 | 0. moonrepo 工程化基建 | monorepo 配置 + 目录结构 + Cargo workspace + CI/CD | — | Complete |
 | 1. 项目脚手架与认证 | 启动应用、认证 GitHub、导航结构 | 4 | Complete |
 | 2. 数据层与 TopK 发现引擎 | SQLite + GitHub 客户端 + TopK 排名 | 11 | Complete |
-| 3. 订阅系统与信号模型 | 订阅 CRUD + Signal + Home | 10 | In progress |
-| 4. Agent 资源雷达 | MCP/Skills/Agent 资源发现 | 3 | Not started |
-| 5. 打磨与发布准备 | 离线 + 性能 + 发布 | 1 | Not started |
+| 3. 订阅系统与信号模型 | 订阅 CRUD + Signal + Home | 10 | Complete |
+| 4. Agent 资源雷达 | MCP/Skills/Agent 资源发现 | 3 | Planning |
+| 5. 打磨与发布准备 | 离线 + 性能 + 发布 | 1 | Planned |
 
 ## Performance Metrics
 
@@ -111,9 +111,9 @@ Plan: 5 of 9
 
 ## Session Continuity
 
-**Last action:** Completed 03-02-PLAN.md（V002 migration + subscription/signal repository）
-**Next action:** Execute 03-03-PLAN.md（GitHub releases/tags adapter）
-**Context needed for next session:** persistence_sqlite 已完成 subscriptions/signals/deliveries 表与仓库层 CRUD/幂等写入；上层可直接复用 get_subscription_by_repo_id、insert_signal、mark_signal_seen/acked、count_unread 等接口
+**Last session:** 2026-03-24 — Phase 05 计划已创建
+**Stopped at:** Phase 05 plan ready, pending execution
+**Next action:** 运行 `/gsd-execute-phase 5` 执行 Phase 05
 
 ---
-*Last updated: 2026-03-23 — Phase 03 Plan 02 complete*
+*Last updated: 2026-03-24 — Phase 05 planned, ready to execute*
