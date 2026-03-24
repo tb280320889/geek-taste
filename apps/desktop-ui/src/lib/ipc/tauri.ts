@@ -1,13 +1,18 @@
 import { invoke } from "@tauri-apps/api/core";
 import type {
+  AppError,
   CreateRankingViewRequest,
   CreateSubscriptionRequest,
+  CurateResourceRequest,
   RankingItemDto,
   RankingViewSpecDto,
   RepoBasicInfo,
+  ResourceCardDto,
+  ResourceListRequest,
   SettingsDto,
   SignalDto,
   SubscriptionRowDto,
+  SyncStatusDto,
   UnreadCountsDto,
   UpdateSettingsRequest,
   UserDto,
@@ -88,3 +93,22 @@ export const markSignalSeen = async (signalId: string): Promise<void> =>
 
 export const getUnreadCounts = async (): Promise<UnreadCountsDto> =>
   invoke("get_unread_counts");
+
+// ── Resource IPC (Phase 4) ──────────────────────────────
+
+export const listResources = async (limit?: number, offset?: number): Promise<ResourceCardDto[]> =>
+  invoke("list_resources", { limit, offset });
+
+export const searchResources = async (request: ResourceListRequest): Promise<ResourceCardDto[]> =>
+  invoke("search_resources", { request });
+
+export const curateResource = async (request: CurateResourceRequest): Promise<ResourceCardDto> =>
+  invoke("curate_resource", { request });
+
+export const deactivateResource = async (resourceId: string): Promise<void> =>
+  invoke("deactivate_resource", { resourceId });
+
+// ── Sync Status IPC (Phase 5) ──────────────────────────────
+
+export const getSyncStatus = async (): Promise<SyncStatusDto> =>
+  invoke("get_sync_status");

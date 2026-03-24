@@ -91,6 +91,11 @@ export type CreateRankingViewRequest = {
   k_value: number;
 };
 
+export interface RankingResultDto {
+  items: RankingItemDto[];
+  warmup: boolean;
+}
+
 // ── Subscription types (Phase 3) ──────────────────────────────
 
 export type SubscriptionRowDto = {
@@ -140,4 +145,50 @@ export type UnreadCountsDto = {
   high: number;
   medium: number;
   low: number;
+};
+
+// ── Error types (Phase 5) ──────────────────────────────
+
+export type ErrorKind = "AUTH_EXPIRED" | "NETWORK_ERROR" | "RATE_LIMITED" | "NOT_FOUND" | "INTERNAL";
+
+export interface AppError {
+  code: ErrorKind;
+  message: string;
+}
+
+export interface SyncStatusDto {
+  is_online: boolean;
+  last_topk_sync: string | null;
+  last_signal_sync: string | null;
+}
+
+// ── Resource types (Phase 4) ──────────────────────────────
+
+export type ResourceCardDto = {
+  resource_id: string;
+  resource_kind: string; // "MCP_SERVER" | "SKILL" | "AGENT_FRAMEWORK" | string
+  title: string;
+  source_repo_id: number | null;
+  source_url: string;
+  languages: string[];
+  framework_tags: string[];
+  agent_tags: string[];
+  score: number;
+  why_recommended: string[];
+  is_curated: boolean;
+  is_active: boolean;
+};
+
+export type ResourceListRequest = {
+  tag_type?: string;
+  tag_value?: string;
+  resource_kind?: string;
+  language?: string;
+  limit?: number;
+  offset?: number;
+};
+
+export type CurateResourceRequest = {
+  resource_id: string;
+  action: "add" | "remove";
 };

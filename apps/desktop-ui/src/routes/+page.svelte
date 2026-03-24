@@ -13,11 +13,16 @@
     activeSubscriptions,
     loadSubscriptions,
   } from "$lib/stores/subscriptions";
+  import { isStale, isOnline } from "$lib/stores/network";
   import SignalCard from "$lib/components/SignalCard.svelte";
 
   const totalUnread = $derived($unreadCounts.total);
   const highPrioritySignals = $derived($homeSignals.filter((s) => s.priority === "HIGH"));
   const normalPrioritySignals = $derived($homeSignals.filter((s) => s.priority !== "HIGH"));
+
+  // STALE 状态检测
+  const signalsStale = $derived(!$isOnline || isStale("signals"));
+  const topkStale = $derived(!$isOnline || isStale("topk"));
 
   onMount(() => {
     void loadHomeSignals();
@@ -40,6 +45,9 @@
     <h1 class="m-0 text-2xl font-semibold">Today</h1>
     {#if totalUnread > 0}
       <span class="unread-badge">{totalUnread}</span>
+    {/if}
+    {#if signalsStale}
+      <span class="stale-dot" title="信号数据已过期"></span>
     {/if}
   </header>
 
@@ -79,7 +87,12 @@
   <!-- Quick Links -->
   <div class="quick-links">
     <a class="quick-link" href={resolve("/topk")}>
-      <span class="quick-link-label">TopK</span>
+      <span class="quick-link-label">
+        TopK
+        {#if topkStale}
+          <span class="stale-dot" title="排名数据已过期"></span>
+        {/if}
+      </span>
       <span class="quick-link-desc">发现趋势</span>
     </a>
     <a class="quick-link" href={resolve("/subscriptions")}>
