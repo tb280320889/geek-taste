@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Executing Phase 04
-stopped_at: Completed 04-01-PLAN.md
-last_updated: "2026-03-24T02:27:00.438Z"
+stopped_at: Completed 04-02-PLAN.md
+last_updated: "2026-03-24T02:38:00.000Z"
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 33
-  completed_plans: 31
+  completed_plans: 32
 ---
 
 # State: geek taste
@@ -23,7 +23,7 @@ progress:
 ## Current Position
 
 Phase: 04 (agent-resources-radar) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 
 ## Phase Summary
 
@@ -63,6 +63,7 @@ Plan: 2 of 3
 | Phase 03 P12 | 5min | 2 tasks | 5 files |
 | Phase 04 P01 | 2min | 2 tasks | 5 files |
 | Phase 04-agent-resources-radar P01 | 2min | 2 tasks | 5 files |
+| Phase 04-agent-resources-radar P02 | 2min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -103,6 +104,9 @@ Plan: 2 of 3
 - ResourceKind::Other(String) 兜底未知类型 — 保持前向兼容
 - compute_resource_score 使用 0.4/0.35/0.25 权重 — stack_relevance 优先于 star 增长
 - search_resources 使用 LIKE 匹配 languages_json — 小数据量简单有效，避免 JSON1 扩展依赖
+- Stack relevance 使用 Jaccard 相似度 — 从订阅仓库推断用户语言兴趣，|intersection|/|union|
+- 推荐解释使用 RecommendationReason::to_template() — 模板规则生成，非 LLM
+- ResourcesToDtos 按 score 降序排列 — 高相关资源优先展示
 
 ### Known Risks
 
@@ -117,9 +121,9 @@ Plan: 2 of 3
 
 ## Session Continuity
 
-**Last session:** 2026-03-24T02:27:00.430Z
-**Stopped at:** Completed 04-01-PLAN.md
-**Next action:** 执行 04-02 资源发现服务计划
+**Last session:** 2026-03-24T02:38:00Z
+**Stopped at:** Completed 04-02-PLAN.md
+**Next action:** 执行 04-03 资源前端页面组件计划
 
 ---
-*Last updated: 2026-03-24 — Phase 04 Plan 01 complete*
+*Last updated: 2026-03-24 — Phase 04 Plan 02 complete*

@@ -115,7 +115,7 @@ Plans:
 **Plans**: 3 plans
 Plans:
 - [x] 04-01-PLAN.md — 领域模型与 SQLite 持久化（Resource 类型 + V003 migration + repository）
-- [ ] 04-02-PLAN.md — 应用层编排与 Tauri IPC（评分 + 推荐解释 + 精选 + 命令）
+- [x] 04-02-PLAN.md — 应用层编排与 Tauri IPC（评分 + 推荐解释 + 精选 + 命令）
 - [ ] 04-03-PLAN.md — 前端界面（ResourceCard + ResourceFilters + Resources 页面）
 
 ### Phase 5: 打磨与发布准备

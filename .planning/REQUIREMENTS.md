@@ -39,7 +39,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Resource Radar
 
 - [x] **RES-01**: 系统能按语言/框架发现 MCP/Skills/Agent 资源
-- [ ] **RES-02**: 系统按 stack_relevance + star_delta + recency 为资源评分
+- [x] **RES-02**: 系统按 stack_relevance + star_delta + recency 为资源评分
 - [ ] **RES-03**: 每条资源推荐展示"为什么推荐给我"
 
 ### Home & Offline
@@ -111,7 +111,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SUB-07 | Phase 3 | Complete |
 | SUB-08 | Phase 3 | Complete |
 | RES-01 | Phase 4 | Complete |
-| RES-02 | Phase 4 | Pending |
+| RES-02 | Phase 4 | Complete |
 | RES-03 | Phase 4 | Pending |
 | HOME-01 | Phase 3 | Complete |
 | HOME-02 | Phase 3 | Complete |
