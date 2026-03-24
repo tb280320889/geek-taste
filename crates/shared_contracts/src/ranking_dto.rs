@@ -63,6 +63,13 @@ pub struct CreateRankingViewRequest {
     pub k_value: i32,
 }
 
+/// 排名结果 DTO — 包含暖机标记
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct RankingResultDto {
+    pub items: Vec<RankingItemDto>,
+    pub warmup: bool,
+}
+
 // ── From 转换 ──────────────────────────────────────────
 
 impl From<RankingFilters> for FiltersDto {

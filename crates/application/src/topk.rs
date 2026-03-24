@@ -12,7 +12,8 @@ use persistence_sqlite::ranking_repository;
 use persistence_sqlite::repo_repository;
 use rusqlite::Connection;
 use shared_contracts::ranking_dto::{
-    CreateRankingViewRequest, RankingItemDto, RankingViewSpecDto, ScoreBreakdownDto,
+    CreateRankingViewRequest, RankingItemDto, RankingResultDto, RankingViewSpecDto,
+    ScoreBreakdownDto,
 };
 
 /// 生成 ULID 风格的 ID（时间排序 + 随机后缀）
@@ -65,7 +66,7 @@ pub async fn execute_ranking(
     conn: &Connection,
     token: &str,
     view_id: &str,
-) -> Result<Vec<RankingItemDto>> {
+) -> Result<RankingResultDto> {
     // 1. 获取 RankingView
     let view = ranking_repository::get_ranking_view(conn, view_id)?
         .context(format!("RankingView not found: {view_id}"))?;
@@ -85,7 +86,14 @@ pub async fn execute_ranking(
     // 4. 获取上一次 snapshot（用于 momentum 计算和排名变化）
     let prev_snapshot = ranking_repository::get_latest_ranking_snapshot(conn, view_id)?;
 
-    // 5. 按 RankingMode 排序
+    // 5. 暖机检测：Momentum 模式无历史快照 → 暖机降级
+    let is_warmup = prev_snapshot.is_none()
+        && matches!(
+            view.ranking_mode,
+            RankingMode::Momentum24h | RankingMode::Momentum7d
+        );
+
+    // 6. 按 RankingMode 排序
     let mut items = search_result.items;
     let score_breakdowns: HashMap<i64, MomentumScore> = match view.ranking_mode {
         RankingMode::StarsDesc => {
@@ -137,10 +145,10 @@ pub async fn execute_ranking(
         }
     };
 
-    // 6. 截取前 k 条
+    // 7. 截取前 k 条
     items.truncate(view.k_value as usize);
 
-    // 7. 构建上一次 snapshot 的排名映射（用于 rank_change）
+    // 8. 构建上一次 snapshot 的排名映射（用于 rank_change）
     let prev_rank_map: HashMap<i64, i32> = prev_snapshot
         .as_ref()
         .map(|snap| {
@@ -151,13 +159,13 @@ pub async fn execute_ranking(
         })
         .unwrap_or_default();
 
-    // 8. 查询活跃订阅 repo_id（用于 is_subscribed）
+    // 9. 查询活跃订阅 repo_id（用于 is_subscribed）
     let subscribed_repo_ids: std::collections::HashSet<i64> =
         persistence_sqlite::subscription_repository::list_active_repo_ids(conn)?
             .into_iter()
             .collect();
 
-    // 9. 转换为 RankingItemDto
+    // 10. 转换为 RankingItemDto
     let dtos: Vec<RankingItemDto> = items
         .into_iter()
         .enumerate()
@@ -204,7 +212,10 @@ pub async fn execute_ranking(
         })
         .collect();
 
-    Ok(dtos)
+    Ok(RankingResultDto {
+        items: dtos,
+        warmup: is_warmup,
+    })
 }
 
 /// 列出所有榜单视图

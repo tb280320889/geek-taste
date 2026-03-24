@@ -11,6 +11,7 @@
     rankingItems,
     topkLoading,
     topkError,
+    topkWarmup,
     loadViews,
     selectView,
     addView,
@@ -124,6 +125,11 @@
     <!-- 错误提示 -->
     {#if $topkError}
       <div class="card rounded-[var(--radius)] p-3 text-[color:var(--danger)]">{$topkError}</div>
+    {/if}
+
+    <!-- 暖机提示 -->
+    {#if $topkWarmup}
+      <div class="warmup-hint">Momentum 评分将在首次快照后生效，当前按最近更新排序</div>
     {/if}
 
     <!-- 排名列表 -->

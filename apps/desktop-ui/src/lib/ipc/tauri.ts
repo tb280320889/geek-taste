@@ -5,6 +5,7 @@ import type {
   CreateSubscriptionRequest,
   CurateResourceRequest,
   RankingItemDto,
+  RankingResultDto,
   RankingViewSpecDto,
   RepoBasicInfo,
   ResourceCardDto,
@@ -54,7 +55,7 @@ export const deleteRankingView = async (viewId: string): Promise<void> =>
 export const togglePinRankingView = async (viewId: string): Promise<void> =>
   invoke("toggle_pin_ranking_view", { viewId });
 
-export const executeRanking = async (viewId: string): Promise<RankingItemDto[]> =>
+export const executeRanking = async (viewId: string): Promise<RankingResultDto> =>
   invoke("execute_ranking", { viewId });
 
 // ── Subscription IPC (Phase 3) ──────────────────────────────
