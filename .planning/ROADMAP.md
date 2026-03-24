@@ -114,7 +114,7 @@ Plans:
   3. 每条资源推荐展示"为什么推荐给我"的解释说明
 **Plans**: 3 plans
 Plans:
-- [ ] 04-01-PLAN.md — 领域模型与 SQLite 持久化（Resource 类型 + V003 migration + repository）
+- [x] 04-01-PLAN.md — 领域模型与 SQLite 持久化（Resource 类型 + V003 migration + repository）
 - [ ] 04-02-PLAN.md — 应用层编排与 Tauri IPC（评分 + 推荐解释 + 精选 + 命令）
 - [ ] 04-03-PLAN.md — 前端界面（ResourceCard + ResourceFilters + Resources 页面）
 

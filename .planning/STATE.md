@@ -2,13 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to execute
-last_updated: "2026-03-24T02:00:00.000Z"
+status: Executing Phase 04
+stopped_at: Completed 04-01-PLAN.md
+last_updated: "2026-03-24T02:27:00.438Z"
 progress:
   total_phases: 6
-  completed_phases: 4
-  total_plans: 29
-  completed_plans: 29
+  completed_phases: 5
+  total_plans: 33
+  completed_plans: 31
 ---
 
 # State: geek taste
@@ -21,8 +22,8 @@ progress:
 
 ## Current Position
 
-Phase: 05 (polish-release) — IN PROGRESS
-Plan: 05-01 — Complete
+Phase: 04 (agent-resources-radar) — EXECUTING
+Plan: 2 of 3
 
 ## Phase Summary
 
@@ -32,7 +33,7 @@ Plan: 05-01 — Complete
 | 1. 项目脚手架与认证 | 启动应用、认证 GitHub、导航结构 | 4 | Complete |
 | 2. 数据层与 TopK 发现引擎 | SQLite + GitHub 客户端 + TopK 排名 | 11 | Complete |
 | 3. 订阅系统与信号模型 | 订阅 CRUD + Signal + Home | 10 | Complete |
-| 4. Agent 资源雷达 | MCP/Skills/Agent 资源发现 | 3 | Planning |
+| 4. Agent 资源雷达 | MCP/Skills/Agent 资源发现 | 3 | In Progress |
 | 5. 打磨与发布准备 | 离线 + 性能 + 发布 | 1 | In Progress |
 
 ## Performance Metrics
@@ -60,6 +61,8 @@ Plan: 05-01 — Complete
 | Phase 03 P10 | 9min | 2 tasks | 6 files |
 | Phase 03 P11 | 11min | 2 tasks | 4 files |
 | Phase 03 P12 | 5min | 2 tasks | 5 files |
+| Phase 04 P01 | 2min | 2 tasks | 5 files |
+| Phase 04-agent-resources-radar P01 | 2min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -97,6 +100,9 @@ Plan: 05-01 — Complete
 - Subscription/Signal 状态迁移在 domain 层显式校验 — 防止非法状态写入持久化
 - signals 表通过 signal_key UNIQUE + INSERT OR IGNORE 实现同步幂等
 - subscription 查询保留 repo JOIN 结果结构，复用现有 application DTO 映射路径
+- ResourceKind::Other(String) 兜底未知类型 — 保持前向兼容
+- compute_resource_score 使用 0.4/0.35/0.25 权重 — stack_relevance 优先于 star 增长
+- search_resources 使用 LIKE 匹配 languages_json — 小数据量简单有效，避免 JSON1 扩展依赖
 
 ### Known Risks
 
@@ -111,9 +117,9 @@ Plan: 05-01 — Complete
 
 ## Session Continuity
 
-**Last session:** 2026-03-24 — Phase 05-01 执行完成
-**Stopped at:** Phase 05-01 complete, ready for next plan
-**Next action:** 确认 Phase 05 是否有后续计划，或执行验证
+**Last session:** 2026-03-24T02:27:00.430Z
+**Stopped at:** Completed 04-01-PLAN.md
+**Next action:** 执行 04-02 资源发现服务计划
 
 ---
-*Last updated: 2026-03-24 — Phase 05 planned, ready to execute*
+*Last updated: 2026-03-24 — Phase 04 Plan 01 complete*
