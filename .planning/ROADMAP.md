@@ -112,7 +112,11 @@ Plans:
   1. 用户能按语言/框架发现 MCP/Skills/Agent 资源列表
   2. 系统按 stack_relevance + star_delta + recency 为资源评分排序
   3. 每条资源推荐展示"为什么推荐给我"的解释说明
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 04-01-PLAN.md — 领域模型与 SQLite 持久化（Resource 类型 + V003 migration + repository）
+- [ ] 04-02-PLAN.md — 应用层编排与 Tauri IPC（评分 + 推荐解释 + 精选 + 命令）
+- [ ] 04-03-PLAN.md — 前端界面（ResourceCard + ResourceFilters + Resources 页面）
 
 ### Phase 5: 打磨与发布准备
 **Goal**: 应用可离线使用、性能达标、可签名发布
@@ -130,7 +134,7 @@ Plans:
 | 1. 项目脚手架与认证 | 6/6 | Complete | 2026-03-23 |
 | 2. 数据层与 TopK 发现引擎 | 6/6 | Complete | 2026-03-23 |
 | 3. 订阅系统与信号模型 | 9/9 | Complete   | 2026-03-23 |
-| 4. Agent 资源雷达 | 0/3 | Not started | - |
+| 4. Agent 资源雷达 | 0/3 | Planning | - |
 | 5. 打磨与发布准备 | 0/1 | Not started | - |
 
 ## Coverage
