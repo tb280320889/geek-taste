@@ -1,4 +1,4 @@
-//! V001 + V002 migration — Phase 2 (4 tables) + Phase 3 (3 tables)
+//! V001 + V002 + V003 migration — Phase 2 (4 tables) + Phase 3 (3 tables) + Phase 4 (2 tables)
 
 use rusqlite_migration::{Migrations, M};
 
@@ -128,6 +128,37 @@ pub fn migrations() -> Migrations<'static> {
             CREATE INDEX IF NOT EXISTS idx_deliveries_signal ON deliveries(signal_id);
             "#,
         ),
+        // V003: Phase 4 资源表
+        M::up(
+            r#"
+            CREATE TABLE IF NOT EXISTS resources (
+                resource_id TEXT PRIMARY KEY,
+                source_repo_id INTEGER REFERENCES repositories(repo_id),
+                resource_kind TEXT NOT NULL,
+                title TEXT NOT NULL,
+                summary TEXT,
+                source_url TEXT NOT NULL,
+                languages_json TEXT NOT NULL DEFAULT '[]',
+                framework_tags_json TEXT NOT NULL DEFAULT '[]',
+                agent_tags_json TEXT NOT NULL DEFAULT '[]',
+                curation_level TEXT NOT NULL DEFAULT 'SYSTEM_DISCOVERED',
+                last_scored_at TEXT,
+                is_active INTEGER NOT NULL DEFAULT 1
+            );
+
+            CREATE TABLE IF NOT EXISTS resource_tags (
+                resource_id TEXT NOT NULL REFERENCES resources(resource_id),
+                tag_type TEXT NOT NULL,
+                tag_value TEXT NOT NULL,
+                PRIMARY KEY (resource_id, tag_type, tag_value)
+            );
+
+            CREATE INDEX IF NOT EXISTS idx_resource_tags_type_value ON resource_tags(tag_type, tag_value);
+            CREATE INDEX IF NOT EXISTS idx_resource_tags_resource ON resource_tags(resource_id);
+            CREATE INDEX IF NOT EXISTS idx_resources_kind ON resources(resource_kind);
+            CREATE INDEX IF NOT EXISTS idx_resources_active ON resources(is_active);
+            "#,
+        ),
     ])
 }
 
@@ -158,6 +189,9 @@ mod tests {
         assert!(tables.contains(&"subscriptions".to_string()));
         assert!(tables.contains(&"signals".to_string()));
         assert!(tables.contains(&"deliveries".to_string()));
+        // V003 tables
+        assert!(tables.contains(&"resources".to_string()));
+        assert!(tables.contains(&"resource_tags".to_string()));
     }
 
     #[test]

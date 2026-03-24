@@ -3,6 +3,7 @@
 pub mod migrations;
 pub mod ranking_repository;
 pub mod repo_repository;
+pub mod resource_repository;
 pub mod signal_repository;
 pub mod subscription_repository;
 
@@ -27,12 +28,12 @@ mod tests {
         // 验证表存在
         let count: i64 = conn
             .query_row(
-                "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name IN ('repositories', 'repo_snapshots', 'ranking_views', 'ranking_snapshots')",
+                "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name IN ('repositories', 'repo_snapshots', 'ranking_views', 'ranking_snapshots', 'subscriptions', 'signals', 'deliveries', 'resources', 'resource_tags')",
                 [],
                 |row| row.get(0),
             )
             .unwrap();
-        assert_eq!(count, 4);
+        assert_eq!(count, 9);
     }
 
     #[test]
