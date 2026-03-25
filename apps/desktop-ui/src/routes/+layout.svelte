@@ -5,12 +5,14 @@
   import { page } from "$app/stores";
   import Sidebar from "$lib/components/Sidebar.svelte";
   import { authStatus, initAuth } from "$lib/stores/auth";
+  import { isOnline, checkNetworkStatus } from "$lib/stores/network";
   import type { Snippet } from "svelte";
 
   let { children }: { children: Snippet } = $props();
 
   onMount(() => {
     void initAuth();
+    void checkNetworkStatus();
   });
 
   const isOnboarding = $derived($page.url.pathname.startsWith("/onboarding"));
@@ -24,6 +26,11 @@
   <div class="page-shell flex min-h-screen flex-col lg:flex-row">
     <Sidebar />
     <main class="flex-1 overflow-auto p-3 lg:p-5">
+      {#if !$isOnline}
+        <div class="offline-banner" role="alert">
+          ⚠ 网络不可用 — 使用缓存数据，部分功能受限
+        </div>
+      {/if}
       {#if $authStatus === "unauthenticated"}
         <div
           class="card mx-auto mt-7 w-full max-w-xl rounded-[var(--radius)] border border-[color:var(--border)] p-6 lg:mt-28"

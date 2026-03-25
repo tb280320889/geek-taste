@@ -16,8 +16,8 @@ pub fn get_db_connection(app: &AppHandle) -> Result<Connection, String> {
         .map_err(|e| e.to_string())?
         .join("geek-taste.db");
     std::fs::create_dir_all(db_path.parent().unwrap()).ok();
-    let mut conn = Connection::open(&db_path).map_err(|e| e.to_string())?;
-    persistence_sqlite::init_db(&mut conn).map_err(|e| e.to_string())?;
+    let mut conn = Connection::open(&db_path).map_err(|e: rusqlite::Error| e.to_string())?;
+    persistence_sqlite::init_db(&mut conn).map_err(|e: anyhow::Error| e.to_string())?;
     Ok(conn)
 }
 

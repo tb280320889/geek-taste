@@ -1,6 +1,8 @@
 <script lang="ts">
   import { resolve } from "$app/paths";
+  import { goto } from "$app/navigation";
   import { page } from "$app/stores";
+  import { logout } from "$lib/stores/auth";
 
   const navItems = [
     { href: "/", label: "Home", icon: "home" },
@@ -13,6 +15,11 @@
   const isActive = (href: string, pathname: string): boolean => {
     if (href === "/") return pathname === "/";
     return pathname.startsWith(href);
+  };
+
+  const handleLogout = async (): Promise<void> => {
+    await logout();
+    await goto("/onboarding");
   };
 </script>
 
@@ -58,6 +65,13 @@
     class:active={$page.url.pathname.startsWith("/settings")}
     >⚙ Settings</a
   >
+
+  <button
+    class="flex w-full cursor-pointer items-center gap-2.5 rounded-[var(--radius-sm)] border border-transparent bg-transparent px-3 py-2.5 text-[color:var(--text-muted)] transition duration-150 ease-out hover:border-[rgba(255,50,50,0.2)] hover:text-[color:var(--danger)]"
+    onclick={() => void handleLogout()}
+  >
+    ↩ 注销
+  </button>
 </aside>
 
 <style>

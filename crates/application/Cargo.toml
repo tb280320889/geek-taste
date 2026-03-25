@@ -6,4 +6,10 @@ edition = "2021"
 [dependencies]
 domain = { path = "../domain" }
 shared_contracts = { path = "../shared_contracts" }
+persistence_sqlite = { path = "../persistence_sqlite" }
+github_adapter = { path = "../github_adapter" }
 serde = { workspace = true }
+anyhow = { workspace = true }
+chrono = { workspace = true }
+serde_json = { workspace = true }
+rusqlite = { workspace = true }

@@ -3,7 +3,7 @@
 **Created:** 2026-03-22
 **Granularity:** standard
 **Total v1 Requirements:** 29
-**Phases:** 6
+**Phases:** 7
 
 ## Phases
 
@@ -12,7 +12,8 @@
 - [x] **Phase 2: 数据层与 TopK 发现引擎** — SQLite + GitHub REST 客户端、TopK 排名/筛选/快照/评分、一键订阅
 - [x] **Phase 3: 订阅系统与信号模型** — 订阅 CRUD、Release/Tag 轮询、Signal 去重/排序/Digest/通知、Home 页面
 - [x] **Phase 4: Agent 资源雷达** — MCP/Skills/Agent 资源发现、分类评分、推荐解释
-- [ ] **Phase 5: 打磨与发布准备** — 离线降级、错误处理、性能优化、Momentum 暖机、代码签名
+- [x] **Phase 5: 打磨与发布准备** — 离线降级、错误处理、性能优化、Momentum 暖机、代码签名
+- [ ] **Phase 6: NEXT-ACTIONS + QA 整合** — 整合 NEXT-ACTIONS.md 和 QA-FINDINGS.md 到 roadmap 与 phase 计划
 
 ## Phase Details
 
@@ -127,7 +128,26 @@ Plans:
 **Requirements**: HOME-03
 **Success Criteria** (what must be TRUE):
   1. 应用可离线打开并展示上次同步缓存，标记 STALE 状态
-**Plans**: TBD
+**Plans**: 5 plans
+Plans:
+- [x] 05-01-PLAN.md — 离线降级、错误处理与 Momentum 暖机
+- [x] 05-02-PLAN.md — P0 阻塞 Bug 修复（搜索框/TopK视图/资源卡片）
+- [x] 05-03-PLAN.md — P1 功能缺陷修复（GitHub链接/Home引导）
+- [x] 05-04-PLAN.md — P2/P3 + 性能优化 + 打磨
+- [x] 05-05-PLAN.md — 打包发布 + 自动更新 + QA 回归验证
+
+### Phase 6: NEXT-ACTIONS + QA 整合
+**Goal**: 整合 NEXT-ACTIONS.md 和 QA-FINDINGS.md 到 roadmap 与 phase 计划
+**Depends on**: Phase 5
+**Requirements**: —
+**Success Criteria** (what must be TRUE):
+  1. NEXT-ACTIONS.md 中的任务已映射到对应 phase 和 plan
+  2. QA-FINDINGS.md 中的发现已归类并分配到相关 phase
+  3. Phase 5 新增 4 个执行计划（05-02 ~ 05-05）覆盖所有 QA 修复和剩余任务
+  4. ROADMAP.md 反映 Phase 5 完整计划列表
+**Plans**: 1 plan
+Plans:
+- [ ] 06-01-PLAN.md — QA 发现映射 + Phase 5 计划补全
 
 ## Progress Table
 
@@ -138,7 +158,8 @@ Plans:
 | 2. 数据层与 TopK 发现引擎 | 6/6 | Complete | 2026-03-23 |
 | 3. 订阅系统与信号模型 | 9/9 | Complete   | 2026-03-23 |
 | 4. Agent 资源雷达 | 3/3 | Complete | 2026-03-24 |
-| 5. 打磨与发布准备 | 0/1 | Not started | - |
+| 5. 打磨与发布准备 | 5/5 | Complete | 2026-03-25 |
+| 6. NEXT-ACTIONS + QA 整合 | 1/1 | Complete | 2026-03-25 |
 
 ## Coverage
 
@@ -200,3 +221,8 @@ Plans:
 *Roadmap created: 2026-03-22*
 *Updated: 2026-03-24 — Phase 04 (agent-resources-radar) complete*
 *Ready for: `/gsd-execute-phase 05` (polish-release)*
+*Updated: 2026-03-25 — Phase 06 (NEXT-ACTIONS + QA 整合) complete*
+*Updated: 2026-03-25 — Phase 05 plan 03 (P1 functional fixes) complete*
+*Updated: 2026-03-25 — Phase 05 plan 04 (P2/P3 polish) complete*
+*Ready for: `/gsd-execute-phase 05 05` (packaging & release)*
+*Updated: 2026-03-25 — Phase 05 plan 05 auto tasks complete, checkpoint pending*

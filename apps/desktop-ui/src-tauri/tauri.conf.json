@@ -1,5 +1,5 @@
 {
-	"$schema": "https://raw.githubusercontent.com/nicoverbruggen/tauri-settings/main/schema.json",
+	"$schema": "https://raw.githubusercontent.com/nicoverbruggern/tauri-settings/main/schema.json",
 	"productName": "geek taste",
 	"version": "0.1.0",
 	"identifier": "com.geek-taste.app",
@@ -33,5 +33,13 @@
 			"icons/icon.icns",
 			"icons/icon.ico"
 		]
+	},
+	"plugins": {
+		"updater": {
+			"endpoints": [
+				"https://your-server.com/updates/{{target}}/{{arch}}/{{current_version}}"
+			],
+			"pubkey": "YOUR_PUBLIC_KEY"
+		}
 	}
 }

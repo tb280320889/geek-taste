@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: "Phase 04 complete — ready for Phase 05 polish-release"
-last_updated: "2026-03-24T11:35:00Z"
+status: "Phase 05 plan 05 complete — 打包发布 + 自动更新 + QA 回归验证通过"
+last_updated: "2026-03-25"
 progress:
-  total_phases: 6
+  total_phases: 7
   completed_phases: 4
   total_plans: 32
-  completed_plans: 32
+  completed_plans: 36
 ---
 
 # State: geek taste
@@ -21,8 +21,8 @@ progress:
 
 ## Current Position
 
-Phase: 05 (polish-release) — NEXT
-Plan: — (not started)
+Phase: 05 (polish-release) — COMPLETE ✅
+Plan: 05 (打包发布 + 自动更新) — Checkpoint:human-verify approved
 
 ## Phase Summary
 
@@ -33,7 +33,8 @@ Plan: — (not started)
 | 2. 数据层与 TopK 发现引擎 | SQLite + GitHub 客户端 + TopK 排名 | 11 | Complete |
 | 3. 订阅系统与信号模型 | 订阅 CRUD + Signal + Home | 10 | Complete |
 | 4. Agent 资源雷达 | MCP/Skills/Agent 资源发现 | 3 | Complete |
-| 5. 打磨与发布准备 | 离线 + 性能 + 发布 | 1 | Not started |
+| 5. 打磨与发布准备 | 离线 + 错误处理 + QA 修复 + 性能 + 打包 | 5 | Complete |
+| 6. NEXT-ACTIONS + QA 整合 | 整合 QA 发现 + Phase 5 计划补全 | — | Planning |
 
 ## Performance Metrics
 
@@ -41,7 +42,7 @@ Plan: — (not started)
 |--------|-------|
 | Requirements total | 29 |
 | Requirements validated | 22 |
-| Phases complete | 4/6 |
+| Phases complete | 4/7 |
 | Current phase progress | — |
 | Phase 01-scaffold-auth P01 | 20min | 2 tasks | 2 files |
 | Phase 01-scaffold-auth P02 | 8min | 4 tasks | 16 files |
@@ -63,6 +64,10 @@ Plan: — (not started)
 | Phase 04-agent-resources-radar P01 | 2min | 2 tasks | 5 files |
 | Phase 04-agent-resources-radar P02 | 2min | 2 tasks | 4 files |
 | Phase 04-agent-resources-radar P03 | 6min | 2 tasks | 4 files |
+| Phase 05-polish-release P02 | 15min | 3 tasks | 4 files |
+| Phase 05-polish-release P03 | 5min | 2 tasks | 3 files |
+| Phase 05-polish-release P04 | 8min | 3 tasks | 4 files |
+| Phase 05-polish-release P05 | 10min | 2 tasks + 1 checkpoint | 3 files |
 
 ## Accumulated Context
 
@@ -107,6 +112,13 @@ Plan: — (not started)
 - Stack relevance 使用 Jaccard 相似度 — 从订阅仓库推断用户语言兴趣，|intersection|/|union|
 - 推荐解释使用 RecommendationReason::to_template() 模板规则 — 非 LLM
 - ResourcesToDtos 按 score 降序排列 — 高相关资源优先展示
+- Subscriptions 搜索采用客户端 $derived 过滤 — 已加载列表，无需新 IPC
+- TopK ensureDefaultViews 自动创建 3 个预设视图 — 首次打开即展示排名
+- Resources 页面无 auth guard 加载 — 本地资源数据不依赖 GitHub API
+- 外部链接使用 @tauri-apps/plugin-shell open() — 前端直接调用 Tauri 插件，不走自定义 IPC command
+- Home 空状态引导使用 $derived + onMount loadSubscriptions — 基于真实数据判断，避免闪烁
+- Toast 使用 position: fixed — 脱离文档流，不引起布局抖动，无需额外依赖
+- 注销按钮双入口 (Settings + Sidebar) — 满足 plan 要求的两处注销路径
 
 ### Known Risks
 
@@ -119,11 +131,15 @@ Plan: — (not started)
 
 - None currently
 
+### Roadmap Evolution
+
+- Phase 6 added: NEXT-ACTIONS + QA 整合
+
 ## Session Continuity
 
-**Last action:** Phase 04 (agent-resources-radar) complete — 3/3 plans, RES-01~03 verified
-**Next action:** Phase 05 polish-release: offline degradation, error handling, Momentum warmup
-**Context needed for next session:** Phase 04 已完成资源雷达全栈：domain/resource.rs 领域模型、resource_repository CRUD、application/resource.rs 评分编排、4 个 Tauri IPC 命令、前端 ResourceCard/ResourceFilters/Resources 页面
+**Last action:** Phase 05-05 complete — 打包发布 + 自动更新 + QA 回归验证通过
+**Next action:** Phase 6 planning (NEXT-ACTIONS + QA 整合)
+**Context needed for next session:** Phase 5 全部完成。updater 插件已注册（占位符端点），打包配置完整。进入 Phase 6 整合阶段。
 
 ---
-*Last updated: 2026-03-24 — Phase 04 complete, ready for Phase 05*
+*Last updated: 2026-03-25 — Phase 05 plan 05 complete*
