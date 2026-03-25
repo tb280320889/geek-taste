@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: "Phase 05 plan 04 complete — P2/P3 polish (toast layout, logout, favicon)"
-last_updated: "2026-03-25T12:30:00Z"
+status: "Phase 05 plan 05 complete — 打包发布 + 自动更新 + QA 回归验证通过"
+last_updated: "2026-03-25"
 progress:
   total_phases: 7
   completed_phases: 4
   total_plans: 32
-  completed_plans: 35
+  completed_plans: 36
 ---
 
 # State: geek taste
@@ -21,8 +21,8 @@ progress:
 
 ## Current Position
 
-Phase: 05 (polish-release) — IN PROGRESS
-Plan: 05 (打包发布 + 自动更新) — Checkpoint:human-verify pending
+Phase: 05 (polish-release) — COMPLETE ✅
+Plan: 05 (打包发布 + 自动更新) — Checkpoint:human-verify approved
 
 ## Phase Summary
 
@@ -33,7 +33,7 @@ Plan: 05 (打包发布 + 自动更新) — Checkpoint:human-verify pending
 | 2. 数据层与 TopK 发现引擎 | SQLite + GitHub 客户端 + TopK 排名 | 11 | Complete |
 | 3. 订阅系统与信号模型 | 订阅 CRUD + Signal + Home | 10 | Complete |
 | 4. Agent 资源雷达 | MCP/Skills/Agent 资源发现 | 3 | Complete |
-| 5. 打磨与发布准备 | 离线 + 错误处理 + QA 修复 + 性能 + 打包 | 5 | In Progress |
+| 5. 打磨与发布准备 | 离线 + 错误处理 + QA 修复 + 性能 + 打包 | 5 | Complete |
 | 6. NEXT-ACTIONS + QA 整合 | 整合 QA 发现 + Phase 5 计划补全 | — | Planning |
 
 ## Performance Metrics
@@ -67,6 +67,7 @@ Plan: 05 (打包发布 + 自动更新) — Checkpoint:human-verify pending
 | Phase 05-polish-release P02 | 15min | 3 tasks | 4 files |
 | Phase 05-polish-release P03 | 5min | 2 tasks | 3 files |
 | Phase 05-polish-release P04 | 8min | 3 tasks | 4 files |
+| Phase 05-polish-release P05 | 10min | 2 tasks + 1 checkpoint | 3 files |
 
 ## Accumulated Context
 
@@ -136,9 +137,9 @@ Plan: 05 (打包发布 + 自动更新) — Checkpoint:human-verify pending
 
 ## Session Continuity
 
-**Last action:** Phase 05-05 auto tasks complete — Tauri 打包配置 + updater 插件注册. Checkpoint:human-verify pending.
-**Next action:** Phase 05-05 checkpoint verification → then Phase 6 planning
-**Context needed for next session:** 05-05 添加了 updater 插件 (lib.rs + tauri.conf.json + Cargo.toml)，端点为占位符。checkpoint 需要人工 QA 回归验证。
+**Last action:** Phase 05-05 complete — 打包发布 + 自动更新 + QA 回归验证通过
+**Next action:** Phase 6 planning (NEXT-ACTIONS + QA 整合)
+**Context needed for next session:** Phase 5 全部完成。updater 插件已注册（占位符端点），打包配置完整。进入 Phase 6 整合阶段。
 
 ---
-*Last updated: 2026-03-25 — Phase 05 plan 04 complete*
+*Last updated: 2026-03-25 — Phase 05 plan 05 complete*

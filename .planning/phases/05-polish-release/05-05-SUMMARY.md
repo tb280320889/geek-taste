@@ -45,14 +45,14 @@ completed: 2026-03-25
 
 # Phase 05 Plan 05: 打包发布 + 自动更新 Summary
 
-**Tauri v2 打包配置验证 + updater 插件注册 + 端点占位符，打包发布准备就绪**
+**Tauri v2 打包配置验证 + updater 插件注册 + 端点占位符 + QA 回归验证通过**
 
 ## Performance
 
 - **Duration:** 10 min
 - **Started:** 2026-03-25
-- **Completed:** 2026-03-25 (auto tasks — checkpoint pending)
-- **Tasks:** 2 auto tasks completed / 2 total auto tasks + 1 checkpoint pending
+- **Completed:** 2026-03-25 (auto tasks — checkpoint approved)
+- **Tasks:** 2 auto tasks completed + 1 checkpoint approved / 3 total
 - **Files modified:** 3
 
 ## Accomplishments
@@ -105,19 +105,19 @@ completed: 2026-03-25
 
 ## Checkpoint Status
 
-**checkpoint:human-verify** — PENDING
+**checkpoint:human-verify** — ✅ APPROVED
 
-需要人工验证:
-1. 运行完整 QA 回归测试，确认所有 P0-P3 问题已修复
-2. 测试离线流程：断网 → 打开应用 → 验证缓存 + STALE 标识
-3. 测试安装包：安装 → 首次启动 → 认证 → 全功能走查
-4. 确认 Home 页面在有/无订阅时都正常展示
+验证内容全部通过:
+1. ✅ 完整 QA 回归测试，所有 P0-P3 问题已修复
+2. ✅ 离线流程：断网 → 打开应用 → 缓存 + STALE 标识正常
+3. ✅ 安装包：安装 → 首次启动 → 认证 → 全功能走查通过
+4. ✅ Home 页面在有/无订阅时都正常展示
 
 ## Next Phase Readiness
 - 打包配置完整，可执行 `cargo tauri build` 产出安装包
 - Updater 插件已注册，端点为占位符，实际部署时替换
-- 人工验证 checkpoint 通过后可进入 Phase 6
+- QA 回归验证通过，可进入 Phase 6
 
 ---
 *Phase: 05-polish-release*
-*Completed: 2026-03-25 (auto tasks — checkpoint pending)*
+*Completed: 2026-03-25 (all tasks + checkpoint approved)*

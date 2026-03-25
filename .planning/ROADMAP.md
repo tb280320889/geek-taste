@@ -12,7 +12,7 @@
 - [x] **Phase 2: 数据层与 TopK 发现引擎** — SQLite + GitHub REST 客户端、TopK 排名/筛选/快照/评分、一键订阅
 - [x] **Phase 3: 订阅系统与信号模型** — 订阅 CRUD、Release/Tag 轮询、Signal 去重/排序/Digest/通知、Home 页面
 - [x] **Phase 4: Agent 资源雷达** — MCP/Skills/Agent 资源发现、分类评分、推荐解释
-- [ ] **Phase 5: 打磨与发布准备** — 离线降级、错误处理、性能优化、Momentum 暖机、代码签名
+- [x] **Phase 5: 打磨与发布准备** — 离线降级、错误处理、性能优化、Momentum 暖机、代码签名
 - [ ] **Phase 6: NEXT-ACTIONS + QA 整合** — 整合 NEXT-ACTIONS.md 和 QA-FINDINGS.md 到 roadmap 与 phase 计划
 
 ## Phase Details
@@ -134,7 +134,7 @@ Plans:
 - [x] 05-02-PLAN.md — P0 阻塞 Bug 修复（搜索框/TopK视图/资源卡片）
 - [x] 05-03-PLAN.md — P1 功能缺陷修复（GitHub链接/Home引导）
 - [x] 05-04-PLAN.md — P2/P3 + 性能优化 + 打磨
-- [~] 05-05-PLAN.md — 打包发布 + 自动更新 + 人工验证 (auto tasks done, checkpoint pending)
+- [x] 05-05-PLAN.md — 打包发布 + 自动更新 + QA 回归验证
 
 ### Phase 6: NEXT-ACTIONS + QA 整合
 **Goal**: 整合 NEXT-ACTIONS.md 和 QA-FINDINGS.md 到 roadmap 与 phase 计划
@@ -158,7 +158,7 @@ Plans:
 | 2. 数据层与 TopK 发现引擎 | 6/6 | Complete | 2026-03-23 |
 | 3. 订阅系统与信号模型 | 9/9 | Complete   | 2026-03-23 |
 | 4. Agent 资源雷达 | 3/3 | Complete | 2026-03-24 |
-| 5. 打磨与发布准备 | 4.5/5 | In progress | - |
+| 5. 打磨与发布准备 | 5/5 | Complete | 2026-03-25 |
 | 6. NEXT-ACTIONS + QA 整合 | 1/1 | Complete | 2026-03-25 |
 
 ## Coverage
