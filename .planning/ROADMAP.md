@@ -133,7 +133,7 @@ Plans:
 - [x] 05-01-PLAN.md — 离线降级、错误处理与 Momentum 暖机
 - [x] 05-02-PLAN.md — P0 阻塞 Bug 修复（搜索框/TopK视图/资源卡片）
 - [x] 05-03-PLAN.md — P1 功能缺陷修复（GitHub链接/Home引导）
-- [ ] 05-04-PLAN.md — P2/P3 + 性能优化 + 打磨
+- [x] 05-04-PLAN.md — P2/P3 + 性能优化 + 打磨
 - [ ] 05-05-PLAN.md — 打包发布 + 自动更新 + 人工验证
 
 ### Phase 6: NEXT-ACTIONS + QA 整合
@@ -158,7 +158,7 @@ Plans:
 | 2. 数据层与 TopK 发现引擎 | 6/6 | Complete | 2026-03-23 |
 | 3. 订阅系统与信号模型 | 9/9 | Complete   | 2026-03-23 |
 | 4. Agent 资源雷达 | 3/3 | Complete | 2026-03-24 |
-| 5. 打磨与发布准备 | 3/5 | In progress | - |
+| 5. 打磨与发布准备 | 4/5 | In progress | - |
 | 6. NEXT-ACTIONS + QA 整合 | 1/1 | Complete | 2026-03-25 |
 
 ## Coverage
@@ -223,4 +223,5 @@ Plans:
 *Ready for: `/gsd-execute-phase 05` (polish-release)*
 *Updated: 2026-03-25 — Phase 06 (NEXT-ACTIONS + QA 整合) complete*
 *Updated: 2026-03-25 — Phase 05 plan 03 (P1 functional fixes) complete*
-*Ready for: `/gsd-execute-phase 05 04` (P2/P3 + performance polish)*
+*Updated: 2026-03-25 — Phase 05 plan 04 (P2/P3 polish) complete*
+*Ready for: `/gsd-execute-phase 05 05` (packaging & release)*

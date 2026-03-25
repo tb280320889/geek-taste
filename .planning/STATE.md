@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: "Phase 05 plan 03 complete — P1 bug fixes (GitHub external link, Home empty state)"
-last_updated: "2026-03-25T12:20:00Z"
+status: "Phase 05 plan 04 complete — P2/P3 polish (toast layout, logout, favicon)"
+last_updated: "2026-03-25T12:30:00Z"
 progress:
   total_phases: 7
   completed_phases: 4
   total_plans: 32
-  completed_plans: 34
+  completed_plans: 35
 ---
 
 # State: geek taste
@@ -22,7 +22,7 @@ progress:
 ## Current Position
 
 Phase: 05 (polish-release) — IN PROGRESS
-Plan: 03 (P1 bug fixes) — Complete
+Plan: 04 (P2/P3 polish) — Complete
 
 ## Phase Summary
 
@@ -66,6 +66,7 @@ Plan: 03 (P1 bug fixes) — Complete
 | Phase 04-agent-resources-radar P03 | 6min | 2 tasks | 4 files |
 | Phase 05-polish-release P02 | 15min | 3 tasks | 4 files |
 | Phase 05-polish-release P03 | 5min | 2 tasks | 3 files |
+| Phase 05-polish-release P04 | 8min | 3 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -115,6 +116,8 @@ Plan: 03 (P1 bug fixes) — Complete
 - Resources 页面无 auth guard 加载 — 本地资源数据不依赖 GitHub API
 - 外部链接使用 @tauri-apps/plugin-shell open() — 前端直接调用 Tauri 插件，不走自定义 IPC command
 - Home 空状态引导使用 $derived + onMount loadSubscriptions — 基于真实数据判断，避免闪烁
+- Toast 使用 position: fixed — 脱离文档流，不引起布局抖动，无需额外依赖
+- 注销按钮双入口 (Settings + Sidebar) — 满足 plan 要求的两处注销路径
 
 ### Known Risks
 
@@ -133,9 +136,9 @@ Plan: 03 (P1 bug fixes) — Complete
 
 ## Session Continuity
 
-**Last action:** Phase 05-03 complete — 2 P1 bug fixes (GitHub external link, Home empty state)
-**Next action:** `/gsd-execute-phase 05` plan 04 — Sidebar 注销按钮 + 其他打磨
-**Context needed for next session:** Phase 05-03 修复了 GitHub 外部链接打开和 Home 页面空状态。@tauri-apps/plugin-shell 前端已接入。
+**Last action:** Phase 05-04 complete — P2/P3 polish (toast layout fix, logout UI, favicon, Sidebar logout)
+**Next action:** Phase 05 plan 05 — 离线支持 / 打包准备
+**Context needed for next session:** Phase 05-04 修复了 Toast 布局抖动、添加了 Settings+Sidebar 双入口注销、favicon 404。后续 05-05 为最后的打磨计划。
 
 ---
-*Last updated: 2026-03-25 — Phase 05 plan 03 complete*
+*Last updated: 2026-03-25 — Phase 05 plan 04 complete*
