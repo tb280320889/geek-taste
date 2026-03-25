@@ -229,6 +229,13 @@ pub fn count_unread(conn: &Connection) -> Result<i64> {
     Ok(count)
 }
 
+/// 获取所有信号中最新创建时间（用于同步状态检测）
+pub fn get_last_signal_time(conn: &Connection) -> Result<Option<String>> {
+    let time: Option<String> =
+        conn.query_row("SELECT MAX(created_at) FROM signals", [], |row| row.get(0))?;
+    Ok(time)
+}
+
 /// 按优先级统计未读数 — 返回 (high, medium, low)
 pub fn count_unread_by_priority(conn: &Connection) -> Result<(i64, i64, i64)> {
     let high: i64 = conn.query_row(

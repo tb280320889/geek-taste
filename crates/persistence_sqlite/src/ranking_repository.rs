@@ -178,6 +178,16 @@ pub fn toggle_pin(conn: &Connection, view_id: &str) -> Result<()> {
     Ok(())
 }
 
+/// 获取所有 ranking snapshot 中最新时间（用于同步状态检测）
+pub fn get_last_snapshot_time(conn: &Connection) -> Result<Option<String>> {
+    let time: Option<String> = conn.query_row(
+        "SELECT MAX(snapshot_at) FROM ranking_snapshots",
+        [],
+        |row| row.get(0),
+    )?;
+    Ok(time)
+}
+
 // ── 内部映射结构 ──────────────────────────────────────────
 
 #[derive(Debug, serde::Deserialize)]

@@ -6,6 +6,7 @@ import {
   togglePinRankingView,
   executeRanking,
 } from "$lib/ipc/tauri";
+import { handleIpcError } from "$lib/stores/network";
 import type {
   RankingViewSpecDto,
   RankingItemDto,
@@ -19,6 +20,7 @@ export const currentViewId = writable<string | null>(null);
 export const rankingItems = writable<RankingItemDto[]>([]);
 export const topkLoading = writable(false);
 export const topkError = writable<string | null>(null);
+export const topkWarmup = writable(false);
 
 // ── Derived ────────────────────────────────────────
 
@@ -38,6 +40,7 @@ export const loadViews = async (): Promise<void> => {
     const views = await listRankingViews();
     rankingViews.set(views);
   } catch (err) {
+    handleIpcError(err);
     topkError.set(err instanceof Error ? err.message : String(err));
   }
 };
@@ -46,10 +49,13 @@ export const selectView = async (viewId: string): Promise<void> => {
   currentViewId.set(viewId);
   topkLoading.set(true);
   topkError.set(null);
+  topkWarmup.set(false);
   try {
-    const items = await executeRanking(viewId);
-    rankingItems.set(items);
+    const result = await executeRanking(viewId);
+    rankingItems.set(result.items);
+    topkWarmup.set(result.warmup);
   } catch (err) {
+    handleIpcError(err);
     topkError.set(err instanceof Error ? err.message : String(err));
     rankingItems.set([]);
   } finally {
@@ -63,6 +69,7 @@ export const addView = async (request: CreateRankingViewRequest): Promise<void> 
     rankingViews.update((views) => [...views, view]);
     await selectView(view.ranking_view_id);
   } catch (err) {
+    handleIpcError(err);
     topkError.set(err instanceof Error ? err.message : String(err));
   }
 };
@@ -76,6 +83,7 @@ export const removeView = async (viewId: string): Promise<void> => {
     currentViewId.update((id) => (id === viewId ? null : id));
     rankingItems.set([]);
   } catch (err) {
+    handleIpcError(err);
     topkError.set(err instanceof Error ? err.message : String(err));
   }
 };
@@ -89,6 +97,7 @@ export const pinView = async (viewId: string): Promise<void> => {
       ),
     );
   } catch (err) {
+    handleIpcError(err);
     topkError.set(err instanceof Error ? err.message : String(err));
   }
 };

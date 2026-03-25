@@ -41,7 +41,7 @@ export type RepoBasicInfo = {
   html_url: string;
 };
 
-// ── TopK types (Phase 2) ──────────────────────────────
+// -- TopK types (Phase 2) -----------------------------
 
 export type FiltersDto = {
   language: string[];
@@ -55,9 +55,9 @@ export type FiltersDto = {
 export type RankingViewSpecDto = {
   ranking_view_id: string;
   name: string;
-  view_kind: string; // "PRESET" | "CUSTOM"
+  view_kind: string;
   filters: FiltersDto;
-  ranking_mode: string; // "STARS_DESC" | "UPDATED_DESC" | "MOMENTUM_24H" | "MOMENTUM_7D"
+  ranking_mode: string;
   k_value: number;
   is_pinned: boolean;
   created_at: string;
@@ -80,7 +80,7 @@ export type RankingItemDto = {
   rank: number;
   score: number;
   score_breakdown: ScoreBreakdownDto | null;
-  rank_change: number | null; // +N / -N / null (首次)
+  rank_change: number | null;
   is_subscribed: boolean;
 };
 
@@ -91,7 +91,12 @@ export type CreateRankingViewRequest = {
   k_value: number;
 };
 
-// ── Subscription types (Phase 3) ──────────────────────────────
+export type RankingResultDto = {
+  items: RankingItemDto[];
+  warmup: boolean;
+};
+
+// -- Subscription types (Phase 3) ---------------------
 
 export type SubscriptionRowDto = {
   subscription_id: string;
@@ -101,7 +106,7 @@ export type SubscriptionRowDto = {
   description: string | null;
   primary_language: string | null;
   stargazers_count: number;
-  state: 'ACTIVE' | 'PAUSED' | 'ARCHIVED';
+  state: "ACTIVE" | "PAUSED" | "ARCHIVED";
   tracking_mode: string;
   event_types: string[];
   digest_window: string;
@@ -118,13 +123,13 @@ export type CreateSubscriptionRequest = {
   notify_high_immediately?: boolean;
 };
 
-// ── Signal types (Phase 3) ──────────────────────────────
+// -- Signal types (Phase 3) ---------------------------
 
 export type SignalDto = {
   signal_id: string;
   signal_type: string;
-  priority: 'HIGH' | 'MEDIUM' | 'LOW';
-  state: 'NEW' | 'SEEN' | 'ACKED' | 'ARCHIVED';
+  priority: "HIGH" | "MEDIUM" | "LOW";
+  state: "NEW" | "SEEN" | "ACKED" | "ARCHIVED";
   source_kind: string;
   repo_id: number | null;
   full_name: string | null;
@@ -140,4 +145,55 @@ export type UnreadCountsDto = {
   high: number;
   medium: number;
   low: number;
+};
+
+// -- Error / Sync types (Phase 5) ---------------------
+
+export type ErrorKind =
+  | "AUTH_EXPIRED"
+  | "NETWORK_ERROR"
+  | "RATE_LIMITED"
+  | "NOT_FOUND"
+  | "INTERNAL";
+
+export type AppError = {
+  code: ErrorKind;
+  message: string;
+};
+
+export type SyncStatusDto = {
+  is_online: boolean;
+  last_topk_sync: string | null;
+  last_signal_sync: string | null;
+};
+
+// -- Resource types (Phase 4) -------------------------
+
+export type ResourceCardDto = {
+  resource_id: string;
+  resource_kind: string;
+  title: string;
+  source_repo_id: number | null;
+  source_url: string;
+  languages: string[];
+  framework_tags: string[];
+  agent_tags: string[];
+  score: number;
+  why_recommended: string[];
+  is_curated: boolean;
+  is_active: boolean;
+};
+
+export type ResourceListRequest = {
+  tag_type?: string;
+  tag_value?: string;
+  resource_kind?: string;
+  language?: string;
+  limit?: number;
+  offset?: number;
+};
+
+export type CurateResourceRequest = {
+  resource_id: string;
+  action: "add" | "remove";
 };

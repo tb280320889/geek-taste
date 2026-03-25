@@ -1,5 +1,6 @@
 import { writable, derived } from 'svelte/store';
 import { listSubscriptions, subscribe, unsubscribe, pauseSubscription, syncSubscriptions } from '$lib/ipc/tauri';
+import { handleIpcError } from '$lib/stores/network';
 import type { SubscriptionRowDto, CreateSubscriptionRequest } from '$lib/types';
 
 export const subscriptions = writable<SubscriptionRowDto[]>([]);
@@ -22,6 +23,7 @@ export async function loadSubscriptions() {
     const list = await listSubscriptions();
     subscriptions.set(list);
   } catch (e: unknown) {
+    handleIpcError(e);
     subscriptionsError.set(e instanceof Error ? e.message : 'Failed to load subscriptions');
   } finally {
     subscriptionsLoading.set(false);
@@ -44,6 +46,7 @@ export async function addSubscription(repoId: number, options?: CreateSubscripti
     });
     return sub;
   } catch (e: unknown) {
+    handleIpcError(e);
     subscriptionsError.set(e instanceof Error ? e.message : 'Failed to create subscription');
     throw e;
   }

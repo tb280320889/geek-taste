@@ -12,14 +12,12 @@
 
 ### Validated
 
-- [x] 用户能输入 GitHub PAT 并保存到 OS 安全存储 — *Validated in Phase 01: scaffold-auth*
-- [x] 用户能查看仓库基本信息（stars, forks, description, language, topics） — *Validated in Phase 01: scaffold-auth*
-- [x] 用户能配置通知频率、语言兴趣、安静时段等设置 — *Validated in Phase 01: scaffold-auth*
-- [x] 应用提供 Home/TopK/Subscriptions/Resources/Rules 导航壳与路由 — *Validated in Phase 01: scaffold-auth*
-- [x] 用户能通过 TopK 榜单按语言/框架/主题/时间窗发现趋势项目 — *Validated in Phase 02: topk*
-- [x] 用户能从 TopK 一键订阅感兴趣的 repo — *Validated in Phase 02: topk*
+(None yet — ship to validate)
 
 ### Active
+
+- [ ] 用户能通过 TopK 榜单按语言/框架/主题/时间窗发现趋势项目
+- [ ] 用户能从 TopK 一键订阅感兴趣的 repo
 - [ ] 用户能管理订阅列表（创建/编辑/暂停/删除）
 - [ ] 系统能按默认事件类型同步订阅 repo 的可用更新（release、tag、branch digest）
 - [ ] 用户能在 Home/Today 页面看到自上次访问以来的高优先级信号摘要
@@ -87,4 +85,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-23 after Phase 02 (topk) completion*
+*Last updated: 2026-03-22 after initialization*

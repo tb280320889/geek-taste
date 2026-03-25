@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import { listHomeSignals, ackSignal, markSignalSeen, getUnreadCounts } from '$lib/ipc/tauri';
+import { handleIpcError } from '$lib/stores/network';
 import type { SignalDto, UnreadCountsDto } from '$lib/types';
 
 const HOME_SIGNALS_LAST_VISIT_KEY = 'home_signals_last_visit';
@@ -36,6 +37,8 @@ export async function loadHomeSignals() {
     const nextLastVisit = new Date().toISOString();
     saveLastVisit(nextLastVisit);
     homeSignalsLastVisit.set(nextLastVisit);
+  } catch (err) {
+    handleIpcError(err);
   } finally {
     signalsLoading.set(false);
   }

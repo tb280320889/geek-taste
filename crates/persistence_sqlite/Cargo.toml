@@ -8,12 +8,4 @@ domain = { path = "../domain" }
 shared_contracts = { path = "../shared_contracts" }
 rusqlite = { workspace = true }
 serde_rusqlite = { workspace = true }
-rusqlite_migration = { workspace = true }
-serde = { workspace = true }
-serde_json = { workspace = true }
-chrono = { workspace = true }
-anyhow = { workspace = true }
 tracing = { workspace = true }
-
-[dev-dependencies]
-tokio = { workspace = true }

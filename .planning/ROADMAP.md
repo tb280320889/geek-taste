@@ -9,8 +9,8 @@
 
 - [x] **Phase 0: moonrepo 工程化基建** — moon monorepo 配置、目录结构、Cargo workspace、SvelteKit+Tauri 骨架、CI/CD pipeline
 - [ ] **Phase 1: 项目脚手架与认证** — GitHub Token 认证、OS 安全存储、导航壳、基础仓库信息展示
-- [x] **Phase 2: 数据层与 TopK 发现引擎** — SQLite + GitHub REST 客户端、TopK 排名/筛选/快照/评分、一键订阅
-- [x] **Phase 3: 订阅系统与信号模型** — 订阅 CRUD、Release/Tag 轮询、Signal 去重/排序/Digest/通知、Home 页面 (completed 2026-03-23)
+- [ ] **Phase 2: 数据层与 TopK 发现引擎** — SQLite + GitHub REST 客户端、TopK 排名/筛选/快照/评分、一键订阅
+- [ ] **Phase 3: 订阅系统与信号模型** — 订阅 CRUD、Release/Tag 轮询、Signal 去重/排序/Digest/通知、Home 页面
 - [ ] **Phase 4: Agent 资源雷达** — MCP/Skills/Agent 资源发现、分类评分、推荐解释
 - [ ] **Phase 5: 打磨与发布准备** — 离线降级、错误处理、性能优化、Momentum 暖机、代码签名
 
@@ -62,14 +62,7 @@ Plans:
   2. 用户能查看仓库基本信息（stars, forks, description, language, topics）
   3. 用户能配置通知频率、语言兴趣、安静时段等设置
   4. 应用提供 Home/TopK/Subscriptions/Resources/Rules 五个导航页面，路由可切换
-**Plans**: 6 plans
-Plans:
-- [x] 01-01-PLAN.md — Cargo workspace + runtime_tauri + domain/application/infrastructure crates + GitHub auth keyring
-- [x] 01-02-PLAN.md — GitHub auth Tauri commands (validate/store/remove/get_user) + settings commands
-- [x] 01-03-PLAN.md — 导航壳与路由 (Sidebar + 7 routes + auth guard + stores + IPC wrapper)
-- [x] 01-04-PLAN.md — Onboarding 流程 (已在 01-03 中实现)
-- [x] 01-05-PLAN.md — Settings 页面 (已在 01-03 中实现)
-- [x] 01-06-PLAN.md — Home 欢迎页与仓库探索 (已在 01-03 中实现)
+**Plans**: TBD
 
 ### Phase 2: 数据层与 TopK 发现引擎
 **Goal**: 用户能通过 TopK 榜单发现趋势项目并一键订阅
@@ -83,14 +76,7 @@ Plans:
   5. 用户能从 TopK 榜单项一键订阅仓库，直接进入订阅管理
   6. GitHub API 速率预算按 core/search 端点隔离管理，同步支持 ETag 条件请求和增量刷新
   7. SQLite 使用 WAL 模式，支持并发读写
-**Plans**: 6 plans
-Plans:
-- [x] 02-01-PLAN.md — 领域模型层（Repository / RankingView / Momentum 评分）
-- [x] 02-02-PLAN.md — SQLite 持久化层（Migration + CRUD）
-- [x] 02-03-PLAN.md — GitHub Search 客户端 + 速率预算
-- [x] 02-04-PLAN.md — 应用层编排 + Tauri IPC 命令
-- [x] 02-05-PLAN.md — 前端 IPC + Store + Types
-- [x] 02-06-PLAN.md — 前端 TopK UI（视图选择/筛选/排名/订阅）
+**Plans**: TBD
 
 ### Phase 3: 订阅系统与信号模型
 **Goal**: 用户能管理订阅、接收高信噪比的技术信号、在 Home 页面一览全局
@@ -127,9 +113,9 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 0. moonrepo 工程化基建 | 5/5 | Complete | 2026-03-22 |
-| 1. 项目脚手架与认证 | 6/6 | Complete | 2026-03-23 |
-| 2. 数据层与 TopK 发现引擎 | 6/6 | Complete | 2026-03-23 |
-| 3. 订阅系统与信号模型 | 9/9 | Complete   | 2026-03-23 |
+| 1. 项目脚手架与认证 | 0/4 | Not started | - |
+| 2. 数据层与 TopK 发现引擎 | 0/11 | Not started | - |
+| 3. 订阅系统与信号模型 | 0/10 | Not started | - |
 | 4. Agent 资源雷达 | 0/3 | Not started | - |
 | 5. 打磨与发布准备 | 0/1 | Not started | - |
 
@@ -137,21 +123,21 @@ Plans:
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | Phase 1 | ✅ Complete |
-| FOUND-02 | Phase 1 | ✅ Complete |
-| FOUND-03 | Phase 1 | ✅ Complete |
-| FOUND-04 | Phase 1 | ✅ Complete |
-| INFRA-01 | Phase 2 | ✅ Complete (02-02) |
-| INFRA-02 | Phase 2 | ✅ Complete (02-03) |
-| INFRA-03 | Phase 2 | ✅ Complete (02-02) |
-| TOPK-01 | Phase 2 | ✅ Complete (02-03) |
-| TOPK-02 | Phase 2 | ✅ Complete (02-04) |
-| TOPK-03 | Phase 2 | ✅ Complete (02-03 + 02-06) |
-| TOPK-04 | Phase 2 | ✅ Complete (02-04) |
-| TOPK-05 | Phase 2 | ✅ Complete (02-04) |
-| TOPK-06 | Phase 2 | ✅ Complete (02-04) |
-| TOPK-07 | Phase 2 | ✅ Complete (02-04) |
-| TOPK-08 | Phase 2 | ✅ Complete (02-06) — subscribe popover UI ready, actual IPC in Phase 3 |
+| FOUND-01 | Phase 1 | Pending |
+| FOUND-02 | Phase 1 | Pending |
+| FOUND-03 | Phase 1 | Pending |
+| FOUND-04 | Phase 1 | Pending |
+| INFRA-01 | Phase 2 | Pending |
+| INFRA-02 | Phase 2 | Pending |
+| INFRA-03 | Phase 2 | Pending |
+| TOPK-01 | Phase 2 | Pending |
+| TOPK-02 | Phase 2 | Pending |
+| TOPK-03 | Phase 2 | Pending |
+| TOPK-04 | Phase 2 | Pending |
+| TOPK-05 | Phase 2 | Pending |
+| TOPK-06 | Phase 2 | Pending |
+| TOPK-07 | Phase 2 | Pending |
+| TOPK-08 | Phase 2 | Pending |
 | SUB-01 | Phase 3 | Pending |
 | SUB-02 | Phase 3 | Pending |
 | SUB-03 | Phase 3 | Pending |

@@ -9,10 +9,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Foundation
 
-- [x] **FOUND-01**: 用户能输入 GitHub PAT 并保存到 OS 安全存储
-- [x] **FOUND-02**: 用户能查看仓库基本信息（stars, forks, description, language, topics）
-- [x] **FOUND-03**: 用户能配置通知频率、语言兴趣、安静时段等设置
-- [x] **FOUND-04**: 应用提供 Home/TopK/Subscriptions/Resources/Rules 导航壳与路由
+- [ ] **FOUND-01**: 用户能输入 GitHub PAT 并保存到 OS 安全存储
+- [ ] **FOUND-02**: 用户能查看仓库基本信息（stars, forks, description, language, topics）
+- [ ] **FOUND-03**: 用户能配置通知频率、语言兴趣、安静时段等设置
+- [ ] **FOUND-04**: 应用提供 Home/TopK/Subscriptions/Resources/Rules 导航壳与路由
 
 ### TopK Discovery
 
@@ -27,14 +27,14 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Subscriptions & Signals
 
-- [x] **SUB-01**: 用户能搜索仓库并创建订阅
-- [x] **SUB-02**: 用户能编辑/暂停/删除已有订阅
-- [x] **SUB-03**: 系统轮询已订阅仓库的 Releases 和 Tags 生成信号
-- [x] **SUB-04**: 系统按 U1-U4 优先级规则去重（RELEASE_PUBLISHED > TAG_PUBLISHED > DEFAULT_BRANCH_ACTIVITY_DIGEST）
-- [x] **SUB-05**: 系统生成 12h/24h digest 窗口内的聚合信号
-- [x] **SUB-06**: HIGH 优先级信号触发桌面通知
-- [x] **SUB-07**: 用户能标记信号为已读/已处理
-- [x] **SUB-08**: 同一信号不会重复生成（幂等同步）
+- [ ] **SUB-01**: 用户能搜索仓库并创建订阅
+- [ ] **SUB-02**: 用户能编辑/暂停/删除已有订阅
+- [ ] **SUB-03**: 系统轮询已订阅仓库的 Releases 和 Tags 生成信号
+- [ ] **SUB-04**: 系统按 U1-U4 优先级规则去重（RELEASE_PUBLISHED > TAG_PUBLISHED > DEFAULT_BRANCH_ACTIVITY_DIGEST）
+- [ ] **SUB-05**: 系统生成 12h/24h digest 窗口内的聚合信号
+- [ ] **SUB-06**: HIGH 优先级信号触发桌面通知
+- [ ] **SUB-07**: 用户能标记信号为已读/已处理
+- [ ] **SUB-08**: 同一信号不会重复生成（幂等同步）
 
 ### Resource Radar
 
@@ -44,8 +44,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Home & Offline
 
-- [x] **HOME-01**: Home 页面聚合自上次访问以来的高优先级信号摘要
-- [x] **HOME-02**: 信号按优先级 + 时间 + 来源类型 + 用户亲和度排序
+- [ ] **HOME-01**: Home 页面聚合自上次访问以来的高优先级信号摘要
+- [ ] **HOME-02**: 信号按优先级 + 时间 + 来源类型 + 用户亲和度排序
 - [ ] **HOME-03**: 应用可离线打开并展示上次同步缓存，标记 STALE 状态
 
 ### Infrastructure
@@ -90,10 +90,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | Phase 1 | Complete |
-| FOUND-02 | Phase 1 | Complete |
-| FOUND-03 | Phase 1 | Complete |
-| FOUND-04 | Phase 1 | Complete |
+| FOUND-01 | Phase 1 | Pending |
+| FOUND-02 | Phase 1 | Pending |
+| FOUND-03 | Phase 1 | Pending |
+| FOUND-04 | Phase 1 | Pending |
 | TOPK-01 | Phase 2 | Pending |
 | TOPK-02 | Phase 2 | Pending |
 | TOPK-03 | Phase 2 | Pending |
@@ -102,19 +102,19 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TOPK-06 | Phase 2 | Pending |
 | TOPK-07 | Phase 2 | Pending |
 | TOPK-08 | Phase 2 | Pending |
-| SUB-01 | Phase 3 | Complete |
-| SUB-02 | Phase 3 | Complete |
-| SUB-03 | Phase 3 | Complete |
-| SUB-04 | Phase 3 | Complete |
-| SUB-05 | Phase 3 | Complete |
-| SUB-06 | Phase 3 | Complete |
-| SUB-07 | Phase 3 | Complete |
-| SUB-08 | Phase 3 | Complete |
+| SUB-01 | Phase 3 | Pending |
+| SUB-02 | Phase 3 | Pending |
+| SUB-03 | Phase 3 | Pending |
+| SUB-04 | Phase 3 | Pending |
+| SUB-05 | Phase 3 | Pending |
+| SUB-06 | Phase 3 | Pending |
+| SUB-07 | Phase 3 | Pending |
+| SUB-08 | Phase 3 | Pending |
 | RES-01 | Phase 4 | Pending |
 | RES-02 | Phase 4 | Pending |
 | RES-03 | Phase 4 | Pending |
-| HOME-01 | Phase 3 | Complete |
-| HOME-02 | Phase 3 | Complete |
+| HOME-01 | Phase 3 | Pending |
+| HOME-02 | Phase 3 | Pending |
 | HOME-03 | Phase 5 | Pending |
 | INFRA-01 | Phase 2 | Pending |
 | INFRA-02 | Phase 2 | Pending |
