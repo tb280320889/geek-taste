@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: "Phase 06 planned — NEXT-ACTIONS + QA integration ready for execution"
-last_updated: "2026-03-25T10:30:00Z"
+status: "Phase 05 plan 02 complete — P0 bug fixes (subscriptions search, TopK default views, resources cards)"
+last_updated: "2026-03-25T10:50:00Z"
 progress:
   total_phases: 7
   completed_phases: 4
   total_plans: 32
-  completed_plans: 32
+  completed_plans: 33
 ---
 
 # State: geek taste
@@ -21,8 +21,8 @@ progress:
 
 ## Current Position
 
-Phase: 05 (polish-release) — NEXT
-Plan: — (not started)
+Phase: 05 (polish-release) — IN PROGRESS
+Plan: 02 (P0 bug fixes) — Complete
 
 ## Phase Summary
 
@@ -33,7 +33,7 @@ Plan: — (not started)
 | 2. 数据层与 TopK 发现引擎 | SQLite + GitHub 客户端 + TopK 排名 | 11 | Complete |
 | 3. 订阅系统与信号模型 | 订阅 CRUD + Signal + Home | 10 | Complete |
 | 4. Agent 资源雷达 | MCP/Skills/Agent 资源发现 | 3 | Complete |
-| 5. 打磨与发布准备 | 离线 + 错误处理 + QA 修复 + 性能 + 打包 | 5 | Planning |
+| 5. 打磨与发布准备 | 离线 + 错误处理 + QA 修复 + 性能 + 打包 | 5 | In Progress |
 | 6. NEXT-ACTIONS + QA 整合 | 整合 QA 发现 + Phase 5 计划补全 | — | Planning |
 
 ## Performance Metrics
@@ -64,6 +64,7 @@ Plan: — (not started)
 | Phase 04-agent-resources-radar P01 | 2min | 2 tasks | 5 files |
 | Phase 04-agent-resources-radar P02 | 2min | 2 tasks | 4 files |
 | Phase 04-agent-resources-radar P03 | 6min | 2 tasks | 4 files |
+| Phase 05-polish-release P02 | 15min | 3 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -108,6 +109,9 @@ Plan: — (not started)
 - Stack relevance 使用 Jaccard 相似度 — 从订阅仓库推断用户语言兴趣，|intersection|/|union|
 - 推荐解释使用 RecommendationReason::to_template() 模板规则 — 非 LLM
 - ResourcesToDtos 按 score 降序排列 — 高相关资源优先展示
+- Subscriptions 搜索采用客户端 $derived 过滤 — 已加载列表，无需新 IPC
+- TopK ensureDefaultViews 自动创建 3 个预设视图 — 首次打开即展示排名
+- Resources 页面无 auth guard 加载 — 本地资源数据不依赖 GitHub API
 
 ### Known Risks
 
@@ -126,9 +130,9 @@ Plan: — (not started)
 
 ## Session Continuity
 
-**Last action:** Phase 06 planned — 1 plan covering QA findings mapping + Phase 5 plan expansion
-**Next action:** `/gsd-execute-phase 06` — 映射 NEXT-ACTIONS/QA-FINDINGS，生成 Phase 5 新增计划 (05-02 ~ 05-05)
-**Context needed for next session:** Phase 6 产出为规划文档：NEXT-ACTIONS.md 映射、QA-FINDINGS.md 分配、Phase 5 四个新 PLAN.md。Phase 5 将从 1 plan 扩展为 5 plans (05-01 ~ 05-05)
+**Last action:** Phase 05-02 complete — 3 P0 bug fixes (subscriptions search, TopK default views, resources cards)
+**Next action:** `/gsd-execute-phase 05` plan 03 — 离线支持
+**Context needed for next session:** Phase 05-02 修复了 3 个占位符页面为可用功能。后续计划 05-03 ~ 05-05 继续打磨。
 
 ---
-*Last updated: 2026-03-24 — Phase 04 complete, ready for Phase 05*
+*Last updated: 2026-03-25 — Phase 05 plan 02 complete*

@@ -128,7 +128,13 @@ Plans:
 **Requirements**: HOME-03
 **Success Criteria** (what must be TRUE):
   1. 应用可离线打开并展示上次同步缓存，标记 STALE 状态
-**Plans**: TBD
+**Plans**: 5 plans
+Plans:
+- [x] 05-01-PLAN.md — 离线降级、错误处理与 Momentum 暖机
+- [x] 05-02-PLAN.md — P0 阻塞 Bug 修复（搜索框/TopK视图/资源卡片）
+- [ ] 05-03-PLAN.md — P1 功能缺陷修复（GitHub链接/Home引导）
+- [ ] 05-04-PLAN.md — P2/P3 + 性能优化 + 打磨
+- [ ] 05-05-PLAN.md — 打包发布 + 自动更新 + 人工验证
 
 ### Phase 6: NEXT-ACTIONS + QA 整合
 **Goal**: 整合 NEXT-ACTIONS.md 和 QA-FINDINGS.md 到 roadmap 与 phase 计划
@@ -152,8 +158,8 @@ Plans:
 | 2. 数据层与 TopK 发现引擎 | 6/6 | Complete | 2026-03-23 |
 | 3. 订阅系统与信号模型 | 9/9 | Complete   | 2026-03-23 |
 | 4. Agent 资源雷达 | 3/3 | Complete | 2026-03-24 |
-| 5. 打磨与发布准备 | 0/1 | Not started | - |
-| 6. NEXT-ACTIONS + QA 整合 | 0/1 | Not started | - |
+| 5. 打磨与发布准备 | 2/5 | In progress | - |
+| 6. NEXT-ACTIONS + QA 整合 | 1/1 | Complete | 2026-03-25 |
 
 ## Coverage
 
@@ -215,4 +221,6 @@ Plans:
 *Roadmap created: 2026-03-22*
 *Updated: 2026-03-24 — Phase 04 (agent-resources-radar) complete*
 *Ready for: `/gsd-execute-phase 05` (polish-release)*
-*Updated: 2026-03-25 — Phase 06 (NEXT-ACTIONS + QA 整合) added*
+*Updated: 2026-03-25 — Phase 06 (NEXT-ACTIONS + QA 整合) complete*
+*Updated: 2026-03-25 — Phase 05 plan 02 (P0 bug fixes) complete*
+*Ready for: `/gsd-execute-phase 05 03` (P1 functional fixes)*
