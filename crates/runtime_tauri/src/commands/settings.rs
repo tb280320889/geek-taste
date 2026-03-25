@@ -37,6 +37,9 @@ pub async fn update_settings(
     if let Some(qh) = settings.quiet_hours {
         current.quiet_hours = qh;
     }
+    if let Some(enabled) = settings.github_api_enabled {
+        current.github_api_enabled = enabled;
+    }
 
     let val = serde_json::to_value(&current).map_err(|e| e.to_string())?;
     store.set(SETTINGS_KEY, val);

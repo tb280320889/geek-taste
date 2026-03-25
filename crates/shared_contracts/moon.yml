@@ -1,11 +1,18 @@
+language: 'rust'
+
 tasks:
   build:
     command: 'cargo build -p shared_contracts'
+    toolchain: 'rust'
   test:
     command: 'cargo test -p shared_contracts'
+    toolchain: 'rust'
   check:
     command: 'cargo check -p shared_contracts'
+    toolchain: 'rust'
   lint:
     command: 'cargo clippy -p shared_contracts -- -D warnings'
+    toolchain: 'rust'
   format:
     command: 'cargo fmt'
+    toolchain: 'rust'

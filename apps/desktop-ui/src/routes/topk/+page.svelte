@@ -3,6 +3,7 @@
   import RepoInfoModal from "$lib/components/RepoInfoModal.svelte";
   import { fetchRepoInfo, openExternal } from "$lib/ipc/tauri";
   import { authStatus } from "$lib/stores/auth";
+  import { settings } from "$lib/stores/settings";
   import {
     rankingViews,
     currentViewId,
@@ -57,6 +58,9 @@
       repoInfo = await fetchRepoInfo(parsed.owner, parsed.repo);
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
+      if (msg.includes("GitHub API 已在设置中关闭")) {
+        error = "GitHub API 已关闭：当前仅支持本地缓存数据";
+      } else
       if (msg.includes("404")) {
         error = "未找到该仓库";
       } else if (msg.toLowerCase().includes("network")) {
@@ -95,6 +99,12 @@
   {#if $authStatus !== "authenticated"}
     <div class="card rounded-[var(--radius)] p-4">请先连接 GitHub 后再查询仓库信息。</div>
   {:else}
+    {#if !$settings.github_api_enabled}
+      <div class="card rounded-[var(--radius)] p-3 text-sm text-[color:var(--text-muted)]">
+        测试模式：GitHub API 已关闭，TopK 将只使用本地缓存数据。
+      </div>
+    {/if}
+
     <!-- Quick lookup -->
     <form
       class="card rounded-[var(--radius)] p-4"

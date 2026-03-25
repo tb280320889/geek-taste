@@ -30,7 +30,7 @@ fn generate_id(prefix: &str) -> String {
 }
 
 #[derive(Debug, Clone)]
-enum SyncCandidate {
+pub enum SyncCandidate {
     Release {
         release_id: String,
         title: String,
@@ -351,20 +351,14 @@ pub struct HighSignalNotification {
     pub signal_type_text: String,
 }
 
-/// 同步所有活跃订阅 — release/tag polling + U1-U4 冲突消解 + digest 生成
-pub async fn sync_subscriptions(
+/// 加载同步上下文（同步，不跨 await）
+pub fn load_sync_context(
     conn: &Connection,
-    token: &str,
-    settings: &SettingsDto,
-) -> Result<(usize, Vec<HighSignalNotification>)> {
+) -> Result<Vec<(Subscription, domain::repository::Repository)>> {
     let subs = subscription_repository::list_active_subscriptions(conn)?;
-    let mut synced_count = 0;
-    let mut notifications: Vec<HighSignalNotification> = Vec::new();
-
-    for sub in &subs {
-        // 获取 repo 信息以获得 owner/name
-        let repo = persistence_sqlite::repo_repository::get_repository(conn, sub.repo_id)?;
-        let repo = match repo {
+    let mut pairs = Vec::new();
+    for sub in subs {
+        let repo = match persistence_sqlite::repo_repository::get_repository(conn, sub.repo_id)? {
             Some(r) => r,
             None => {
                 eprintln!(
@@ -374,103 +368,158 @@ pub async fn sync_subscriptions(
                 continue;
             }
         };
+        pairs.push((sub, repo));
+    }
+    Ok(pairs)
+}
 
+/// 单个订阅的同步候选结果
+#[derive(Debug, Clone)]
+pub struct SyncFetchResult {
+    pub subscription_id: String,
+    pub repo_id: i64,
+    pub repo_full_name: String,
+    pub candidates: Vec<SyncCandidate>,
+    pub latest_release_id: Option<String>,
+    pub latest_tag: Option<String>,
+}
+
+/// Async：获取所有订阅的 GitHub 更新（不持有 conn）
+pub async fn fetch_all_updates(
+    token: &str,
+    pairs: &[(Subscription, domain::repository::Repository)],
+) -> Vec<SyncFetchResult> {
+    let mut results = Vec::new();
+
+    for (sub, repo) in pairs {
         let parts: Vec<&str> = repo.full_name.splitn(2, '/').collect();
         if parts.len() != 2 {
-            eprintln!("Warn: Invalid full_name: {}", repo.full_name);
             continue;
         }
         let (owner, name) = (parts[0], parts[1]);
-
         let mut candidates: Vec<SyncCandidate> = Vec::new();
+        let mut latest_release_id = sub.cursor_release_id.clone();
+        let mut latest_tag = sub.cursor_tag_name.clone();
 
         // Fetch releases
-        let releases_result =
-            fetch_latest_releases(token, owner, name, sub.cursor_release_id.as_deref()).await;
-
-        match releases_result {
-            Ok(releases) => {
-                let mut latest_release_id: Option<String> = sub.cursor_release_id.clone();
-                for release in &releases {
-                    candidates.push(SyncCandidate::Release {
-                        release_id: release.release_id.to_string(),
-                        title: format!(
-                            "{} 发布 {}{}",
-                            repo.full_name,
-                            release.tag_name,
-                            if release.prerelease {
-                                " (预发布)"
-                            } else {
-                                ""
-                            }
-                        ),
-                        occurred_at: release
-                            .published_at
-                            .clone()
-                            .unwrap_or_else(|| Utc::now().to_rfc3339()),
-                        evidence: serde_json::json!({
-                            "releaseId": release.release_id,
-                            "tagName": release.tag_name,
-                            "releaseUrl": release.html_url,
-                        }),
-                    });
-                    latest_release_id = Some(release.release_id.to_string());
-                }
-                // 更新 cursor
-                if latest_release_id.is_some() && latest_release_id != sub.cursor_release_id {
-                    subscription_repository::update_subscription_cursors(
-                        conn,
-                        &sub.subscription_id,
-                        latest_release_id.as_deref(),
-                        sub.cursor_tag_name.as_deref(),
-                        sub.cursor_branch_sha.as_deref(),
-                    )?;
-                }
-            }
-            Err(e) => {
-                eprintln!("Failed to fetch releases for {}: {}", repo.full_name, e);
+        if let Ok(releases) =
+            fetch_latest_releases(token, owner, name, sub.cursor_release_id.as_deref()).await
+        {
+            for release in &releases {
+                candidates.push(SyncCandidate::Release {
+                    release_id: release.release_id.to_string(),
+                    title: format!(
+                        "{} 发布 {}{}",
+                        repo.full_name,
+                        release.tag_name,
+                        if release.prerelease {
+                            " (预发布)"
+                        } else {
+                            ""
+                        }
+                    ),
+                    occurred_at: release
+                        .published_at
+                        .clone()
+                        .unwrap_or_else(|| Utc::now().to_rfc3339()),
+                    evidence: serde_json::json!({
+                        "releaseId": release.release_id,
+                        "tagName": release.tag_name,
+                        "releaseUrl": release.html_url,
+                    }),
+                });
+                latest_release_id = Some(release.release_id.to_string());
             }
         }
 
         // Fetch tags
-        let tags_result =
-            fetch_latest_tags(token, owner, name, sub.cursor_tag_name.as_deref()).await;
-
-        match tags_result {
-            Ok(tags) => {
-                let mut latest_tag: Option<String> = sub.cursor_tag_name.clone();
-                for tag in &tags {
-                    candidates.push(SyncCandidate::Tag {
-                        tag_name: tag.name.clone(),
-                        title: format!("{} 新标签 {}", repo.full_name, tag.name),
-                        occurred_at: Utc::now().to_rfc3339(),
-                        evidence: serde_json::json!({
-                            "tagName": tag.name,
-                            "sha": tag.sha,
-                        }),
-                    });
-                    latest_tag = Some(tag.name.clone());
-                }
-                if latest_tag.is_some() && latest_tag != sub.cursor_tag_name {
-                    subscription_repository::update_subscription_cursors(
-                        conn,
-                        &sub.subscription_id,
-                        sub.cursor_release_id.as_deref(),
-                        latest_tag.as_deref(),
-                        sub.cursor_branch_sha.as_deref(),
-                    )?;
-                }
-            }
-            Err(e) => {
-                eprintln!("Failed to fetch tags for {}: {}", repo.full_name, e);
+        if let Ok(tags) =
+            fetch_latest_tags(token, owner, name, sub.cursor_tag_name.as_deref()).await
+        {
+            for tag in &tags {
+                candidates.push(SyncCandidate::Tag {
+                    tag_name: tag.name.clone(),
+                    title: format!("{} 新标签 {}", repo.full_name, tag.name),
+                    occurred_at: Utc::now().to_rfc3339(),
+                    evidence: serde_json::json!({
+                        "tagName": tag.name,
+                        "sha": tag.sha,
+                    }),
+                });
+                latest_tag = Some(tag.name.clone());
             }
         }
+
+        results.push(SyncFetchResult {
+            subscription_id: sub.subscription_id.clone(),
+            repo_id: sub.repo_id,
+            repo_full_name: repo.full_name.clone(),
+            candidates,
+            latest_release_id,
+            latest_tag,
+        });
+    }
+
+    results
+}
+
+/// 同步：处理获取到的更新，生成信号，更新游标，保存到 DB
+pub fn process_sync_results(
+    conn: &Connection,
+    pairs: &[(Subscription, domain::repository::Repository)],
+    fetch_results: &[SyncFetchResult],
+    settings: &SettingsDto,
+) -> Result<(usize, Vec<HighSignalNotification>)> {
+    let mut synced_count = 0;
+    let mut notifications: Vec<HighSignalNotification> = Vec::new();
+
+    // 构建 subscription 映射
+    let sub_map: std::collections::HashMap<String, &Subscription> = pairs
+        .iter()
+        .map(|(sub, _)| (sub.subscription_id.clone(), sub))
+        .collect();
+
+    for fetch in fetch_results {
+        let sub = match sub_map.get(&fetch.subscription_id) {
+            Some(s) => *s,
+            None => continue,
+        };
+
+        let mut candidates = fetch.candidates.clone();
+
+        // 更新 release cursor
+        if fetch.latest_release_id.is_some() && fetch.latest_release_id != sub.cursor_release_id {
+            subscription_repository::update_subscription_cursors(
+                conn,
+                &sub.subscription_id,
+                fetch.latest_release_id.as_deref(),
+                sub.cursor_tag_name.as_deref(),
+                sub.cursor_branch_sha.as_deref(),
+            )?;
+        }
+
+        // 更新 tag cursor
+        if fetch.latest_tag.is_some() && fetch.latest_tag != sub.cursor_tag_name {
+            subscription_repository::update_subscription_cursors(
+                conn,
+                &sub.subscription_id,
+                sub.cursor_release_id.as_deref(),
+                fetch.latest_tag.as_deref(),
+                sub.cursor_branch_sha.as_deref(),
+            )?;
+        }
+
+        // 获取 repo 用于 digest 判断
+        let repo = match persistence_sqlite::repo_repository::get_repository(conn, fetch.repo_id)? {
+            Some(r) => r,
+            None => continue,
+        };
 
         if let Some(digest_candidate) = should_generate_digest(sub, &repo, &candidates) {
             candidates.push(digest_candidate);
         }
 
-        let resolved_signals = resolve_sync_signals(sub.repo_id, candidates);
+        let resolved_signals = resolve_sync_signals(fetch.repo_id, candidates);
         for signal in resolved_signals {
             let inserted = signal_repository::insert_signal(conn, &signal)?;
             if inserted
@@ -479,7 +528,7 @@ pub async fn sync_subscriptions(
                 && !is_within_quiet_hours(settings.quiet_hours.as_ref(), Utc::now())
             {
                 notifications.push(HighSignalNotification {
-                    repo_full_name: repo.full_name.clone(),
+                    repo_full_name: fetch.repo_full_name.clone(),
                     title: signal.title.clone(),
                     signal_type_text: format_signal_type_text(&signal.signal_type).to_string(),
                 });

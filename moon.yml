@@ -4,29 +4,37 @@ tasks:
     inputs:
       - '@globs(sources)'
       - 'Cargo.toml'
-    platform: 'system'
+      - 'Cargo.lock'
+    toolchain: 'rust'
 
   test:
     command: 'cargo test'
     inputs:
       - '@globs(sources)'
-    platform: 'system'
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+    toolchain: 'rust'
 
   check:
     command: 'cargo check'
     inputs:
       - '@globs(sources)'
       - 'Cargo.toml'
-    platform: 'system'
+      - 'Cargo.lock'
+    toolchain: 'rust'
 
   lint:
     command: 'cargo clippy -- -D warnings'
     inputs:
       - '@globs(sources)'
-    platform: 'system'
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+    toolchain: 'rust'
 
   format:
     command: 'cargo fmt --all'
     inputs:
       - '@globs(sources)'
-    platform: 'system'
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+    toolchain: 'rust'

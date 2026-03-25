@@ -2,16 +2,16 @@ language: 'rust'
 
 tasks:
   build:
-    command: 'cargo build -p application'
+    command: 'cargo build -p runtime_server'
     toolchain: 'rust'
   test:
-    command: 'cargo test -p application'
+    command: 'cargo test -p runtime_server'
     toolchain: 'rust'
   check:
-    command: 'cargo check -p application'
+    command: 'cargo check -p runtime_server'
     toolchain: 'rust'
   lint:
-    command: 'cargo clippy -p application -- -D warnings'
+    command: 'cargo clippy -p runtime_server -- -D warnings'
     toolchain: 'rust'
   format:
     command: 'cargo fmt'

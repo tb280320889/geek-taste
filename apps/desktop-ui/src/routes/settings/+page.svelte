@@ -33,6 +33,7 @@
       notification_frequency: NotificationFrequency;
       language_interests: string[];
       quiet_hours: QuietHoursDto | null;
+      github_api_enabled: boolean;
     }>,
   ): Promise<void> => {
     saving = true;
@@ -77,6 +78,10 @@
         [which]: value,
       },
     });
+  };
+
+  const onGithubApiToggle = async (enabled: boolean): Promise<void> => {
+    await runSave({ github_api_enabled: enabled });
   };
 
   void loadSettings().finally(() => {
@@ -124,6 +129,18 @@
         selected={$settings.language_interests}
         onChange={(next) => void onLanguageChange(next)}
       />
+    </SettingsGroup>
+
+    <SettingsGroup title="测试模式" description="可手动关闭 GitHub API，避免触发限流">
+      <label class="inline-flex items-center gap-2 text-sm">
+        <input
+          type="checkbox"
+          checked={$settings.github_api_enabled}
+          onchange={(e) => void onGithubApiToggle((e.currentTarget as HTMLInputElement).checked)}
+          disabled={saving}
+        />
+        启用 GitHub API 请求（关闭后 TopK/同步只走本地缓存）
+      </label>
     </SettingsGroup>
 
     <SettingsGroup title="安静时段" description="减少夜间打扰">

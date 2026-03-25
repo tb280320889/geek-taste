@@ -4,12 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite dev",
-    "build": "vite build",
+    "dev": "moon run desktop-ui:dev --interactive",
+    "build": "moon run desktop-ui:build",
     "preview": "vite preview",
-    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-    "lint": "biome lint .",
-    "format": "biome format --write ."
+    "check": "moon run desktop-ui:check",
+    "lint": "moon run desktop-ui:lint",
+    "format": "moon run desktop-ui:format"
   },
   "dependencies": {
     "@lucide/svelte": "^1.3.0",
@@ -19,14 +19,14 @@
   "devDependencies": {
     "@biomejs/biome": "^2.2.4",
     "@sveltejs/adapter-static": "^3.0.0",
-    "@sveltejs/kit": "^2.50.0",
+    "@sveltejs/kit": "^2.55.0",
     "@sveltejs/vite-plugin-svelte": "^7.0.0",
     "@tailwindcss/vite": "^4.1.14",
     "@tauri-apps/cli": "^2.10.1",
     "svelte": "^5.54.0",
     "svelte-check": "^4.0.0",
     "tailwindcss": "^4.2.2",
-    "typescript": "^5.5.0",
+    "typescript": "^6.0.0",
     "vite": "^8.0.1"
   }
 }

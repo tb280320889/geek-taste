@@ -27,6 +27,7 @@ pub struct Settings {
     pub notification_frequency: NotificationFrequency,
     pub language_interests: Vec<String>,
     pub quiet_hours: Option<QuietHours>,
+    pub github_api_enabled: bool,
 }
 
 impl Default for Settings {
@@ -35,6 +36,7 @@ impl Default for Settings {
             notification_frequency: NotificationFrequency::default(),
             language_interests: Vec::new(),
             quiet_hours: None,
+            github_api_enabled: true,
         }
     }
 }
@@ -49,6 +51,7 @@ mod tests {
         assert_eq!(s.notification_frequency, NotificationFrequency::Digest12h);
         assert!(s.language_interests.is_empty());
         assert!(s.quiet_hours.is_none());
+        assert!(s.github_api_enabled);
     }
 
     #[test]
@@ -60,10 +63,12 @@ mod tests {
                 start: "22:00".into(),
                 end: "08:00".into(),
             }),
+            github_api_enabled: false,
         };
         let json = serde_json::to_string(&settings).unwrap();
         let back: Settings = serde_json::from_str(&json).unwrap();
         assert_eq!(back.notification_frequency, NotificationFrequency::Realtime);
         assert_eq!(back.language_interests.len(), 2);
+        assert!(!back.github_api_enabled);
     }
 }
