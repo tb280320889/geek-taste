@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: "Phase 04 complete — ready for Phase 05 polish-release"
-last_updated: "2026-03-24T11:35:00Z"
+status: "Phase 06 planned — NEXT-ACTIONS + QA integration ready for execution"
+last_updated: "2026-03-25T10:30:00Z"
 progress:
-  total_phases: 6
+  total_phases: 7
   completed_phases: 4
   total_plans: 32
   completed_plans: 32
@@ -33,7 +33,8 @@ Plan: — (not started)
 | 2. 数据层与 TopK 发现引擎 | SQLite + GitHub 客户端 + TopK 排名 | 11 | Complete |
 | 3. 订阅系统与信号模型 | 订阅 CRUD + Signal + Home | 10 | Complete |
 | 4. Agent 资源雷达 | MCP/Skills/Agent 资源发现 | 3 | Complete |
-| 5. 打磨与发布准备 | 离线 + 性能 + 发布 | 1 | Not started |
+| 5. 打磨与发布准备 | 离线 + 错误处理 + QA 修复 + 性能 + 打包 | 5 | Planning |
+| 6. NEXT-ACTIONS + QA 整合 | 整合 QA 发现 + Phase 5 计划补全 | — | Planning |
 
 ## Performance Metrics
 
@@ -41,7 +42,7 @@ Plan: — (not started)
 |--------|-------|
 | Requirements total | 29 |
 | Requirements validated | 22 |
-| Phases complete | 4/6 |
+| Phases complete | 4/7 |
 | Current phase progress | — |
 | Phase 01-scaffold-auth P01 | 20min | 2 tasks | 2 files |
 | Phase 01-scaffold-auth P02 | 8min | 4 tasks | 16 files |
@@ -119,11 +120,15 @@ Plan: — (not started)
 
 - None currently
 
+### Roadmap Evolution
+
+- Phase 6 added: NEXT-ACTIONS + QA 整合
+
 ## Session Continuity
 
-**Last action:** Phase 04 (agent-resources-radar) complete — 3/3 plans, RES-01~03 verified
-**Next action:** Phase 05 polish-release: offline degradation, error handling, Momentum warmup
-**Context needed for next session:** Phase 04 已完成资源雷达全栈：domain/resource.rs 领域模型、resource_repository CRUD、application/resource.rs 评分编排、4 个 Tauri IPC 命令、前端 ResourceCard/ResourceFilters/Resources 页面
+**Last action:** Phase 06 planned — 1 plan covering QA findings mapping + Phase 5 plan expansion
+**Next action:** `/gsd-execute-phase 06` — 映射 NEXT-ACTIONS/QA-FINDINGS，生成 Phase 5 新增计划 (05-02 ~ 05-05)
+**Context needed for next session:** Phase 6 产出为规划文档：NEXT-ACTIONS.md 映射、QA-FINDINGS.md 分配、Phase 5 四个新 PLAN.md。Phase 5 将从 1 plan 扩展为 5 plans (05-01 ~ 05-05)
 
 ---
 *Last updated: 2026-03-24 — Phase 04 complete, ready for Phase 05*
