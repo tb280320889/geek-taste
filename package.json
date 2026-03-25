@@ -1,0 +1,20 @@
+{
+  "name": "geek-taste",
+  "private": true,
+  "packageManager": "bun@1.3.11",
+  "scripts": {
+    "repo:setup": "moon setup",
+    "repo:sync": "moon sync",
+    "repo:check": "moon run :check",
+    "repo:test": "moon run :test",
+    "repo:lint": "moon run :lint",
+    "repo:build": "moon run :build",
+    "repo:format": "moon run :format",
+    "repo:ci": "moon ci",
+    "repo:desktop:dev": "moon run desktop-ui:dev --interactive",
+    "repo:desktop:tauri-build": "moon run desktop-ui:tauri-build"
+  },
+  "workspaces": [
+    "apps/*"
+  ]
+}

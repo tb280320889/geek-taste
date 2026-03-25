@@ -1,11 +1,18 @@
+language: 'rust'
+
 tasks:
   build:
     command: 'cargo build -p domain'
+    toolchain: 'rust'
   test:
     command: 'cargo test -p domain'
+    toolchain: 'rust'
   check:
     command: 'cargo check -p domain'
+    toolchain: 'rust'
   lint:
     command: 'cargo clippy -p domain -- -D warnings'
+    toolchain: 'rust'
   format:
     command: 'cargo fmt'
+    toolchain: 'rust'

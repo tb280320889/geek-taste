@@ -1,0 +1,18 @@
+language: 'rust'
+
+tasks:
+  build:
+    command: 'cargo build -p notification_adapter'
+    toolchain: 'rust'
+  test:
+    command: 'cargo test -p notification_adapter'
+    toolchain: 'rust'
+  check:
+    command: 'cargo check -p notification_adapter'
+    toolchain: 'rust'
+  lint:
+    command: 'cargo clippy -p notification_adapter -- -D warnings'
+    toolchain: 'rust'
+  format:
+    command: 'cargo fmt'
+    toolchain: 'rust'

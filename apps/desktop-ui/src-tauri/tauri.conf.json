@@ -4,9 +4,9 @@
 	"version": "0.1.0",
 	"identifier": "com.geek-taste.app",
 	"build": {
-		"beforeDevCommand": "pnpm dev",
+		"beforeDevCommand": "moon run desktop-ui:dev --interactive",
 		"devUrl": "http://localhost:5173",
-		"beforeBuildCommand": "pnpm build",
+		"beforeBuildCommand": "moon run desktop-ui:build",
 		"frontendDist": "../build"
 	},
 	"app": {

@@ -1,0 +1,18 @@
+language: 'rust'
+
+tasks:
+  build:
+    command: 'cargo build -p persistence_sqlite'
+    toolchain: 'rust'
+  test:
+    command: 'cargo test -p persistence_sqlite'
+    toolchain: 'rust'
+  check:
+    command: 'cargo check -p persistence_sqlite'
+    toolchain: 'rust'
+  lint:
+    command: 'cargo clippy -p persistence_sqlite -- -D warnings'
+    toolchain: 'rust'
+  format:
+    command: 'cargo fmt'
+    toolchain: 'rust'
