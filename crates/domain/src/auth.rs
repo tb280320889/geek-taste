@@ -9,23 +9,6 @@ pub struct User {
     pub html_url: String,
 }
 
-impl User {
-    /// 从 GitHub API 响应字段构建 User
-    pub fn from_github_response(
-        login: impl Into<String>,
-        name: Option<String>,
-        avatar_url: impl Into<String>,
-        html_url: impl Into<String>,
-    ) -> Self {
-        Self {
-            login: login.into(),
-            name,
-            avatar_url: avatar_url.into(),
-            html_url: html_url.into(),
-        }
-    }
-}
-
 /// 认证令牌（Debug 时 mask）
 #[derive(Clone)]
 pub struct AuthToken {
@@ -49,18 +32,6 @@ impl AuthToken {
 
     pub fn mark_validated(&mut self) {
         self.last_validated = Some(chrono::Utc::now());
-    }
-
-    /// 检查 token 是否需要重新验证
-    /// v1 简化: 启动时验证一次，24h 内视为有效
-    pub fn is_expired(&self) -> bool {
-        match self.last_validated {
-            Some(last) => {
-                let elapsed = chrono::Utc::now() - last;
-                elapsed.num_hours() >= 24
-            }
-            None => true, // 从未验证，视为过期
-        }
     }
 }
 
@@ -103,30 +74,5 @@ mod tests {
     fn auth_token_as_str() {
         let token = AuthToken::new("ghp_abc123".to_string());
         assert_eq!(token.as_str(), "ghp_abc123");
-    }
-
-    #[test]
-    fn auth_token_new_is_expired_never_validated() {
-        let token = AuthToken::new("ghp_abc123".to_string());
-        assert!(token.is_expired(), "从未验证的 token 应视为过期");
-    }
-
-    #[test]
-    fn auth_token_recently_validated_not_expired() {
-        let mut token = AuthToken::new("ghp_abc123".to_string());
-        token.mark_validated();
-        assert!(!token.is_expired(), "刚验证的 token 不应过期");
-    }
-
-    #[test]
-    fn user_from_github_response() {
-        let user = User::from_github_response(
-            "octocat",
-            Some("The Octocat".into()),
-            "https://avatars.githubusercontent.com/u/1",
-            "https://github.com/octocat",
-        );
-        assert_eq!(user.login, "octocat");
-        assert_eq!(user.name, Some("The Octocat".into()));
     }
 }
