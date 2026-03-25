@@ -3,12 +3,14 @@
   import { resolve } from "$app/paths";
   import { currentUser } from "$lib/stores/auth";
   import { subscriptions, subscriptionsLoading, loadSubscriptions } from "$lib/stores/subscriptions";
+  import { lastSyncedAt, isStale } from "$lib/stores/network";
 
   onMount(() => {
     void loadSubscriptions();
   });
 
   const isEmpty = $derived($subscriptions.length === 0 && !$subscriptionsLoading);
+  const topkStale = $derived(isStale("topk"));
 </script>
 
 <section class="grid gap-4">
@@ -23,7 +25,12 @@
       {/if}
     </div>
     <div>
-      <h1 class="m-0 text-2xl font-semibold">欢迎回来，{$currentUser?.name || $currentUser?.login || "Geek"}</h1>
+      <h1 class="m-0 text-2xl font-semibold">
+        欢迎回来，{$currentUser?.name || $currentUser?.login || "Geek"}
+        {#if topkStale}
+          <span class="stale-dot" title="数据可能已过期"></span>
+        {/if}
+      </h1>
       <p class="muted m-0 mt-1.5">
         {#if isEmpty}
           开始发现你关注的技术项目。

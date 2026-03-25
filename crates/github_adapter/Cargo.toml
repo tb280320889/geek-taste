@@ -8,3 +8,8 @@ domain = { path = "../domain" }
 shared_contracts = { path = "../shared_contracts" }
 octocrab = { workspace = true }
 serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+thiserror = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }

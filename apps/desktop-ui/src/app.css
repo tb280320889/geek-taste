@@ -57,3 +57,26 @@ select {
 .muted {
   color: var(--text-muted);
 }
+
+.offline-banner {
+  background: rgba(255, 193, 7, 0.12);
+  border: 1px solid rgba(255, 193, 7, 0.35);
+  border-radius: var(--radius-sm);
+  color: #ffc107;
+  padding: 8px 14px;
+  margin-bottom: 12px;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.stale-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffc107;
+  margin-left: 6px;
+  vertical-align: middle;
+  position: relative;
+  top: -2px;
+}
