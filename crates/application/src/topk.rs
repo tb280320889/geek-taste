@@ -10,6 +10,7 @@ use domain::ranking::{
 };
 use persistence_sqlite::ranking_repository;
 use persistence_sqlite::repo_repository;
+use persistence_sqlite::repo_repository::SearchFilters;
 use rusqlite::Connection;
 use shared_contracts::ranking_dto::{
     CreateRankingViewRequest, RankingItemDto, RankingResultDto, RankingViewSpecDto,
@@ -61,40 +62,82 @@ pub fn build_search_query(view: &RankingView) -> github_adapter::search::SearchQ
     }
 }
 
-/// 执行排名：从 GitHub 搜索候选仓库，按 RankingMode 排序，返回前 k 条
-pub async fn execute_ranking(
+/// 从 DB 读取排名所需上下文（同步，不持有 conn 跨 await）
+pub fn load_ranking_context(
     conn: &Connection,
-    token: &str,
     view_id: &str,
-) -> Result<RankingResultDto> {
-    // 1. 获取 RankingView
+) -> Result<(
+    RankingView,
+    Option<RankingSnapshot>,
+    Vec<domain::repository::RepoSnapshot>,
+)> {
     let view = ranking_repository::get_ranking_view(conn, view_id)?
         .context(format!("RankingView not found: {view_id}"))?;
+    let prev_snapshot = ranking_repository::get_latest_ranking_snapshot(conn, view_id)?;
 
-    // 2. 构建 SearchQuery 并调用 GitHub Search API
-    let query = build_search_query(&view);
+    // 预加载 momentum 所需的 repo snapshots
+    let mut repo_snapshots = Vec::new();
+    if matches!(
+        view.ranking_mode,
+        RankingMode::Momentum24h | RankingMode::Momentum7d
+    ) && prev_snapshot.is_some()
+    {
+        // 获取候选集 repo_id 列表（从上次 snapshot）
+        if let Some(ref snap) = prev_snapshot {
+            for item in &snap.items {
+                if let Some(snap_row) =
+                    repo_repository::get_latest_repo_snapshot(conn, item.repo_id)?
+                {
+                    repo_snapshots.push(snap_row);
+                }
+            }
+        }
+    }
+
+    Ok((view, prev_snapshot, repo_snapshots))
+}
+
+/// Async 部分：调用 GitHub API 获取候选仓库
+pub async fn fetch_ranking_candidates(
+    token: &str,
+    view: &RankingView,
+) -> Result<Vec<domain::repository::Repository>> {
+    let query = build_search_query(view);
     let budget = github_adapter::rate_limit::RateBudget::new();
     let search_result = github_adapter::search::search_repositories(token, &query, &budget)
         .await
         .map_err(|e| anyhow::anyhow!("GitHub search failed: {e}"))?;
+    Ok(search_result.items)
+}
 
-    // 3. Upsert 搜索结果到 repositories 表
-    for repo in &search_result.items {
+/// 同步部分：排序 + 截取 + 转 DTO（不跨 await）
+pub fn compute_ranking_result(
+    conn: &Connection,
+    view: &RankingView,
+    items: Vec<domain::repository::Repository>,
+    prev_snapshot: Option<&RankingSnapshot>,
+    repo_snapshots: &[domain::repository::RepoSnapshot],
+) -> Result<RankingResultDto> {
+    // Upsert 到 repositories 表
+    for repo in &items {
         repo_repository::upsert_repository(conn, repo)?;
     }
 
-    // 4. 获取上一次 snapshot（用于 momentum 计算和排名变化）
-    let prev_snapshot = ranking_repository::get_latest_ranking_snapshot(conn, view_id)?;
-
-    // 5. 暖机检测：Momentum 模式无历史快照 → 暖机降级
+    // 暖机检测
     let is_warmup = prev_snapshot.is_none()
         && matches!(
             view.ranking_mode,
             RankingMode::Momentum24h | RankingMode::Momentum7d
         );
 
-    // 6. 按 RankingMode 排序
-    let mut items = search_result.items;
+    // 构建 repo snapshot 映射
+    let snapshot_map: HashMap<i64, (i64, i64)> = repo_snapshots
+        .iter()
+        .map(|s| (s.repo_id, (s.stargazers_count, s.forks_count)))
+        .collect();
+
+    // 按 RankingMode 排序
+    let mut items = items;
     let score_breakdowns: HashMap<i64, MomentumScore> = match view.ranking_mode {
         RankingMode::StarsDesc => {
             items.sort_by(|a, b| b.stargazers_count.cmp(&a.stargazers_count));
@@ -105,20 +148,15 @@ pub async fn execute_ranking(
             HashMap::new()
         }
         RankingMode::Momentum24h | RankingMode::Momentum7d => {
-            // 降级检查：无历史快照 → UPDATED_DESC
             if prev_snapshot.is_none() {
                 items.sort_by(|a, b| b.updated_at.cmp(&a.updated_at));
                 HashMap::new()
             } else {
-                // 使用 repo_snapshots 获取上一次的 stars/forks
                 let mut breakdowns = HashMap::new();
                 for repo in &items {
-                    let prev_snap = repo_repository::get_latest_repo_snapshot(conn, repo.repo_id)?;
-                    let (prev_stars, prev_forks) = prev_snap
-                        .map(|s| (s.stargazers_count, s.forks_count))
-                        .unwrap_or((0, 0));
+                    let (prev_stars, prev_forks) =
+                        snapshot_map.get(&repo.repo_id).copied().unwrap_or((0, 0));
 
-                    // 计算 days_since_update
                     let updated_dt = chrono::DateTime::parse_from_rfc3339(&repo.updated_at)
                         .unwrap_or_else(|_| Utc::now().into());
                     let days_since = (Utc::now() - updated_dt.with_timezone(&Utc)).num_seconds()
@@ -145,12 +183,9 @@ pub async fn execute_ranking(
         }
     };
 
-    // 7. 截取前 k 条
     items.truncate(view.k_value as usize);
 
-    // 8. 构建上一次 snapshot 的排名映射（用于 rank_change）
     let prev_rank_map: HashMap<i64, i32> = prev_snapshot
-        .as_ref()
         .map(|snap| {
             snap.items
                 .iter()
@@ -159,13 +194,11 @@ pub async fn execute_ranking(
         })
         .unwrap_or_default();
 
-    // 9. 查询活跃订阅 repo_id（用于 is_subscribed）
     let subscribed_repo_ids: std::collections::HashSet<i64> =
         persistence_sqlite::subscription_repository::list_active_repo_ids(conn)?
             .into_iter()
             .collect();
 
-    // 10. 转换为 RankingItemDto
     let dtos: Vec<RankingItemDto> = items
         .into_iter()
         .enumerate()
@@ -175,7 +208,6 @@ pub async fn execute_ranking(
                 .get(&repo.repo_id)
                 .map(|s| s.total)
                 .unwrap_or_else(|| {
-                    // 非 momentum 模式，用 stars 作为 score（归一化到 0-1 范围近似）
                     if view.ranking_mode == RankingMode::StarsDesc {
                         (repo.stargazers_count as f64 / 100_000.0).min(1.0)
                     } else {
@@ -191,9 +223,9 @@ pub async fn execute_ranking(
                     updated_recency: s.updated_recency_norm,
                 });
 
-            let rank_change = prev_rank_map.get(&repo.repo_id).map(|&prev_rank| {
-                prev_rank - rank // 正值 = 排名上升
-            });
+            let rank_change = prev_rank_map
+                .get(&repo.repo_id)
+                .map(|&prev_rank| prev_rank - rank);
 
             RankingItemDto {
                 repo_id: repo.repo_id,
@@ -215,6 +247,72 @@ pub async fn execute_ranking(
     Ok(RankingResultDto {
         items: dtos,
         warmup: is_warmup,
+    })
+}
+
+/// API 关闭时从本地缓存构建 TopK 结果（无远程请求）
+pub fn execute_ranking_from_cache(conn: &Connection, view_id: &str) -> Result<RankingResultDto> {
+    let view = ranking_repository::get_ranking_view(conn, view_id)?
+        .context(format!("RankingView not found: {view_id}"))?;
+
+    let mut rows = repo_repository::search_repositories(
+        conn,
+        &SearchFilters {
+            language: view.filters.language.first().cloned(),
+            min_stars: view.filters.min_stars,
+            topic: view.filters.topic.first().cloned(),
+            limit: view.k_value as i64,
+            offset: 0,
+            sort_by: match view.ranking_mode {
+                RankingMode::UpdatedDesc => "updated".to_string(),
+                RankingMode::Momentum24h | RankingMode::Momentum7d | RankingMode::StarsDesc => {
+                    "stars".to_string()
+                }
+            },
+        },
+    )?;
+
+    // 本地缓存不支持完整 momentum 计算，直接按 stars/updated 排序并标记 warmup
+    match view.ranking_mode {
+        RankingMode::UpdatedDesc => rows.sort_by(|a, b| b.updated_at.cmp(&a.updated_at)),
+        _ => rows.sort_by(|a, b| b.stargazers_count.cmp(&a.stargazers_count)),
+    }
+    rows.truncate(view.k_value as usize);
+
+    let subscribed_repo_ids: std::collections::HashSet<i64> =
+        persistence_sqlite::subscription_repository::list_active_repo_ids(conn)?
+            .into_iter()
+            .collect();
+
+    let items: Vec<RankingItemDto> = rows
+        .into_iter()
+        .enumerate()
+        .map(|(idx, repo)| RankingItemDto {
+            repo_id: repo.repo_id,
+            full_name: repo.full_name,
+            html_url: repo.html_url,
+            description: repo.description,
+            primary_language: repo.primary_language,
+            stars: repo.stargazers_count,
+            forks: repo.forks_count,
+            rank: (idx + 1) as i32,
+            score: if view.ranking_mode == RankingMode::StarsDesc {
+                (repo.stargazers_count as f64 / 100_000.0).min(1.0)
+            } else {
+                0.0
+            },
+            score_breakdown: None,
+            rank_change: None,
+            is_subscribed: subscribed_repo_ids.contains(&repo.repo_id),
+        })
+        .collect();
+
+    Ok(RankingResultDto {
+        items,
+        warmup: matches!(
+            view.ranking_mode,
+            RankingMode::Momentum24h | RankingMode::Momentum7d
+        ),
     })
 }
 

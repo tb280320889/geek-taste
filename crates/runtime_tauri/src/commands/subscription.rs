@@ -1,10 +1,12 @@
 //! Subscription Tauri IPC 命令 — 薄封装层
+//!
+//! 重构说明：同步加载 → 异步获取 GitHub 数据 → 同步处理，避免 conn 跨 .await。
 
 use shared_contracts::subscription_dto::{CreateSubscriptionRequest, SubscriptionRowDto};
 use tauri::AppHandle;
 use tauri_plugin_store::StoreExt;
 
-use super::helpers::{get_db_connection, load_token};
+use super::helpers::{get_db_connection, github_api_enabled, load_token};
 
 const SETTINGS_KEY: &str = "settings";
 
@@ -56,8 +58,12 @@ pub async fn list_subscriptions(app: AppHandle) -> Result<Vec<SubscriptionRowDto
 
 #[tauri::command]
 pub async fn sync_subscriptions(app: AppHandle) -> Result<usize, String> {
-    let conn = get_db_connection(&app)?;
-    let token = load_token()?;
+    if !github_api_enabled(&app)? {
+        // 测试模式：禁用远程同步，返回 0（不报错）
+        return Ok(0);
+    }
+
+    // 获取 settings（需要 store，在 conn 之前获取）
     let store = app.store("settings.json").map_err(|e| e.to_string())?;
     let settings: shared_contracts::settings_dto::SettingsDto = match store.get(SETTINGS_KEY) {
         Some(val) => serde_json::from_value(val).map_err(|e| e.to_string())?,
@@ -66,9 +72,21 @@ pub async fn sync_subscriptions(app: AppHandle) -> Result<usize, String> {
         }
     };
 
+    // 同步：加载上下文（conn 在此作用域内）
+    let pairs = {
+        let conn = get_db_connection(&app)?;
+        application::subscription::load_sync_context(&conn).map_err(|e| e.to_string())?
+    };
+    // conn 已释放
+
+    // 异步：获取 GitHub 更新（不持有 conn）
+    let token = load_token()?;
+    let fetch_results = application::subscription::fetch_all_updates(&token, &pairs).await;
+
+    // 同步：处理结果，生成信号，保存到 DB
+    let conn2 = get_db_connection(&app)?;
     let (synced, notifications) =
-        application::subscription::sync_subscriptions(&conn, &token, &settings)
-            .await
+        application::subscription::process_sync_results(&conn2, &pairs, &fetch_results, &settings)
             .map_err(|e| e.to_string())?;
 
     for item in &notifications {

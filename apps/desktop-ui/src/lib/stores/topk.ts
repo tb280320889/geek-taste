@@ -7,6 +7,7 @@ import {
   executeRanking,
 } from "$lib/ipc/tauri";
 import { handleIpcError } from "$lib/stores/network";
+import { settings } from "$lib/stores/settings";
 import type {
   RankingViewSpecDto,
   RankingItemDto,
@@ -158,7 +159,12 @@ export const ensureDefaultViews = async (): Promise<void> => {
     await selectView(views[0].ranking_view_id);
     return;
   }
-  for (const preset of DEFAULT_VIEWS) {
+  // API 关闭时，首次只创建一个默认视图，避免空页面且不触发大量远程请求
+  let apiEnabled = true;
+  settings.subscribe((s) => (apiEnabled = s.github_api_enabled))();
+  const presets = apiEnabled ? DEFAULT_VIEWS : [DEFAULT_VIEWS[0]];
+
+  for (const preset of presets) {
     try {
       const view = await createRankingView(preset);
       rankingViews.update((v) => [...v, view]);

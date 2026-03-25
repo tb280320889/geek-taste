@@ -23,6 +23,12 @@ pub struct SettingsDto {
     pub notification_frequency: NotificationFrequencyDto,
     pub language_interests: Vec<String>,
     pub quiet_hours: Option<QuietHoursDto>,
+    #[serde(default = "default_github_api_enabled")]
+    pub github_api_enabled: bool,
+}
+
+fn default_github_api_enabled() -> bool {
+    true
 }
 
 impl From<domain::settings::Settings> for SettingsDto {
@@ -45,6 +51,7 @@ impl From<domain::settings::Settings> for SettingsDto {
                 start: q.start,
                 end: q.end,
             }),
+            github_api_enabled: s.github_api_enabled,
         }
     }
 }
@@ -69,6 +76,7 @@ impl From<SettingsDto> for domain::settings::Settings {
                 start: q.start,
                 end: q.end,
             }),
+            github_api_enabled: d.github_api_enabled,
         }
     }
 }
@@ -79,4 +87,5 @@ pub struct UpdateSettingsRequest {
     pub notification_frequency: Option<NotificationFrequencyDto>,
     pub language_interests: Option<Vec<String>>,
     pub quiet_hours: Option<Option<QuietHoursDto>>,
+    pub github_api_enabled: Option<bool>,
 }

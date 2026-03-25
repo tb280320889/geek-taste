@@ -22,12 +22,14 @@ export type SettingsDto = {
   notification_frequency: NotificationFrequency;
   language_interests: string[];
   quiet_hours: QuietHoursDto | null;
+  github_api_enabled: boolean;
 };
 
 export type UpdateSettingsRequest = {
   notification_frequency?: NotificationFrequency;
   language_interests?: string[];
   quiet_hours?: QuietHoursDto | null;
+  github_api_enabled?: boolean;
 };
 
 export type RepoBasicInfo = {

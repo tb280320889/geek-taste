@@ -3,6 +3,8 @@ use shared_contracts::auth_dto::{UserDto, ValidateTokenResponse};
 use shared_contracts::repo_dto::RepoBasicInfo;
 use tauri::AppHandle;
 
+use super::helpers::github_api_enabled;
+
 const SERVICE: &str = "geek-taste";
 const TOKEN_KEY: &str = "github-pat";
 
@@ -58,7 +60,15 @@ pub async fn get_current_user() -> Result<Option<UserDto>, String> {
 }
 
 #[tauri::command]
-pub async fn fetch_repo_info(owner: String, repo: String) -> Result<RepoBasicInfo, String> {
+pub async fn fetch_repo_info(
+    app: AppHandle,
+    owner: String,
+    repo: String,
+) -> Result<RepoBasicInfo, String> {
+    if !github_api_enabled(&app)? {
+        return Err("GitHub API 已在设置中关闭（测试模式）".to_string());
+    }
+
     let entry = Entry::new(SERVICE, TOKEN_KEY).map_err(|e| e.to_string())?;
     let token = entry.get_password().map_err(|e| e.to_string())?;
     github_adapter::auth::fetch_repo_info(&token, &owner, &repo).await

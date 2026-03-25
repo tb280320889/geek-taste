@@ -3,10 +3,13 @@
 use keyring::Entry;
 use rusqlite::Connection;
 use shared_contracts::error_dto::{AppErrorDto, ErrorKind};
+use shared_contracts::settings_dto::SettingsDto;
 use tauri::{AppHandle, Manager};
+use tauri_plugin_store::StoreExt;
 
 const SERVICE: &str = "geek-taste";
 const TOKEN_KEY: &str = "github-pat";
+const SETTINGS_KEY: &str = "settings";
 
 /// 获取 DB 连接（每次调用打开独立连接，WAL 模式支持并发）
 pub fn get_db_connection(app: &AppHandle) -> Result<Connection, String> {
@@ -25,6 +28,20 @@ pub fn get_db_connection(app: &AppHandle) -> Result<Connection, String> {
 pub fn load_token() -> Result<String, String> {
     let entry = Entry::new(SERVICE, TOKEN_KEY).map_err(|e| e.to_string())?;
     entry.get_password().map_err(|e| e.to_string())
+}
+
+/// 从持久化 store 读取用户设置（无记录时返回默认值）
+pub fn load_settings(app: &AppHandle) -> Result<SettingsDto, String> {
+    let store = app.store("settings.json").map_err(|e| e.to_string())?;
+    match store.get(SETTINGS_KEY) {
+        Some(val) => serde_json::from_value(val).map_err(|e| e.to_string()),
+        None => Ok(SettingsDto::from(domain::settings::Settings::default())),
+    }
+}
+
+/// 测试期开关：是否允许发起 GitHub API 请求
+pub fn github_api_enabled(app: &AppHandle) -> Result<bool, String> {
+    Ok(load_settings(app)?.github_api_enabled)
 }
 
 /// 将原始错误字符串分类为 AppErrorDto

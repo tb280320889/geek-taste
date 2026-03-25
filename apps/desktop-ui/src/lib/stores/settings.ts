@@ -6,6 +6,7 @@ const DEFAULT_SETTINGS: SettingsDto = {
   notification_frequency: "digest12h",
   language_interests: [],
   quiet_hours: null,
+  github_api_enabled: true,
 };
 
 export const settings = writable<SettingsDto>(DEFAULT_SETTINGS);
