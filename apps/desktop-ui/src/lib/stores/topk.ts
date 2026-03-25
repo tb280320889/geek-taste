@@ -107,3 +107,68 @@ export const refreshCurrentView = async (): Promise<void> => {
   currentViewId.subscribe((v) => (id = v))();
   if (id) await selectView(id);
 };
+
+const DEFAULT_VIEWS: CreateRankingViewRequest[] = [
+  {
+    name: "Trending",
+    filters: {
+      language: [],
+      exclude_archived: true,
+      exclude_forks: false,
+      min_stars: null,
+      updated_since_days: 7,
+      topic: [],
+    },
+    ranking_mode: "STARS_DESC",
+    k_value: 25,
+  },
+  {
+    name: "Most Starred",
+    filters: {
+      language: [],
+      exclude_archived: true,
+      exclude_forks: true,
+      min_stars: 1000,
+      updated_since_days: null,
+      topic: [],
+    },
+    ranking_mode: "STARS_DESC",
+    k_value: 25,
+  },
+  {
+    name: "Recently Updated",
+    filters: {
+      language: [],
+      exclude_archived: true,
+      exclude_forks: false,
+      min_stars: null,
+      updated_since_days: 30,
+      topic: [],
+    },
+    ranking_mode: "UPDATED_DESC",
+    k_value: 25,
+  },
+];
+
+export const ensureDefaultViews = async (): Promise<void> => {
+  await loadViews();
+  let views: RankingViewSpecDto[] = [];
+  rankingViews.subscribe((v) => (views = v))();
+  if (views.length > 0) {
+    await selectView(views[0].ranking_view_id);
+    return;
+  }
+  for (const preset of DEFAULT_VIEWS) {
+    try {
+      const view = await createRankingView(preset);
+      rankingViews.update((v) => [...v, view]);
+    } catch (err) {
+      handleIpcError(err);
+    }
+  }
+  let created: RankingViewSpecDto[] = [];
+  rankingViews.subscribe((v) => (created = v))();
+  if (created.length > 0) {
+    await selectView(created[0].ranking_view_id);
+  }
+};
