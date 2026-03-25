@@ -1,7 +1,9 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import LanguagePicker from "$lib/components/LanguagePicker.svelte";
   import SettingsGroup from "$lib/components/SettingsGroup.svelte";
   import { settings, loadSettings, updateSettings } from "$lib/stores/settings";
+  import { logout } from "$lib/stores/auth";
   import type { NotificationFrequency, QuietHoursDto } from "$lib/types";
 
   const languageOptions = [
@@ -22,6 +24,7 @@
   ];
 
   let toast = $state("");
+  let toastType = $state<"success" | "error">("success");
   let saving = $state(false);
   let loading = $state(true);
 
@@ -37,14 +40,21 @@
     try {
       await updateSettings(patch);
       toast = "已保存";
+      toastType = "success";
       window.setTimeout(() => {
         if (toast === "已保存") toast = "";
       }, 1200);
     } catch {
       toast = "保存失败";
+      toastType = "error";
     } finally {
       saving = false;
     }
+  };
+
+  const handleLogout = async (): Promise<void> => {
+    await logout();
+    await goto("/onboarding");
   };
 
   const onFrequencyChange = async (value: NotificationFrequency): Promise<void> => {
@@ -78,9 +88,6 @@
   <header>
     <h1 class="m-0 text-2xl font-semibold">设置</h1>
     <p class="muted">通知频率、语言兴趣和安静时段会自动保存到本地。</p>
-    {#if toast}
-      <p class={toast === "已保存" ? "text-[color:var(--ok)]" : "text-[color:var(--danger)]"}>{toast}</p>
-    {/if}
   </header>
 
   {#if loading}
@@ -155,12 +162,63 @@
         </div>
       {/if}
     </SettingsGroup>
+
+    <div class="mt-4">
+      <button
+        class="cursor-pointer rounded-[var(--radius-sm)] border border-[color:var(--border)] bg-transparent px-3 py-2 text-sm text-[color:var(--text-muted)] transition hover:border-[color:var(--danger)] hover:text-[color:var(--danger)]"
+        onclick={() => void handleLogout()}
+      >
+        注销
+      </button>
+    </div>
   {/if}
 </section>
+
+{#if toast}
+  <div
+    class="toast-notification rounded-[var(--radius-sm)] border border-[color:var(--border)] px-4 py-2.5 text-sm shadow-lg"
+    class:toast-success={toastType === "success"}
+    class:toast-error={toastType === "error"}
+  >
+    {toast}
+  </div>
+{/if}
 
 <style>
   label.selected {
     border-color: rgba(78, 201, 176, 0.45);
     background: rgba(78, 201, 176, 0.14);
+  }
+
+  .toast-notification {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 1000;
+    animation: slideIn 0.3s ease;
+    backdrop-filter: blur(8px);
+  }
+
+  .toast-success {
+    background: rgba(78, 201, 176, 0.15);
+    border-color: rgba(78, 201, 176, 0.45);
+    color: var(--ok);
+  }
+
+  .toast-error {
+    background: rgba(255, 50, 50, 0.15);
+    border-color: rgba(255, 50, 50, 0.45);
+    color: var(--danger);
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(8px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
 </style>
