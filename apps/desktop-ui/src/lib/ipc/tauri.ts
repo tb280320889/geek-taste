@@ -1,4 +1,5 @@
 import { invoke } from "@tauri-apps/api/core";
+import { open } from "@tauri-apps/plugin-shell";
 import type {
   CreateRankingViewRequest,
   CreateSubscriptionRequest,
@@ -110,3 +111,7 @@ export const deactivateResource = async (resourceId: string): Promise<void> =>
 
 export const getSyncStatus = async (): Promise<SyncStatusDto> =>
   invoke("get_sync_status");
+
+// -- External links (Phase 5) -------------------------
+
+export const openExternal = async (url: string): Promise<void> => open(url);

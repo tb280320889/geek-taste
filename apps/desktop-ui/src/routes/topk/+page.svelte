@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import RepoInfoModal from "$lib/components/RepoInfoModal.svelte";
-  import { fetchRepoInfo } from "$lib/ipc/tauri";
+  import { fetchRepoInfo, openExternal } from "$lib/ipc/tauri";
   import { authStatus } from "$lib/stores/auth";
   import {
     rankingViews,
@@ -167,9 +167,19 @@
                 <div class="flex items-center gap-2">
                   <a
                     href={item.html_url}
-                    class="font-medium text-[color:var(--accent)] hover:underline"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    class="cursor-pointer font-medium text-[color:var(--accent)] hover:underline"
+                    role="button"
+                    tabindex="0"
+                    onclick={(e) => {
+                      e.preventDefault();
+                      void openExternal(item.html_url);
+                    }}
+                    onkeydown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        void openExternal(item.html_url);
+                      }
+                    }}
                   >
                     {item.full_name}
                   </a>
