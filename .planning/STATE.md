@@ -22,7 +22,7 @@ progress:
 ## Current Position
 
 Phase: 05 (polish-release) — IN PROGRESS
-Plan: 04 (P2/P3 polish) — Complete
+Plan: 05 (打包发布 + 自动更新) — Checkpoint:human-verify pending
 
 ## Phase Summary
 
@@ -136,9 +136,9 @@ Plan: 04 (P2/P3 polish) — Complete
 
 ## Session Continuity
 
-**Last action:** Phase 05-04 complete — P2/P3 polish (toast layout fix, logout UI, favicon, Sidebar logout)
-**Next action:** Phase 05 plan 05 — 离线支持 / 打包准备
-**Context needed for next session:** Phase 05-04 修复了 Toast 布局抖动、添加了 Settings+Sidebar 双入口注销、favicon 404。后续 05-05 为最后的打磨计划。
+**Last action:** Phase 05-05 auto tasks complete — Tauri 打包配置 + updater 插件注册. Checkpoint:human-verify pending.
+**Next action:** Phase 05-05 checkpoint verification → then Phase 6 planning
+**Context needed for next session:** 05-05 添加了 updater 插件 (lib.rs + tauri.conf.json + Cargo.toml)，端点为占位符。checkpoint 需要人工 QA 回归验证。
 
 ---
 *Last updated: 2026-03-25 — Phase 05 plan 04 complete*
